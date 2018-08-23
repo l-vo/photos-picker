@@ -1,0 +1,15 @@
+# Compiled files
+*.pyc
+
+# IDE Files
+.idea/
+
+# Tox files
+.tox/
+
+# Pypi files
+*.egg-info/
+
+# Coverage
+.coverage
+htmlcov/

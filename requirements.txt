@@ -1,0 +1,7 @@
+Pillow
+zope.event
+dropbox
+mock
+unittest-dataprovider
+flake8
+coverage
