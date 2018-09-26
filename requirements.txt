@@ -5,3 +5,4 @@ mock
 unittest-dataprovider
 flake8
 coverage
+codecov
