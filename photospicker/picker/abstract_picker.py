@@ -61,7 +61,7 @@ class AbstractPicker:
 
         :raise NotImplementedError
         """
-        raise NotImplementedError("Not implemented")
+        raise NotImplementedError()
 
     def _notify_progress(self, scanned):
         """
