@@ -9,7 +9,7 @@ This libary allows to pick photos in a folder according to a given strategy (las
 This library works and is tested with Python 2.7. Other Python versions are not tested yet.
 
 ## Usage
-The main class `PhotosPicker` accepts a "picker" and an "uploader" as arguments. The picker allows to select photos while the uploader copy them to a given destination. This is the simplest example which copy the 50 lastest photos to another directory:
+The main class `PhotosPicker` accepts a "picker", a tuple of "filters" and an "uploader" as arguments. The picker allows to select photos while the filters modify them. At the end of the process, the uploader copy transformed (or not) photos to a given destination. Below the simplest example which copy the 50 lastest photos to another directory:
 
 ```python
 from photospicker.picker.last_photos_picker import LastPhotosPicker
@@ -20,7 +20,7 @@ if __name__ == '__main__':
     picker = LastPhotosPicker('/pictures', 50)
     uploader = FilesystemUploader('/destination')
 
-    photos_picker = PhotosPicker(picker, uploader)
+    photos_picker = PhotosPicker(picker, (), uploader)
     photos_picker.run()
 ```
 
@@ -35,6 +35,8 @@ from photospicker.uploader.filesystem_uploader import FilesystemUploader
 from photospicker.event.scan_progress_event import ScanProgressEvent
 from photospicker.event.start_upload_event import StartUploadEvent
 from photospicker.event.end_upload_event import EndUploadEvent
+from photospicker.event.start_filter_event import StartFilterEvent
+from photospicker.event.end_filter_event import EndFilterEvent
 from zope.event.classhandler import handler
 from photospicker.photos_picker import PhotosPicker
 
@@ -75,6 +77,25 @@ def end_upload_listener(event):
     """
     msg = "\rUpload {uploaded}/{total}: upload finished for {filepath}"
     print(msg.format(uploaded=event.uploaded_files, total=event.files_to_upload, filepath=event.filepath))
+    
+@handler(StartFilterEvent)
+def start_filter_listener(event):
+    """Display when a filter start
+
+    :param StartFilterEvent event: event
+    """
+    msg = "Start filter {filter} for {filepath}";
+    print(msg.format(filter=event.filter_name(), filepath=event.filepath()))
+
+
+@handler(EndFilterEvent)
+def end_filter_listener(event):
+    """Display when a filter end
+
+    :param EndFilterEvent event: event
+    """
+    msg = "End filter {filter} for {filepath}"
+    print(msg.format(filter=event.filter_name(), filepath=event.filepath()))
 
 
 if __name__ == '__main__':
@@ -82,13 +103,16 @@ if __name__ == '__main__':
     picker = LastPhotosPicker('/pictures', 50)
     uploader = FilesystemUploader('/destination')
 
-    photos_picker = PhotosPicker(picker, uploader)
+    photos_picker = PhotosPicker(picker, (), uploader)
     photos_picker.run()
 ```
 
 ### Pickers:
 * `LastPhotosPicker`: pick the *n* lastest photos. *n* is passed as argument to the constructor.
 * `RandomPicker`: pick randomly *n* photos. *n* is passed as argument to the constructor.
+
+### Filters:
+No filter currently implemented.
 
 ### Uploaders:
 Note that uploaders don't append new photos. Either the directory must be empty or the uploader clear it before copying files.
@@ -97,4 +121,4 @@ Note that uploaders don't append new photos. Either the directory must be empty 
 * `DropBoxUploader`: upload the photos to Dropbox. The class constructor accepts a Dropbox API token as argument. ***Be careful, the script empty the `/photos` directory, you must limit your token access to application for avoiding unwanted deletions***.
 
 ## Contributing
-Other pickers and uploaders will come along the time. If you need a specific picker or a specific uploader, post an issue. Or better, submit a pull request :)
+Other pickers, filters and uploaders will come along the time. If you need a specific picker, filter or uploader, post an issue. Or better, submit a pull request :)
