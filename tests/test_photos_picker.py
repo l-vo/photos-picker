@@ -40,7 +40,7 @@ class TestPhotosPicker(TestCase):
         mock_open.assert_has_calls([
             mock.call('/myfolder/myphoto1.jpg', mode='rb'),
             mock.call('/myfolder/myphoto2.png', mode='rb')
-        ], any_order=True)
+        ])
 
         open_mock1.__enter__().read.assert_called_once()
         open_mock2.__enter__().read.assert_called_once()
