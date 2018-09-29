@@ -45,7 +45,8 @@ import sys
 
 @handler(ScanProgressEvent)
 def progress_listener(event):
-    """Display pick progression
+    """
+    Display pick progression
 
     :param ScanProgressEvent event: event
     """
@@ -59,7 +60,8 @@ def progress_listener(event):
 
 @handler(StartUploadEvent)
 def start_upload_listener(event):
-    """Display info when an upload starts
+    """
+    Display info when an upload starts
 
     :param StartUploadEvent event: event
     """
@@ -71,7 +73,8 @@ def start_upload_listener(event):
 
 @handler(EndUploadEvent)
 def end_upload_listener(event):
-    """Display info when an upload ends
+    """
+    Display info when an upload ends
 
     :param EndUploadEvent event: event
     """
@@ -80,7 +83,8 @@ def end_upload_listener(event):
     
 @handler(StartFilterEvent)
 def start_filter_listener(event):
-    """Display when a filter start
+    """
+    Display when a filter start
 
     :param StartFilterEvent event: event
     """
@@ -90,7 +94,8 @@ def start_filter_listener(event):
 
 @handler(EndFilterEvent)
 def end_filter_listener(event):
-    """Display when a filter end
+    """
+    Display when a filter end
 
     :param EndFilterEvent event: event
     """
