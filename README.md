@@ -108,7 +108,7 @@ if __name__ == '__main__':
     picker = LastPhotosPicker('/pictures', 50)
     uploader = FilesystemUploader('/destination')
 
-    photos_picker = PhotosPicker(picker, (), uploader)
+    photos_picker = PhotosPicker(picker, (800, 600), uploader)
     photos_picker.run()
 ```
 
@@ -117,7 +117,7 @@ if __name__ == '__main__':
 * `RandomPicker`: pick randomly *n* photos. *n* is passed as argument to the constructor.
 
 ### Filters:
-No filter currently implemented.
+* `ResizeFilter`: resize the photos with the width and height passed as filter arguments. The final photos sizes are computed for avoiding distortion.
 
 ### Uploaders:
 Note that uploaders don't append new photos. Either the directory must be empty or the uploader clear it before copying files.
