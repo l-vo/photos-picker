@@ -31,8 +31,7 @@ class TestAbstractPicker(TestCase):
 
         self.assertEqual(
             "patterns argument must be a list",
-            cm.exception.message,
-            "Wrong exception message"
+            cm.exception.message
         )
 
     @staticmethod
@@ -66,8 +65,4 @@ class TestAbstractPicker(TestCase):
         sut.initialize()
 
         walk_mock.assert_called_with('mypath')
-        self.assertEqual(
-            expected_files_to_scan,
-            sut.files_to_scan,
-            "Wrong files to scan list"
-        )
+        self.assertEqual(expected_files_to_scan, sut.files_to_scan)

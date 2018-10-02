@@ -32,8 +32,7 @@ class TestRandomPicker(TestCase):
 
         self.assertEqual(
             ['myphoto3.jpg', 'myphoto2.jpg'],
-            sut.picked_file_paths,
-            "Wrong photo list built"
+            sut.picked_file_paths
         )
 
     def _shuffle_mock_side_effect(self, files):
@@ -48,7 +47,7 @@ class TestRandomPicker(TestCase):
             'myphoto2.jpg',
             'myphoto3.jpg',
             'myphoto4.jpg'
-        ], "Wrong list passed to random.shuffle")
+        ])
 
         del files[:]
         files.append('myphoto3.jpg')

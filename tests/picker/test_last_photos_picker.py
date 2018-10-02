@@ -65,6 +65,5 @@ class TestLastPhotosPicker(TestCase):
 
         self.assertEqual(
             ['myphoto4.jpg', 'myphoto1.jpg'],
-            sut.picked_file_paths,
-            "Wrong photo list built"
+            sut.picked_file_paths
         )
