@@ -25,7 +25,7 @@ class AbstractUploader:
 
         :raise NotImplementedError
         """
-        raise NotImplementedError("Not implemented")
+        raise NotImplementedError()
 
     def increase_photo_counter(self):
         """Increase photo counter"""
