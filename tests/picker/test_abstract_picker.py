@@ -52,7 +52,7 @@ class TestAbstractPicker(TestCase):
                                                  to the constructor
         :param list      expected_files_to_scan: list that should be in
                                                  the _files_to_scan property
-        :param Mock      walk_mock             : MOck for walk function
+        :param mock.Mock walk_mock             : Mock for walk function
         """
 
         walk_mock.return_value = [['', [], [

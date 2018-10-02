@@ -23,7 +23,6 @@ class AbstractPicker:
         :param int  photos_count:   photos count to pick
         :param list patterns:       patterns (in lowercase) that files must
                                     match for being scanned
-
         :raise TypeError
         """
         self._root = directory_path

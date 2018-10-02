@@ -24,7 +24,7 @@ class TestPhotosPicker(TestCase):
         """
         Test run method
 
-        :param MagicMock mock_open: open built'in function mock
+        :param mock.MagicMock mock_open: open built'in function mock
         """
 
         open_mock1 = MagicMock()
