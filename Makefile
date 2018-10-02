@@ -22,7 +22,7 @@ upload-test:
 test-distribute: build upload-test
 
 ## Launch tox for PEP8 and tests validation
-valid:
+validate:
 	tox -c tox.ini
 
 ## ------

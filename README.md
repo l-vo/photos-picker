@@ -135,5 +135,5 @@ Other pickers, filters and uploaders will come along the time. If you need a spe
 
 If you submit a pull request, be sure that the PEP8 standards are respected and the tests are not broken launching the following command:
 ```bash
-$ make valid
+$ make validate
 ```
