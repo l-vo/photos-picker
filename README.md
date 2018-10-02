@@ -8,6 +8,11 @@ This libary allows to pick photos in a folder according to a given strategy (las
 ## Compatibility
 This library works and is tested with Python 2.7. Other Python versions are not tested yet.
 
+## Install
+```bash
+$ pip install photos-picker
+```
+
 ## Usage
 The main class `PhotosPicker` accepts a "picker", a tuple of "filters" and an "uploader" as arguments. The picker allows to select photos while the filters modify them. At the end of the process, the uploader copy transformed (or not) photos to a given destination. Below the simplest example which copy the 50 lastest photos to another directory:
 
@@ -127,3 +132,8 @@ Note that uploaders don't append new photos. Either the directory must be empty 
 
 ## Contributing
 Other pickers, filters and uploaders will come along the time. If you need a specific picker, filter or uploader, post an issue. Or better, submit a pull request :)
+
+If you submit a pull request, be sure that the PEP8 standards are respected and the tests are not broken launching the following command:
+```bash
+$ make valid
+```
