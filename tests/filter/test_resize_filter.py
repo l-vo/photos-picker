@@ -11,6 +11,11 @@ class TestResizeFilter(TestCase):
 
     @staticmethod
     def provider_execute():
+        """
+        Data provider for test_execute
+
+        :return: tuple
+        """
         return (
             ((200, 100), (200, 50)),
             ((100, 200), (200, 50)),

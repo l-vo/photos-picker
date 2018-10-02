@@ -20,14 +20,14 @@ class DummyUploader(AbstractUploader):
 
 
 class TestAbstractUploader(TestCase):
-    """Unit tests for AbstractUploader"""
+    """Test class for AbstractUploader"""
 
     def test_build_filename(self):
         """Test filename built"""
         uploader = DummyUploader()
         uploader.increase_photo_counter()
         filename = uploader.build_filename('myphoto1.JPG')
-        self.assertEqual('photo1.jpg', filename, "Wrong photo name")
+        self.assertEqual('photo1.jpg', filename)
         uploader.increase_photo_counter()
         filename = uploader.build_filename('myphoto27.png')
-        self.assertEqual('photo2.png', filename, "Wrong photo name")
+        self.assertEqual('photo2.png', filename)
