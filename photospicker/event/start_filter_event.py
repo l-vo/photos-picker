@@ -1,3 +1,6 @@
+from photospicker.filter.abstract_filter import AbstractFilter  # noqa
+
+
 class StartFilterEvent(object):
     """Event dispatched before a filter execution"""
 

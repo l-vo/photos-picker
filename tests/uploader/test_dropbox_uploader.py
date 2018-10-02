@@ -16,7 +16,8 @@ class TestDropboxUploader(TestCase):
         """
         Test initialize
 
-        :param MagicMock dropbox_constructor_mock: mock for dropbox constructor
+        :param mock.MagicMock dropbox_constructor_mock:
+                                                mock for dropbox constructor
         """
         dropbox_mock = Mock()
         dropbox_constructor_mock.return_value = dropbox_mock
@@ -31,7 +32,8 @@ class TestDropboxUploader(TestCase):
         """
         Test upload
 
-        :param MagicMock dropbox_constructor_mock: mock for dropbox constructor
+        :param mock.MagicMock dropbox_constructor_mock:
+                                                mock for dropbox constructor
         """
 
         dropbox_mock = Mock()
@@ -55,7 +57,8 @@ class TestDropboxUploader(TestCase):
         Test that an ApiError raised by Dropbox client is not caught
         if it's not a path lookup error
 
-        :param MagicMock dropbox_constructor_mock: mock for dropbox constructor
+        :param mock.MagicMock dropbox_constructor_mock:
+                                                mock for dropbox constructor
         """
         dropbox_mock = Mock()
         dropbox_constructor_mock.return_value = dropbox_mock
@@ -77,7 +80,8 @@ class TestDropboxUploader(TestCase):
         """
         Test that path lookup ApiErrors raised by Dropbox are caught
 
-        :param MagicMock dropbox_constructor_mock: mock for dropbox constructor
+        :param mock.MagicMock dropbox_constructor_mock:
+                                                mock for dropbox constructor
         """
         dropbox_mock = Mock()
         dropbox_constructor_mock.return_value = dropbox_mock

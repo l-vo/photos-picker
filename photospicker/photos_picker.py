@@ -3,6 +3,8 @@ from event.end_upload_event import EndUploadEvent
 from event.start_filter_event import StartFilterEvent
 from event.end_filter_event import EndFilterEvent
 from zope.event import notify
+from photospicker.picker.abstract_picker import AbstractPicker  # noqa
+from photospicker.uploader.abstract_uploader import AbstractUploader  # noqa
 import ntpath
 
 
