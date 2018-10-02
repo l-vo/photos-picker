@@ -20,7 +20,7 @@ class DummyUploader(AbstractUploader):
 
 
 class TestAbstractUploader(TestCase):
-    """Unit tests for AbstractUploader"""
+    """Test class for AbstractUploader"""
 
     def test_build_filename(self):
         """Test filename built"""

@@ -5,6 +5,7 @@ from mock import Mock
 
 
 class TestLastPhotosPicker(TestCase):
+    """Test class for LastPhotosPicker"""
 
     @mock.patch('PIL.Image.open', new_callable=Mock)
     @mock.patch('os.walk')
