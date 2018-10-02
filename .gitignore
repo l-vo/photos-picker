@@ -1,6 +1,9 @@
 # Compiled files
 *.pyc
 
+# Distributed files
+dist/
+
 # IDE Files
 .idea/
 
