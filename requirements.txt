@@ -3,6 +3,7 @@ zope.event
 dropbox
 mock
 unittest-dataprovider
+tox
 flake8
 coverage
 codecov
