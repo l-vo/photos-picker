@@ -15,7 +15,7 @@ class AbstractPicker:
 
     __metaclass__ = ABCMeta
 
-    def __init__(self, directory_path, photos_count=20, patterns=None):
+    def __init__(self, directory_path, photos_count, patterns=None):
         """
         Constructor
 
