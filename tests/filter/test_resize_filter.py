@@ -23,46 +23,29 @@ class TestResizeFilter(TestCase):
         )
 
     @unittest_dataprovider.data_provider(provider_execute)
-    @mock.patch('PIL.Image.open')
-    def test_execute(self, filter_size, expected_img_size, image_open_mock):
+    def test_execute(self, filter_size, expected_img_size):
         """
         Test execute method
 
-        :param mock.MagicMock image_open_mock   : mock for Image.open
+        :param tuple filter_size      : parameterized size of the filter
+        :param tuple expected_img_size: expected size of the returned image
         """
-        image_open_mock.side_effect = self._image_open_side_effect
-
-        self._original_img = mock.Mock()
-        self._original_img.size = (400, 100)
-        self._original_img.format = 'JPEG'
+        original_img = mock.Mock()
+        original_img.size = (400, 100)
+        original_img.format = 'JPEG'
 
         resized_mock = mock.Mock()
-        resized_mock.save.side_effect = self._image_save_side_effect
-        self._original_img.resize.return_value = resized_mock
+        original_img.resize.return_value = resized_mock
 
         sut = ResizeFilter(filter_size[0], filter_size[1])
-        content = sut.execute('mycontent')
+        resized_img = sut.execute(original_img)
 
-        self._original_img.resize.assert_called_once_with(
+        original_img.resize.assert_called_once_with(
             (expected_img_size[0], expected_img_size[1]),
             Image.ANTIALIAS
         )
 
-        resized_mock.save.assert_called_once()
-        self.assertEqual('myresizedcontent', content)
-
-    def _image_open_side_effect(self, bytesio):
-        """
-        Closure for Image.open side effect
-
-        :param BytesIO bytesio: bytesIO instance passed to Image.open
-
-        :return mock.Mock
-        """
-        self.assertIsInstance(bytesio, BytesIO)
-        self.assertEqual('mycontent', bytesio.getvalue())
-
-        return self._original_img
+        self.assertEqual(resized_mock, resized_img)
 
     def _image_save_side_effect(self, bytesio, img_format):
         """
