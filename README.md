@@ -37,6 +37,7 @@ from __future__ import print_function
 
 from photospicker.picker.last_photos_picker import LastPhotosPicker
 from photospicker.uploader.filesystem_uploader import FilesystemUploader
+from photospicker.filter.resize_filter import ResizeFilter
 from photospicker.event.scan_progress_event import ScanProgressEvent
 from photospicker.event.start_upload_event import StartUploadEvent
 from photospicker.event.end_upload_event import EndUploadEvent
@@ -112,8 +113,9 @@ if __name__ == '__main__':
 
     picker = LastPhotosPicker('/pictures', 50)
     uploader = FilesystemUploader('/destination')
+    filters = (ResizeFilter(800, 600),)
 
-    photos_picker = PhotosPicker(picker, (800, 600), uploader)
+    photos_picker = PhotosPicker(picker, filters, uploader)
     photos_picker.run()
 ```
 
