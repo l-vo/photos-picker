@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := help
 SHELL := /bin/bash
 
-.PHONY: build help upload upload-test test-distribute valid
+.PHONY: build help upload upload-test test test-distribute valid
 
 ## ------
 
@@ -17,6 +17,10 @@ upload:
 ## Upload to PYPI test
 upload-test:
 	python -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+
+## Run tests
+test:
+	python -m unittest discover
 
 ## Build and upload on PYPI test
 test-distribute: build upload-test
