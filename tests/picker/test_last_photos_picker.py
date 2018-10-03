@@ -6,7 +6,7 @@ from unittest import TestCase
 class TestLastPhotosPicker(TestCase):
     """Test class for LastPhotosPicker"""
 
-    @mock.patch('PIL.Image.open', new_callable=mock.Mock)
+    @mock.patch('PIL.Image.open')
     @mock.patch('os.walk')
     def test_scan(self, walk_mock, image_open_mock):
         """
