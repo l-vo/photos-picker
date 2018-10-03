@@ -27,7 +27,7 @@ class TestAbstractPicker(TestCase):
     def test_wrong_patterns_format(self):
         """Test that an exception is launched """
         with self.assertRaises(TypeError) as cm:
-            DummyPicker('', patterns='test')
+            DummyPicker('', 20, patterns='test')
 
         self.assertEqual(
             "patterns argument must be a list",
@@ -61,7 +61,7 @@ class TestAbstractPicker(TestCase):
             'myphoto3.png'
         ]]]
 
-        sut = DummyPicker('mypath', patterns=patterns)
+        sut = DummyPicker('mypath', 20, patterns=patterns)
         sut.initialize()
 
         walk_mock.assert_called_with('mypath')
