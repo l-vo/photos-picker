@@ -27,7 +27,7 @@ test-distribute: build upload-test
 
 ## Launch tox for PEP8 and tests validation
 validate:
-	tox -c tox.ini
+	tox --recreate -c tox.ini
 
 ## ------
 
