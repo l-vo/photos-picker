@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := help
 SHELL := /bin/bash
 
-.PHONY: build help upload upload-test test test-distribute valid
+.PHONY: build help lint upload upload-test test test-distribute valid
 
 ## ------
 
@@ -9,6 +9,11 @@ SHELL := /bin/bash
 build:
 	rm dist/*
 	python setup.py sdist
+
+## Lint code
+lint:
+	flake8 photopicker
+	flake8 test
 
 ## Upload to PYPI
 upload:
