@@ -15,11 +15,12 @@ class ResizeFilter(AbstractFilter):
         self._width = new_width
         self._height = new_height
 
-    def execute(self, original_img):
+    def execute(self, original_img, exif_data):
         """
         Resize photo
 
         :param Image original_img: image object to resize
+        :param dict exif_data    : image exif data
 
         :return Image
         """

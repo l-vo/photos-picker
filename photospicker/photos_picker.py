@@ -45,11 +45,12 @@ class PhotosPicker:
                     file_content = f.read()
             else:
                 original_img = Image.open(filepath)
+                exif_data = original_img._getexif()
                 img = original_img.copy()
 
                 for photo_filter in self._filters:
                     notify(StartFilterEvent(photo_filter, filepath))
-                    img = photo_filter.execute(img)
+                    img = photo_filter.execute(img, exif_data)
                     notify(EndFilterEvent(photo_filter, filepath))
 
                 b = BytesIO()

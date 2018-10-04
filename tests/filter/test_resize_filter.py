@@ -38,7 +38,7 @@ class TestResizeFilter(TestCase):
         original_img.resize.return_value = resized_mock
 
         sut = ResizeFilter(filter_size[0], filter_size[1])
-        resized_img = sut.execute(original_img)
+        resized_img = sut.execute(original_img, 'myexifdata')
 
         original_img.resize.assert_called_once_with(
             (expected_img_size[0], expected_img_size[1]),

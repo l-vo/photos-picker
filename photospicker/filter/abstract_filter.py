@@ -8,11 +8,12 @@ class AbstractFilter:
     __metaclass__ = ABCMeta
 
     @abstractmethod
-    def execute(self, img):  # pragma: no cover
+    def execute(self, img, exif_data):  # pragma: no cover
         """
         Execute filter
 
-        :param Image img: image object to modify
+        :param Image img     : image object to modify
+        :param dict exif_data: image exif data
 
         :return Image
         """
