@@ -1,6 +1,6 @@
 from photospicker.picker.abstract_picker import AbstractPicker
 from unittest import TestCase
-from mock import Mock  # noqa
+from mock import MagicMock  # noqa
 import unittest_dataprovider
 import mock
 
@@ -53,7 +53,7 @@ class TestAbstractPicker(TestCase):
                                                  to the constructor
         :param list      expected_files_to_scan: list that should be in
                                                  the _files_to_scan property
-        :param Mock walk_mock                  : mock for walk function
+        :param MagicMock walk_mock             : mock for walk function
         """
 
         walk_mock.return_value = [['', [], [

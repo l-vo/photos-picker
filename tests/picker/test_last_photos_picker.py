@@ -1,6 +1,7 @@
 from photospicker.picker.last_photos_picker import LastPhotosPicker
 from unittest import TestCase
 from mock import Mock
+from mock import MagicMock  # noqa
 import mock
 
 
@@ -13,8 +14,8 @@ class TestLastPhotosPicker(TestCase):
         """
         Test scan method
 
-        :param Mock walk_mock:       mock for walk method
-        :param Mock image_open_mock: mock for PIL Image mock method
+        :param MagicMock walk_mock:       mock for walk method
+        :param MagicMock image_open_mock: mock for PIL Image mock method
         """
 
         walk_mock.return_value = [['', [], [
