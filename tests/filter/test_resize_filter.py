@@ -48,17 +48,3 @@ class TestResizeFilter(TestCase):
         )
 
         self.assertEqual(resized_mock, resized_img)
-
-    def _image_save_side_effect(self, bytesio, img_format):
-        """
-        Closure for Image.save side effect
-
-        :param BytesIO bytesio: bytesIO instance passed to Image.save
-        :param str img_format : originam image format
-
-        :return: BytesIO
-        """
-        self.assertIsInstance(bytesio, BytesIO)
-        self.assertEqual('JPEG', img_format)
-
-        bytesio.write('myresizedcontent')
