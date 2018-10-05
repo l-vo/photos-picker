@@ -19,7 +19,9 @@ class TestResizeFilter(TestCase):
         return (
             ((200, 100), (200, 50)),
             ((100, 200), (200, 50)),
-            ((200, 25), (100, 25))
+            ((200, 25), (100, 25)),
+            ((750, 150), (600, 150)),
+            ((500, 250), (500, 125)),
         )
 
     @unittest_dataprovider.data_provider(provider_execute)
