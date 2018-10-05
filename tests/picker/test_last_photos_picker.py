@@ -1,6 +1,8 @@
-import mock
 from photospicker.picker.last_photos_picker import LastPhotosPicker
 from unittest import TestCase
+from mock import Mock
+from mock import MagicMock  # noqa
+import mock
 
 
 class TestLastPhotosPicker(TestCase):
@@ -12,8 +14,8 @@ class TestLastPhotosPicker(TestCase):
         """
         Test scan method
 
-        :param mock.Mock walk_mock:       mock for walk method
-        :param mock.Mock image_open_mock: mock for PIL Image mock method
+        :param MagicMock walk_mock:       mock for walk method
+        :param MagicMock image_open_mock: mock for PIL Image mock method
         """
 
         walk_mock.return_value = [['', [], [
@@ -23,22 +25,22 @@ class TestLastPhotosPicker(TestCase):
             'myphoto4.jpg'
         ]]]
 
-        image_mock1 = mock.Mock()
+        image_mock1 = Mock()
         image_mock1._getexif.return_value = {
             36865: 'myData',
             36867: '2017-05-01 23:50:00'
         }
 
-        image_mock2 = mock.Mock()
+        image_mock2 = Mock()
         image_mock2._getexif.return_value = None
 
-        image_mock3 = mock.Mock()
+        image_mock3 = Mock()
         image_mock3._getexif.return_value = {
             36867: '2017-05-01 23:49:50',
             36882: 'myOtherData'
         }
 
-        image_mock4 = mock.Mock()
+        image_mock4 = Mock()
         image_mock4._getexif.return_value = {
             36864: 'myOtherData',
             36867: '2017-05-01 23:55:00',

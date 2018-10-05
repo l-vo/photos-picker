@@ -3,8 +3,8 @@ from mock import Mock
 from mock import MagicMock
 from photospicker.photos_picker import PhotosPicker
 from callee.types import InstanceOf
+from io import BytesIO
 import mock
-import io
 
 
 class TestPhotosPicker(TestCase):
@@ -26,7 +26,7 @@ class TestPhotosPicker(TestCase):
         """
         Test run method without filters
 
-        :param mock.MagicMock mock_open: open built'in function mock
+        :param MagicMock mock_open: open built'in function mock
         """
 
         open_mock1 = MagicMock()
@@ -74,7 +74,7 @@ class TestPhotosPicker(TestCase):
         """
         Test run method with filters
 
-        :param mock.MagicMock image_open_mock: mock for Image.open
+        :param MagicMock image_open_mock: mock for Image.open
         """
         original_img1 = Mock()
         original_img1.format = 'JPEG'
@@ -133,8 +133,8 @@ class TestPhotosPicker(TestCase):
             mock.call(filter1_img2, 'myexifdata2'),
         ])
 
-        filter2_img1.save.assert_called_with(InstanceOf(io.BytesIO), 'JPEG')
-        filter2_img2.save.assert_called_with(InstanceOf(io.BytesIO), 'PNG')
+        filter2_img1.save.assert_called_with(InstanceOf(BytesIO), 'JPEG')
+        filter2_img2.save.assert_called_with(InstanceOf(BytesIO), 'PNG')
 
         uploader.initialize.assert_called_once()
         uploader.increase_photo_counter.assert_has_calls([
@@ -151,7 +151,7 @@ class TestPhotosPicker(TestCase):
         """
         Method for image save mock side effect
 
-        :param io.BytesIO bytesio: BytesIO instance for writing image
-        :param str img_format    : image format (JPEG, PNG...)
+        :param BytesIO bytesio: BytesIO instance for writing image
+        :param str img_format : image format (JPEG, PNG...)
         """
         bytesio.write('binarydata_' + img_format)

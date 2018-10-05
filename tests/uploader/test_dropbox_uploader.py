@@ -1,10 +1,10 @@
 from unittest import TestCase
 from photospicker.uploader.dropbox_uploader import DropboxUploader
 from mock import Mock
+from mock import MagicMock  # noqa
 from dropbox.exceptions import ApiError
 from dropbox.files import LookupError
 from dropbox.files import DeleteError
-
 import mock
 
 
@@ -16,7 +16,7 @@ class TestDropboxUploader(TestCase):
         """
         Test initialize
 
-        :param mock.MagicMock dropbox_constructor_mock:
+        :param MagicMock dropbox_constructor_mock:
                                                 mock for dropbox constructor
         """
         dropbox_mock = Mock()
@@ -32,7 +32,7 @@ class TestDropboxUploader(TestCase):
         """
         Test upload
 
-        :param mock.MagicMock dropbox_constructor_mock:
+        :param MagicMock dropbox_constructor_mock:
                                                 mock for dropbox constructor
         """
 
@@ -57,7 +57,7 @@ class TestDropboxUploader(TestCase):
         Test that an ApiError raised by Dropbox client is not caught
         if it's not a path lookup error
 
-        :param mock.MagicMock dropbox_constructor_mock:
+        :param MagicMock dropbox_constructor_mock:
                                                 mock for dropbox constructor
         """
         dropbox_mock = Mock()
@@ -80,7 +80,7 @@ class TestDropboxUploader(TestCase):
         """
         Test that path lookup ApiErrors raised by Dropbox are caught
 
-        :param mock.MagicMock dropbox_constructor_mock:
+        :param MagicMock dropbox_constructor_mock:
                                                 mock for dropbox constructor
         """
         dropbox_mock = Mock()
