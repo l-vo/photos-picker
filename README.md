@@ -125,6 +125,7 @@ if __name__ == '__main__':
 
 ### Filters:
 * `ResizeFilter`: resize the photos with the width and height passed as filter arguments. The final photos sizes are computed for avoiding distortion.
+* `RotateFilter`: rotate the photos according to EXIF data. Setting the expand argument to `True` allows to expands the output image to make it large enough to hold the entire rotated image.
 
 ### Uploaders:
 Note that uploaders don't append new photos. Either the directory must be empty or the uploader clear it before copying files.
