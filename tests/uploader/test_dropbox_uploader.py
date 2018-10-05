@@ -4,7 +4,6 @@ from mock import Mock
 from dropbox.exceptions import ApiError
 from dropbox.files import LookupError
 from dropbox.files import DeleteError
-
 import mock
 
 

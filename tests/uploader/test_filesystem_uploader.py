@@ -14,8 +14,8 @@ class TestFilesystemUploader(TestCase):
         """
         Test that an exception is launched if the directory is not found
 
-        :param mock.MagicMock is_dir_mock: is_dir function mock
-        :param mock.MagicMock listdir_mock: listdir function mock
+        :param MagicMock is_dir_mock: is_dir function mock
+        :param MagicMock listdir_mock: listdir function mock
         """
         is_dir_mock.return_value = False
 
@@ -36,8 +36,8 @@ class TestFilesystemUploader(TestCase):
         """
         Test that an exception is launched if the directory is not empty
 
-        :param mock.MagicMock is_dir_mock: is_dir function mock
-        :param mock.MagicMock listdir_mock: listdir function mock
+        :param MagicMock is_dir_mock: is_dir function mock
+        :param MagicMock listdir_mock: listdir function mock
         """
         is_dir_mock.return_value = True
         listdir_mock.return_value = ['myfile']
@@ -61,9 +61,9 @@ class TestFilesystemUploader(TestCase):
         """
         Test upload (copy)
 
-        :param mock.MagicMock is_dir_mock: is_dir function mock
-        :param mock.MagicMock listdir_mock: listdir function mock
-        :param mock.MagicMock mock_open: open built'in function mock
+        :param MagicMock is_dir_mock: is_dir function mock
+        :param MagicMock listdir_mock: listdir function mock
+        :param MagicMock mock_open: open built'in function mock
         """
         is_dir_mock.return_value = True
         listdir_mock.return_value = []

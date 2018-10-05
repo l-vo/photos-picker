@@ -1,5 +1,6 @@
 from unittest import TestCase
 from photospicker.picker.random_picker import RandomPicker
+from mock import MagicMock  # noqa
 import mock
 
 
@@ -12,8 +13,8 @@ class TestRandomPicker(TestCase):
         """
         Test random pick
 
-        :param mock.MagicMock walk_mock   : mock for os.walk
-        :param mock.MagicMock shuffle_mock: mock for random.shuffle
+        :param MagicMock walk_mock   : mock for os.walk
+        :param MagicMock shuffle_mock: mock for random.shuffle
         """
         walk_mock.return_value = [['', [], [
             'myphoto1.jpg',

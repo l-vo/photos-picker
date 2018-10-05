@@ -1,9 +1,8 @@
 from unittest import TestCase
 from mock import Mock
+from photospicker.filter.rotate_filter import RotateFilter
 import mock
 import unittest_dataprovider
-
-from photospicker.filter.rotate_filter import RotateFilter
 
 
 class TestRotateFilter(TestCase):
