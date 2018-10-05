@@ -1,4 +1,5 @@
 from abc import ABCMeta, abstractmethod
+from PIL import Image  # noqa
 
 
 class AbstractFilter:
@@ -7,10 +8,13 @@ class AbstractFilter:
     __metaclass__ = ABCMeta
 
     @abstractmethod
-    def execute(self, content):  # pragma: no cover
+    def execute(self, img, exif_data):  # pragma: no cover
         """
         Execute filter
 
-        :param string content: binary content of the photo
+        :param Image img     : image object to modify
+        :param dict exif_data: image exif data
+
+        :return Image
         """
         raise NotImplementedError()

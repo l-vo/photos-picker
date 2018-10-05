@@ -1,6 +1,5 @@
 from photospicker.filter.abstract_filter import AbstractFilter
 from PIL import Image
-from io import BytesIO
 
 
 class ResizeFilter(AbstractFilter):
@@ -16,13 +15,15 @@ class ResizeFilter(AbstractFilter):
         self._width = new_width
         self._height = new_height
 
-    def execute(self, content):
+    def execute(self, original_img, exif_data):
         """
         Resize photo
 
-        :param string content: binary content of the photo
+        :param Image original_img: image object to resize
+        :param dict exif_data    : image exif data
+
+        :return Image
         """
-        original_img = Image.open(BytesIO(content))
         (original_width, original_height) = original_img.size
 
         diff_wh = self._width - self._height
@@ -46,6 +47,5 @@ class ResizeFilter(AbstractFilter):
             (int(ratio * original_width), int(ratio * original_height)),
             Image.ANTIALIAS
         )
-        b = BytesIO()
-        resized_img.save(b, original_img.format)
-        return b.getvalue()
+
+        return resized_img

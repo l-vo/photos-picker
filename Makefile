@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := help
 SHELL := /bin/bash
 
-.PHONY: build help upload upload-test test-distribute valid
+.PHONY: build help lint upload upload-test test test-distribute valid
 
 ## ------
 
@@ -9,6 +9,11 @@ SHELL := /bin/bash
 build:
 	rm dist/*
 	python setup.py sdist
+
+## Lint code
+lint:
+	flake8 photopicker
+	flake8 test
 
 ## Upload to PYPI
 upload:
@@ -18,12 +23,16 @@ upload:
 upload-test:
 	python -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
 
+## Run tests
+test:
+	python -m unittest discover
+
 ## Build and upload on PYPI test
 test-distribute: build upload-test
 
 ## Launch tox for PEP8 and tests validation
 validate:
-	tox -c tox.ini
+	tox --recreate -c tox.ini
 
 ## ------
 
