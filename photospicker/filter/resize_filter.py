@@ -5,15 +5,15 @@ from PIL import Image
 class ResizeFilter(AbstractFilter):
     """Resize a photo"""
 
-    def __init__(self, new_width, new_height):
+    def __init__(self, max_width, max_height):
         """
         Constructor
 
-        :param int new_width : new width after filter execution
-        :param int new_height: new height after filter execution
+        :param int max_width : max width after filter execution
+        :param int max_height: max height after filter execution
         """
-        self._width = new_width
-        self._height = new_height
+        self._width = max_width
+        self._height = max_height
 
     def execute(self, original_img, exif_data):
         """

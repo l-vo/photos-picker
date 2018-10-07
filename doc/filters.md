@@ -7,11 +7,11 @@ Resize the photos with the given width and height. The final photos size are com
 
 ### Constructor arguments
 ```python
-def __init__(self, new_width, new_height):
+def __init__(self, max_width, max_height):
 ```
 
-* `new_width` (int): max width of the photo after resizing
-* `new_height` (int): max height of the photo after resizing
+* `max_width` (int): max width of the photo after resizing
+* `max_height` (int): max height of the photo after resizing
 
 ## RotateFilter
 
