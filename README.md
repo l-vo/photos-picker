@@ -33,18 +33,24 @@ Since picking and uloading may take a while, progress events are dispatched.
 You can see a more complex example which displays work progress [here](examples/example.py).
 
 ### Pickers:
-* `LastPhotosPicker`: pick the *n* lastest photos. *n* is passed as argument to the constructor.
-* `RandomPicker`: pick randomly *n* photos. *n* is passed as argument to the constructor.
+* `LastPhotosPicker`: pick the *n* lastest photos.
+* `RandomPicker`: pick randomly *n* photos. 
+
+More details [here](doc/pickers.md)
 
 ### Filters:
-* `ResizeFilter`: resize the photos with the width and height passed as filter arguments. The final photos sizes are computed for avoiding distortion.
-* `RotateFilter`: rotate the photos according to EXIF data. Setting the expand argument to `True` allows to expands the output image to make it large enough to hold the entire rotated image.
+* `ResizeFilter`: resize the photos with the given width and height. The final photos size are computed for avoiding distortion.
+* `RotateFilter`: Rotate the photos according to EXIF data.
+
+More details [here](doc/filters.md)
 
 ### Uploaders:
 Note that uploaders don't append new photos. Either the directory must be empty or the uploader clear it before copying files.
 
-* `FilesystemUploader`: copy the photos to the directory passed as class constructor argument. This directory must exist and not be empty.
-* `DropBoxUploader`: upload the photos to Dropbox. The class constructor accepts a Dropbox API token as argument. ***Be careful, the script empty the `/photos` directory, you must limit your token access to application for avoiding unwanted deletions***.
+* `FilesystemUploader`: copy the photos to a given directory. This directory must exist and be empty.
+* `DropBoxUploader`: upload the photos to Dropbox. ***Be careful, the script empty the `/photos` directory, you must limit your token access to application for avoiding unwanted deletions***.
+
+More details [here](doc/uploaders.md)
 
 ## Contributing
 Other pickers, filters and uploaders will come along the time. If you need a specific picker, filter or uploader, post an issue. Or better, submit a pull request :)
