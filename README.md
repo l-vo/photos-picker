@@ -29,109 +29,28 @@ if __name__ == '__main__':
     photos_picker.run()
 ```
 
-Since picking and uloading may take a while, progress events are dispatched. This is a more complex example which displays work progress:
-
-```python
-from __future__ import division
-from __future__ import print_function
-
-from photospicker.picker.last_photos_picker import LastPhotosPicker
-from photospicker.uploader.filesystem_uploader import FilesystemUploader
-from photospicker.filter.resize_filter import ResizeFilter
-from photospicker.event.scan_progress_event import ScanProgressEvent
-from photospicker.event.start_upload_event import StartUploadEvent
-from photospicker.event.end_upload_event import EndUploadEvent
-from photospicker.event.start_filter_event import StartFilterEvent
-from photospicker.event.end_filter_event import EndFilterEvent
-from zope.event.classhandler import handler
-from photospicker.photos_picker import PhotosPicker
-
-import sys
-
-
-@handler(ScanProgressEvent)
-def progress_listener(event):
-    """
-    Display pick progression
-
-    :param ScanProgressEvent event: event
-    """
-    percent = int(event.files_scanned * 100/event.files_to_scan)
-    print("\rScanning files: {percent}%".format(percent=percent), end='')
-    sys.stdout.flush()
-
-    if event.end:
-        print("\nPicking photos...")
-
-
-@handler(StartUploadEvent)
-def start_upload_listener(event):
-    """
-    Display info when an upload starts
-
-    :param StartUploadEvent event: event
-    """
-
-    msg = "Upload {rank}/{total}: uploading {filepath}..."
-    print(msg.format(rank=event.upload_file_rank, total=event.files_to_upload, filepath=event.filepath), end='')
-    sys.stdout.flush()
-
-
-@handler(EndUploadEvent)
-def end_upload_listener(event):
-    """
-    Display info when an upload ends
-
-    :param EndUploadEvent event: event
-    """
-    msg = "\rUpload {uploaded}/{total}: upload finished for {filepath}"
-    print(msg.format(uploaded=event.uploaded_files, total=event.files_to_upload, filepath=event.filepath))
-    
-@handler(StartFilterEvent)
-def start_filter_listener(event):
-    """
-    Display when a filter start
-
-    :param StartFilterEvent event: event
-    """
-    msg = "Start filter {filter} for {filepath}";
-    print(msg.format(filter=event.filter_name(), filepath=event.filepath()))
-
-
-@handler(EndFilterEvent)
-def end_filter_listener(event):
-    """
-    Display when a filter end
-
-    :param EndFilterEvent event: event
-    """
-    msg = "End filter {filter} for {filepath}"
-    print(msg.format(filter=event.filter_name(), filepath=event.filepath()))
-
-
-if __name__ == '__main__':
-
-    picker = LastPhotosPicker('/pictures', 50)
-    uploader = FilesystemUploader('/destination')
-    filters = (ResizeFilter(800, 600),)
-
-    photos_picker = PhotosPicker(picker, filters, uploader)
-    photos_picker.run()
-```
+Since picking and uloading may take a while, progress events are dispatched. 
+You can see a more complex example which displays work progress [here](examples/example.py).
 
 ### Pickers:
-* `LastPhotosPicker`: pick the *n* lastest photos. *n* is passed as argument to the constructor.
-* `RandomPicker`: pick randomly *n* photos. *n* is passed as argument to the constructor.
+* `LastPhotosPicker`: pick the *n* lastest photos.
+* `RandomPicker`: pick randomly *n* photos. 
+
+More details [here](doc/pickers.md)
 
 ### Filters:
-* `ResizeFilter`: resize the photos with the width and height passed as filter arguments. The final photos sizes are computed for avoiding distortion.
-* `RotateFilter`: rotate the photos according to EXIF data. Setting the expand argument to `True` allows to expands the output image to make it large enough to hold the entire rotated image.
+* `ResizeFilter`: resize the photos with the given width and height. The final photos size are computed for avoiding distortion.
+* `RotateFilter`: Rotate the photos according to EXIF data.
+
+More details [here](doc/filters.md)
 
 ### Uploaders:
 Note that uploaders don't append new photos. Either the directory must be empty or the uploader clear it before copying files.
 
-* `FilesystemUploader`: copy the photos to the directory passed as class constructor argument. This directory must exist and not be empty.
-* `DropBoxUploader`: upload the photos to Dropbox. The class constructor accepts a Dropbox API token as argument. ***Be careful, the script empty the `/photos` directory, you must limit your token access to application for avoiding unwanted deletions***.
+* `FilesystemUploader`: copy the photos to a given directory. This directory must exist and be empty.
+* `DropBoxUploader`: upload the photos to Dropbox. ***Be careful, the script empty the `/photos` directory, you must limit your token access to application for avoiding unwanted deletions***.
+
+More details [here](doc/uploaders.md)
 
 ## Contributing
 Other pickers, filters and uploaders will come along the time. If you need a specific picker, filter or uploader, post an issue. Or better, submit a pull request :)
