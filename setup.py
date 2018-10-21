@@ -14,6 +14,7 @@ setup(
     author_email='laurent.voullemier@gmail.com',
     url='https://github.com/l-vo/photos-picker',
     packages=find_packages(exclude=("tests",)),
+    install_requires=['Pillow', 'zope.event', 'dropbox'],
     include_package_data=True,
     zip_safe=False,
     long_description=read('README.md'),
