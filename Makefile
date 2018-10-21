@@ -7,7 +7,7 @@ SHELL := /bin/bash
 
 ## Build files to distribute on PYPI
 build:
-	rm dist/*
+	-rm dist/*
 	python setup.py sdist
 
 ## Lint code
