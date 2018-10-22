@@ -19,7 +19,7 @@ class AbstractPicker:
         """
         Constructor
 
-        :param str  directory_path: directory to scan
+        :param str  directory_path: directory path to scan
         :param int  photos_count:   photos count to pick
         :param list patterns:       patterns (in lowercase) that files must
                                     match for being scanned
