@@ -15,17 +15,21 @@ class AbstractPicker:
 
     __metaclass__ = ABCMeta
 
-    def __init__(self, directory_path, photos_count, patterns=None):
+    def __init__(self, directory_paths, photos_count, patterns=None):
         """
         Constructor
 
-        :param str  directory_path: directory path to scan
-        :param int  photos_count:   photos count to pick
-        :param list patterns:       patterns (in lowercase) that files must
-                                    match for being scanned
+        :param mixed directory_paths: directory paths to scan
+        :param int   photos_count:    photos count to pick
+        :param list  patterns:        patterns (in lowercase) that files must
+                                      match for being scanned
         :raise TypeError
         """
-        self._root = directory_path
+        if isinstance(directory_paths, list):
+            self._paths = directory_paths
+        else:
+            self._paths = [directory_paths]
+
         self._files_to_scan = []
         self._picked_file_paths = []
         self._photos_count = photos_count
@@ -44,14 +48,15 @@ class AbstractPicker:
 
     def initialize(self):
         """Fill in the list of files to scan"""
-        for root, dirnames, filenames in os.walk(self._root):
-            for filename in filenames:
-                for pattern in self._patterns:
-                    if fnmatch.fnmatch(filename.lower(), pattern):
-                        self._files_to_scan.append(os.path.join(
-                            root,
-                            filename
-                        ))
+        for path in self._paths:
+            for root, dirnames, filenames in os.walk(path):
+                for filename in filenames:
+                    for pattern in self._patterns:
+                        if fnmatch.fnmatch(filename.lower(), pattern):
+                            self._files_to_scan.append(os.path.join(
+                                root,
+                                filename
+                            ))
 
     @abstractmethod
     def scan(self):  # pragma: no cover

@@ -67,3 +67,33 @@ class TestAbstractPicker(TestCase):
 
         walk_mock.assert_called_with('mypath')
         self.assertEqual(expected_files_to_scan, sut.files_to_scan)
+
+    @mock.patch('os.walk')
+    def test_initialize_multiple_paths(self, walk_mock):
+        """
+        Test initialize method with multiple paths
+
+        :param MagicMock walk_mock: mock for walk function
+        """
+        walk_mock.side_effect = [
+            [['', [], [
+                'myphoto1.jpg',
+                'myphoto2.JPEG'
+            ]]],
+            [['', [], [
+                'myphoto3.png'
+            ]]]
+        ]
+
+        sut = DummyPicker(['mypath1', 'mypath2'], 20)
+        sut.initialize()
+
+        walk_mock.assert_has_calls([
+            mock.call('mypath1'),
+            mock.call('mypath2')
+        ])
+
+        self.assertEqual(
+            ['myphoto1.jpg', 'myphoto2.JPEG', 'myphoto3.png'],
+            sut.files_to_scan
+        )
