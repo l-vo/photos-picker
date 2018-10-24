@@ -67,3 +67,66 @@ class TestAbstractPicker(TestCase):
 
         walk_mock.assert_called_with('mypath')
         self.assertEqual(expected_files_to_scan, sut.files_to_scan)
+
+    @staticmethod
+    def provider_initialize_multiple_and_excluded_paths():
+        """Data provider for test_initialize_multiple_and_excluded_paths"""
+        return (
+            ([], [
+                '/mypath1/folder1/myphoto1.jpg',
+                '/mypath1/folder1/myphoto2.JPEG',
+                '/mypath2/myphoto3.png',
+                '/mypath2/folder1/myphoto4.png'
+            ]),
+            (['/mypath1'], [
+                '/mypath2/myphoto3.png',
+                '/mypath2/folder1/myphoto4.png'
+            ]),
+            (['/mypath2'], [
+                '/mypath1/folder1/myphoto1.jpg',
+                '/mypath1/folder1/myphoto2.JPEG',
+            ]),
+            (['/mypath2/folder1'], [
+                '/mypath1/folder1/myphoto1.jpg',
+                '/mypath1/folder1/myphoto2.JPEG',
+                '/mypath2/myphoto3.png'
+            ])
+        )
+
+    @unittest_dataprovider.data_provider(
+        provider_initialize_multiple_and_excluded_paths
+    )
+    @mock.patch('os.walk')
+    def test_initialize_multiple_and_excluded_paths(
+            self,
+            excluded_paths,
+            expected_files_to_scan,
+            walk_mock
+    ):
+        """
+        Test initialize method with multiple and excluded paths
+
+        :param list excluded_paths        : excluded paths
+        :param list expected_files_to_scan: expected files to scan
+        :param MagicMock walk_mock        : mock for walk function
+        """
+        walk_mock.side_effect = [
+            [
+                ['/mypath1', [], []],
+                ['/mypath1/folder1', [], ['myphoto1.jpg', 'myphoto2.JPEG']]
+            ],
+            [
+                ['/mypath2', [], ['myphoto3.png']],
+                ['/mypath2/folder1', [], ['myphoto4.png']]
+            ]
+        ]
+
+        sut = DummyPicker(['/mypath1', '/mypath2'], 20, None, excluded_paths)
+        sut.initialize()
+
+        walk_mock.assert_has_calls([
+            mock.call('/mypath1'),
+            mock.call('/mypath2')
+        ])
+
+        self.assertEqual(expected_files_to_scan, sut.files_to_scan)

@@ -3,6 +3,7 @@ from photospicker.event.scan_progress_event import ScanProgressEvent
 from zope import event
 import os
 import fnmatch
+import string
 
 
 class AbstractPicker:
@@ -15,17 +16,28 @@ class AbstractPicker:
 
     __metaclass__ = ABCMeta
 
-    def __init__(self, directory_path, photos_count, patterns=None):
+    def __init__(
+            self,
+            directory_paths,
+            photos_count,
+            patterns=None,
+            excluded_paths=None
+    ):
         """
         Constructor
 
-        :param str  directory_path: directory to scan
-        :param int  photos_count:   photos count to pick
-        :param list patterns:       patterns (in lowercase) that files must
-                                    match for being scanned
+        :param mixed directory_paths: directory paths to scan
+        :param int   photos_count:    photos count to pick
+        :param list  patterns:        patterns (in lowercase) that files must
+                                      match for being scanned
+        :param list  excluded_paths:  directory paths excluded form the scan
         :raise TypeError
         """
-        self._root = directory_path
+        if isinstance(directory_paths, list):
+            self._paths = directory_paths
+        else:
+            self._paths = [directory_paths]
+
         self._files_to_scan = []
         self._picked_file_paths = []
         self._photos_count = photos_count
@@ -37,6 +49,13 @@ class AbstractPicker:
 
         self._patterns = patterns
 
+        if excluded_paths is None:
+            excluded_paths = []
+
+        self._excluded_paths = []
+        for excluded_path in excluded_paths:
+            self._excluded_paths.append(os.path.abspath(excluded_path))
+
     @property
     def picked_file_paths(self):
         """Return an array of the picked file paths"""
@@ -44,14 +63,30 @@ class AbstractPicker:
 
     def initialize(self):
         """Fill in the list of files to scan"""
-        for root, dirnames, filenames in os.walk(self._root):
-            for filename in filenames:
-                for pattern in self._patterns:
-                    if fnmatch.fnmatch(filename.lower(), pattern):
-                        self._files_to_scan.append(os.path.join(
-                            root,
-                            filename
-                        ))
+        for path in self._paths:
+            for root, dirnames, filenames in os.walk(path):
+                if self._is_in_excluded_paths(root):
+                    continue
+                for filename in filenames:
+                    for pattern in self._patterns:
+                        if fnmatch.fnmatch(filename.lower(), pattern):
+                            self._files_to_scan.append(os.path.join(
+                                root,
+                                filename
+                            ))
+
+    def _is_in_excluded_paths(self, path):
+        """
+        Check if a path is (or is in) an excluded path
+
+        :param string path: path to check
+
+        :return: bool
+        """
+        for excluded_path in self._excluded_paths:
+            if string.find(path, excluded_path) == 0:
+                return True
+        return False
 
     @abstractmethod
     def scan(self):  # pragma: no cover
