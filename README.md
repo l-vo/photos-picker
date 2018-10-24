@@ -22,11 +22,14 @@ from photospicker.uploader.filesystem_uploader import FilesystemUploader
 from photospicker.photos_picker import PhotosPicker
 
 if __name__ == '__main__':
-    picker = LastPhotosPicker('/pictures', 50)
-    uploader = FilesystemUploader('/destination')
-
-    photos_picker = PhotosPicker(picker, (), uploader)
-    photos_picker.run()
+    try:
+        picker = LastPhotosPicker('/pictures', 50)
+        uploader = FilesystemUploader('/destination')
+    
+        photos_picker = PhotosPicker(picker, (), uploader)
+        photos_picker.run()
+    except Exception as err:
+        print err.message    
 ```
 
 Since picking and uloading may take a while, progress events are dispatched. 

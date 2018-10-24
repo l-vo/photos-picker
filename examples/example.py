@@ -77,9 +77,12 @@ def end_filter_listener(event):
 
 if __name__ == '__main__':
 
-    picker = LastPhotosPicker('/pictures', 50)
-    uploader = FilesystemUploader('/destination')
-    filters = (ResizeFilter(800, 600),)
+    try:
+        picker = LastPhotosPicker('/pictures', 50)
+        uploader = FilesystemUploader('/destination')
+        filters = (ResizeFilter(800, 600),)
 
-    photos_picker = PhotosPicker(picker, filters, uploader)
-    photos_picker.run()
+        photos_picker = PhotosPicker(picker, filters, uploader)
+        photos_picker.run()
+    except Exception as err:
+        print(err.message)

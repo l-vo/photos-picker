@@ -1,7 +1,4 @@
-from exceptions import BaseException
-
-
-class PickerException(BaseException):
+class PickerException(Exception):
     """Exception when picking photos"""
 
     # Error constants
