@@ -1,5 +1,5 @@
 class UploaderException(Exception):
-    """Exception when picking photos"""
+    """Exception when uploading photos"""
 
     # Error constants
     NOT_FOUND = 1
