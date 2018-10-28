@@ -1,3 +1,4 @@
+from photospicker.exception.picker_exception import PickerException
 from photospicker.picker.abstract_picker import AbstractPicker
 from unittest import TestCase
 from mock import MagicMock  # noqa
@@ -130,3 +131,19 @@ class TestAbstractPicker(TestCase):
         ])
 
         self.assertEqual(expected_files_to_scan, sut.files_to_scan)
+
+    @mock.patch('os.walk')
+    def test_initialize_with_no_photo_found(self, walk_mock):
+        """
+        Test than an exception is raised when no photo is found in scan path(s)
+
+        :param MagicMock walk_mock        : mock for walk function
+        """
+        walk_mock.return_value = []
+
+        sut = DummyPicker('/mypath', 20)
+
+        with self.assertRaises(PickerException) as cm:
+            sut.initialize()
+
+        self.assertEqual(PickerException.EMPTY_SCAN, cm.exception.code)
