@@ -1,4 +1,4 @@
-class PickerException(Exception):
+class UploaderException(Exception):
     """Exception when picking photos"""
 
     # Error constants
