@@ -1,5 +1,5 @@
 from photospicker.uploader.abstract_uploader import AbstractUploader
-from photospicker.exception.picker_exception import PickerException
+from photospicker.exception.uploader_exception import UploaderException
 import os
 
 
@@ -18,14 +18,14 @@ class FilesystemUploader(AbstractUploader):
     def initialize(self):  # pragma: no cover
         """Check target directory"""
         if not os.path.isdir(self._path):
-            raise PickerException(
-                PickerException.NOT_FOUND,
+            raise UploaderException(
+                UploaderException.NOT_FOUND,
                 "Directory {path} not found".format(path=self._path)
             )
 
         if os.listdir(self._path):
-            raise PickerException(
-                PickerException.NOT_EMPTY,
+            raise UploaderException(
+                UploaderException.NOT_EMPTY,
                 "Directory {path} not empty".format(path=self._path)
             )
 

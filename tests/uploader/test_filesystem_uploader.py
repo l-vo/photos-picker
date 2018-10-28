@@ -1,7 +1,7 @@
 from unittest import TestCase
 from photospicker.uploader.filesystem_uploader import FilesystemUploader
 from mock import MagicMock
-from photospicker.exception.picker_exception import PickerException
+from photospicker.exception.uploader_exception import UploaderException
 import mock
 
 
@@ -19,7 +19,7 @@ class TestFilesystemUploader(TestCase):
         """
         is_dir_mock.return_value = False
 
-        with self.assertRaises(PickerException) as cm:
+        with self.assertRaises(UploaderException) as cm:
             sut = FilesystemUploader('/root/myfolder')
             sut.initialize()
 
@@ -42,7 +42,7 @@ class TestFilesystemUploader(TestCase):
         is_dir_mock.return_value = True
         listdir_mock.return_value = ['myfile']
 
-        with self.assertRaises(PickerException) as cm:
+        with self.assertRaises(UploaderException) as cm:
             sut = FilesystemUploader('/root/myfolder')
             sut.initialize()
 
