@@ -1,6 +1,7 @@
 from abc import ABCMeta, abstractmethod
 from photospicker.event.scan_progress_event import ScanProgressEvent
 from zope import event
+from photospicker.exception.picker_exception import PickerException
 import os
 import fnmatch
 import string
@@ -74,6 +75,11 @@ class AbstractPicker:
                                 root,
                                 filename
                             ))
+        if not self._files_to_scan:
+            raise PickerException(
+                PickerException.EMPTY_SCAN,
+                "No photos to scan found in given directory(ies)"
+            )
 
     def _is_in_excluded_paths(self, path):
         """
