@@ -34,7 +34,6 @@ class TestRotateFilter(TestCase):
         :return: tuple
         """
         return (
-            (None,),
             ({},),
             ({123: 'myexifdata'},),
             ({456: 5},)
