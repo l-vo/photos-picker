@@ -79,6 +79,9 @@ class TestAbstractPicker(TestCase):
                 '/mypath2/myphoto3.png',
                 '/mypath2/folder1/myphoto4.png'
             ]),
+            (['/folder1/'], [
+                '/mypath2/myphoto3.png'
+            ]),
             (['/mypath1'], [
                 '/mypath2/myphoto3.png',
                 '/mypath2/folder1/myphoto4.png'
