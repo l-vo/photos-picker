@@ -12,7 +12,7 @@ class AbstractException(Exception):
         self._message = message
 
     @property
-    def code(self):  # pragma no cover
+    def code(self):
         """
         Getter code
 

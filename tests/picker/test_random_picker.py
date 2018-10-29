@@ -29,7 +29,12 @@ class TestRandomPicker(TestCase):
         sut.initialize()
         sut.scan()
 
-        shuffle_mock.assert_called_once()
+        shuffle_mock.assert_called_once_with([
+            'myphoto3.jpg',
+            'myphoto2.jpg',
+            'myphoto4.jpg',
+            'myphoto1.jpg']
+        )
 
         self.assertEqual(
             ['myphoto3.jpg', 'myphoto2.jpg'],
