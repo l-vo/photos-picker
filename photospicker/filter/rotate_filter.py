@@ -28,14 +28,13 @@ class RotateFilter(AbstractFilter):
                 orientation_key = key
 
         angle = None
-        if exif_data:
-            if orientation_key is not None and orientation_key in exif_data:
-                if exif_data[orientation_key] == 3:
-                    angle = 180
-                elif exif_data[orientation_key] == 6:
-                    angle = 270
-                elif exif_data[orientation_key] == 8:
-                    angle = 90
+        if orientation_key is not None and orientation_key in exif_data:
+            if exif_data[orientation_key] == 3:
+                angle = 180
+            elif exif_data[orientation_key] == 6:
+                angle = 270
+            elif exif_data[orientation_key] == 8:
+                angle = 90
 
         if angle is None:
             return original_img

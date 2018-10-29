@@ -1,3 +1,5 @@
+from PIL.JpegImagePlugin import JpegImageFile
+
 from photospicker.picker.abstract_picker import AbstractPicker
 from PIL import Image
 from PIL import ExifTags
@@ -15,16 +17,18 @@ class LastPhotosPicker(AbstractPicker):
         self._notify_progress(scanned)
         for filepath in self._files_to_scan:
             img = Image.open(filepath)
-            exif_data = img._getexif()
 
-            if exif_data is None:
-                continue
+            if isinstance(img, JpegImageFile):
+                exif_data = img._getexif()
 
-            for key in exif_data.keys():
-                if ExifTags.TAGS.get(key) != 'DateTimeOriginal':
-                    continue
+                if exif_data is None:
+                    exif_data = {}
 
-                data_to_sort[filepath] = exif_data[key]
+                for key in exif_data.keys():
+                    if ExifTags.TAGS.get(key) != 'DateTimeOriginal':
+                        continue
+
+                    data_to_sort[filepath] = exif_data[key]
 
             scanned += 1
             self._notify_progress(scanned)

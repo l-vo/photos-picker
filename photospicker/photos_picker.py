@@ -1,3 +1,5 @@
+from PIL.JpegImagePlugin import JpegImageFile
+
 from event.start_upload_event import StartUploadEvent
 from event.end_upload_event import EndUploadEvent
 from event.start_filter_event import StartFilterEvent
@@ -45,7 +47,13 @@ class PhotosPicker:
                     file_content = f.read()
             else:
                 original_img = Image.open(filepath)
-                exif_data = original_img._getexif()
+
+                exif_data = {}
+                if isinstance(original_img, JpegImageFile):
+                    wexif = original_img._getexif()
+                    if wexif is not None:
+                        exif_data = wexif
+
                 img = original_img.copy()
 
                 for photo_filter in self._filters:

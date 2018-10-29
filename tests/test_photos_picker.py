@@ -1,4 +1,6 @@
 from unittest import TestCase
+
+from PIL.JpegImagePlugin import JpegImageFile
 from mock import Mock
 from mock import MagicMock
 from photospicker.photos_picker import PhotosPicker
@@ -76,15 +78,14 @@ class TestPhotosPicker(TestCase):
 
         :param MagicMock image_open_mock: mock for Image.open
         """
-        original_img1 = Mock()
+        original_img1 = Mock(spec=JpegImageFile)
         original_img1.format = 'JPEG'
         original_img1._getexif.return_value = 'myexifdata1'
         original_img2 = Mock()
         original_img2.format = 'PNG'
-        original_img2._getexif.return_value = 'myexifdata2'
         image_open_mock.side_effect = [original_img1, original_img2]
 
-        img1 = Mock()
+        img1 = Mock(spec=JpegImageFile)
         original_img1.copy.return_value = img1
         img2 = Mock()
         original_img2.copy.return_value = img2
@@ -125,12 +126,12 @@ class TestPhotosPicker(TestCase):
 
         filter1.execute.assert_has_calls([
             mock.call(img1, 'myexifdata1'),
-            mock.call(img2, 'myexifdata2'),
+            mock.call(img2, {}),
         ])
 
         filter2.execute.assert_has_calls([
             mock.call(filter1_img1, 'myexifdata1'),
-            mock.call(filter1_img2, 'myexifdata2'),
+            mock.call(filter1_img2, {}),
         ])
 
         filter2_img1.save.assert_called_with(InstanceOf(BytesIO), 'JPEG')

@@ -1,3 +1,5 @@
+from PIL.JpegImagePlugin import JpegImageFile
+
 from photospicker.picker.last_photos_picker import LastPhotosPicker
 from unittest import TestCase
 from mock import Mock
@@ -22,36 +24,40 @@ class TestLastPhotosPicker(TestCase):
             'myphoto1.jpg',
             'myphoto2.jpg',
             'myphoto3.jpg',
-            'myphoto4.jpg'
+            'myphoto4.jpg',
+            'myphoto5.jpg'
         ]]]
 
-        image_mock1 = Mock()
+        image_mock1 = Mock(spec=JpegImageFile)
         image_mock1._getexif.return_value = {
             36865: 'myData',
             36867: '2017-05-01 23:50:00'
         }
 
-        image_mock2 = Mock()
+        image_mock2 = Mock(spec=JpegImageFile)
         image_mock2._getexif.return_value = None
 
-        image_mock3 = Mock()
+        image_mock3 = Mock(spec=JpegImageFile)
         image_mock3._getexif.return_value = {
             36867: '2017-05-01 23:49:50',
             36882: 'myOtherData'
         }
 
-        image_mock4 = Mock()
+        image_mock4 = Mock(spec=JpegImageFile)
         image_mock4._getexif.return_value = {
             36864: 'myOtherData',
             36867: '2017-05-01 23:55:00',
             36888: 'anotherData'
         }
 
+        image_mock5 = Mock()
+
         image_open_mock.side_effect = [
             image_mock1,
             image_mock2,
             image_mock3,
-            image_mock4
+            image_mock4,
+            image_mock5
         ]
 
         sut = LastPhotosPicker('', 2)
@@ -62,7 +68,8 @@ class TestLastPhotosPicker(TestCase):
            mock.call('myphoto1.jpg'),
            mock.call('myphoto2.jpg'),
            mock.call('myphoto3.jpg'),
-           mock.call('myphoto4.jpg')
+           mock.call('myphoto4.jpg'),
+           mock.call('myphoto5.jpg')
         ])
 
         self.assertEqual(
