@@ -25,10 +25,7 @@ class TestFilesystemUploader(TestCase):
 
         is_dir_mock.assert_called_with('/root/myfolder')
 
-        self.assertEqual(
-            "Directory /root/myfolder not found",
-            cm.exception.message
-        )
+        self.assertEqual(UploaderException.NOT_FOUND, cm.exception.code)
 
     @mock.patch('os.listdir')
     @mock.patch('os.path.isdir')
@@ -49,10 +46,7 @@ class TestFilesystemUploader(TestCase):
         is_dir_mock.assert_called_with('/root/myfolder')
         listdir_mock.assert_called_with('/root/myfolder')
 
-        self.assertEqual(
-            "Directory /root/myfolder not empty",
-            cm.exception.message
-        )
+        self.assertEqual(UploaderException.NOT_EMPTY, cm.exception.code)
 
     @mock.patch('__builtin__.open')
     @mock.patch('os.listdir')
