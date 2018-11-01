@@ -5,6 +5,7 @@ from dropbox.files import DeleteError
 
 
 class DropboxUploader(AbstractUploader):
+    """Upload picked photo to Dropbox"""
 
     def __init__(self, api_token):
         """
