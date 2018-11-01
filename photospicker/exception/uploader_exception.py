@@ -7,3 +7,4 @@ class UploaderException(AbstractException):
     # Error constants
     NOT_FOUND = 1
     NOT_EMPTY = 2
+    MANY_DIRS = 3
