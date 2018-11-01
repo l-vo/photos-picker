@@ -25,7 +25,7 @@ class TestDropboxUploader(TestCase):
         dropbox_uploader = DropboxUploader(None)
         dropbox_uploader.initialize()
 
-        dropbox_mock.files_delete_v2.assert_called_once_with('/photos')
+        dropbox_mock.files_delete_v2.assert_called_once_with('/photos-picker')
 
     @mock.patch('photospicker.uploader.dropbox_uploader.Dropbox')
     def test_upload(self, dropbox_constructor_mock):
@@ -47,8 +47,8 @@ class TestDropboxUploader(TestCase):
 
         dropbox_constructor_mock.assert_called_with('mytoken')
         dropbox_mock.files_upload.assert_has_calls([
-            mock.call('mybinarydata', '/photos/photo1.png'),
-            mock.call('mybinarydata2', '/photos/photo2.jpg')
+            mock.call('mybinarydata', '/photos-picker/photo1.png'),
+            mock.call('mybinarydata2', '/photos-picker/photo2.jpg')
         ])
 
     @mock.patch('photospicker.uploader.dropbox_uploader.Dropbox')
@@ -97,5 +97,5 @@ class TestDropboxUploader(TestCase):
         dropbox_uploader.upload('mybinarydata', 'myphoto.png')
         dropbox_mock.files_upload.assert_called_with(
             'mybinarydata',
-            '/photos/photo0.png'
+            '/photos-picker/photo0.png'
         )

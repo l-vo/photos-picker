@@ -19,7 +19,7 @@ class DropboxUploader(AbstractUploader):
         """Clear remote directory"""
         # Clear application directory
         try:
-            self._dbx.files_delete_v2('/photos')
+            self._dbx.files_delete_v2('/photos-picker')
         except ApiError as e:
             if not isinstance(e.error, DeleteError) \
                     or not e.error.is_path_lookup():
@@ -33,7 +33,7 @@ class DropboxUploader(AbstractUploader):
         :param str original_filename: original file name
         """
         # Upload file
-        path = "/photos/{photo_name}".format(
+        path = "/photos-picker/{photo_name}".format(
             photo_name=self._build_filename(original_filename)
         )
         self._dbx.files_upload(binary, path)
