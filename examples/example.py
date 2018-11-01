@@ -85,4 +85,7 @@ if __name__ == '__main__':
         photos_picker = PhotosPicker(picker, filters, uploader)
         photos_picker.run()
     except Exception as err:
-        print(err.message)
+        if err.message:
+            print(err.message)
+        else:
+            raise err
