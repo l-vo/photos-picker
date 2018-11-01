@@ -51,7 +51,7 @@ More details [here](doc/filters.md)
 Note that uploaders don't append new photos. Either the directory must be empty or the uploader clear it before copying files.
 
 * `FilesystemUploader`: copy the photos to a given directory. This directory must exist and be empty.
-* `DropBoxUploader`: upload the photos to Dropbox. ***Be careful, the script empty the `/photos` directory, you must limit your token access to application for avoiding unwanted deletions***.
+* `DropBoxUploader`: upload the photos to Dropbox. Note that you should limit your token access to application. Creating a full access token is not needed and may induce security issues.
 
 More details [here](doc/uploaders.md)
 
