@@ -14,7 +14,7 @@ def __init__(self, folder_path)
 ## DropboxUploader
 
 ### Utility
-Upload the photos to Dropbox. ***Be careful, the script empty the `/photos` directory, you must limit your token access to application for avoiding unwanted deletions***.
+Upload the photos to Dropbox. ***Be careful, the script empty the `/photos-picker` directory, you must limit your token access to application for avoiding unwanted deletions***.
 
 ### Constructor arguments
 ```python
