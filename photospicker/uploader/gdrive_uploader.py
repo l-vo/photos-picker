@@ -13,14 +13,15 @@ class GDriveUploader(AbstractUploader):
 
         :param pydrive.auth.GoogleAuth gauth: GoogleAth authentified instance
         """
-        super(GDriveUploader, self).__init__()
+        super(GDriveUploader, self).__init__('photos-picker')
         self._gdrive = GoogleDrive(gauth)
         self._folder = None
 
     def initialize(self):
         """Clear remote directory"""
         query = "mimeType = 'application/vnd.google-apps.folder'"\
-                + " and title = 'photos-picker' and trashed=false"
+                + " and title = '{dir}' and trashed=false"
+        query = query.format(dir=self._path)
         folders = self._gdrive.ListFile({"q": query}).GetList()
 
         count = len(folders)
@@ -29,7 +30,7 @@ class GDriveUploader(AbstractUploader):
         if count == 0:
             # Create folder
             folder_metadata = {
-                'title': 'photos-picker',
+                'title': self._path,
                 'mimeType': 'application/vnd.google-apps.folder'
             }
             self._folder = self._gdrive.CreateFile(folder_metadata)
@@ -46,7 +47,7 @@ class GDriveUploader(AbstractUploader):
         else:
             raise UploaderException(
                 UploaderException.MANY_DIRS,
-                "Many dirs named photos-picker; can't continue"
+                "Many dirs named {dir}; can't continue".format(dir=self._path)
             )
 
     def upload(self, binary, original_filename):
