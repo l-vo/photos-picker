@@ -6,15 +6,6 @@ import os
 class FilesystemUploader(AbstractUploader):
     """Copy picked photo to a filesystem empty directory"""
 
-    def __init__(self, folder_path):
-        """
-        Constructor
-
-        :param str folder_path: target folder path in filesystem
-        """
-        super(FilesystemUploader, self).__init__()
-        self._path = folder_path
-
     def initialize(self):  # pragma: no cover
         """Check target directory"""
         if not os.path.isdir(self._path):

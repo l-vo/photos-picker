@@ -2,25 +2,35 @@ from io import BytesIO
 from photospicker.exception.uploader_exception import UploaderException
 from photospicker.uploader.abstract_uploader import AbstractUploader
 from pydrive.drive import GoogleDrive
+import re
 
 
 class GDriveUploader(AbstractUploader):
     """Upload picked photo to Google Drive"""
 
-    def __init__(self, gauth):
+    def __init__(self, gauth, folder_name='photos-picker'):
         """
         Constructor
 
         :param pydrive.auth.GoogleAuth gauth: GoogleAth authentified instance
+        :param str folder_name: Google Drive folder name
         """
-        super(GDriveUploader, self).__init__()
+        super(GDriveUploader, self).__init__(folder_name)
+
+        if not re.match('^[A-Za-z0-9._-]+$', self._path):
+            raise UploaderException(
+                UploaderException.INVALID_DIR_NAME,
+                "Invalid dir name {dirname}".format(dirname=self._path)
+            )
+
         self._gdrive = GoogleDrive(gauth)
         self._folder = None
 
     def initialize(self):
         """Clear remote directory"""
         query = "mimeType = 'application/vnd.google-apps.folder'"\
-                + " and title = 'photos-picker' and trashed=false"
+                + " and title = '{dir}' and trashed=false"
+        query = query.format(dir=self._path)
         folders = self._gdrive.ListFile({"q": query}).GetList()
 
         count = len(folders)
@@ -29,7 +39,7 @@ class GDriveUploader(AbstractUploader):
         if count == 0:
             # Create folder
             folder_metadata = {
-                'title': 'photos-picker',
+                'title': self._path,
                 'mimeType': 'application/vnd.google-apps.folder'
             }
             self._folder = self._gdrive.CreateFile(folder_metadata)
@@ -46,7 +56,7 @@ class GDriveUploader(AbstractUploader):
         else:
             raise UploaderException(
                 UploaderException.MANY_DIRS,
-                "Many dirs named photos-picker; can't continue"
+                "Many dirs named {dir}; can't continue".format(dir=self._path)
             )
 
     def upload(self, binary, original_filename):

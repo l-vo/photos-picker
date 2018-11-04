@@ -24,7 +24,7 @@ class TestAbstractUploader(TestCase):
 
     def test_build_filename(self):
         """Test filename built"""
-        uploader = DummyUploader()
+        uploader = DummyUploader('mypath')
         uploader.increase_photo_counter()
         filename = uploader.build_filename('myphoto1.JPG')
         self.assertEqual('photo1.jpg', filename)

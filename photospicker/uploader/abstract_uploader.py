@@ -7,8 +7,13 @@ class AbstractUploader:
 
     __metaclass__ = ABCMeta
 
-    def __init__(self):
-        """Constructor"""
+    def __init__(self, folder_path):
+        """
+        Constructor
+
+        :param str folder_path: target folder path
+        """
+        self._path = folder_path
         self._photo_counter = 0
 
     def initialize(self):  # pragma: no cover

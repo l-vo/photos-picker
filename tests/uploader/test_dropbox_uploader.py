@@ -1,4 +1,6 @@
 from unittest import TestCase
+
+from photospicker.exception.uploader_exception import UploaderException
 from photospicker.uploader.dropbox_uploader import DropboxUploader
 from mock import Mock
 from mock import MagicMock  # noqa
@@ -22,10 +24,12 @@ class TestDropboxUploader(TestCase):
         dropbox_mock = Mock()
         dropbox_constructor_mock.return_value = dropbox_mock
 
-        dropbox_uploader = DropboxUploader(None)
+        dropbox_uploader = DropboxUploader(None, 'my-customer-dir')
         dropbox_uploader.initialize()
 
-        dropbox_mock.files_delete_v2.assert_called_once_with('/photos-picker')
+        dropbox_mock.files_delete_v2.assert_called_once_with(
+            '/my-customer-dir'
+        )
 
     @mock.patch('photospicker.uploader.dropbox_uploader.Dropbox')
     def test_upload(self, dropbox_constructor_mock):
@@ -39,7 +43,7 @@ class TestDropboxUploader(TestCase):
         dropbox_mock = Mock()
         dropbox_constructor_mock.return_value = dropbox_mock
 
-        dropbox_uploader = DropboxUploader('mytoken')
+        dropbox_uploader = DropboxUploader('mytoken', 'my-customer-dir')
         dropbox_uploader.increase_photo_counter()
         dropbox_uploader.upload('mybinarydata', 'myphoto.png')
         dropbox_uploader.increase_photo_counter()
@@ -47,8 +51,8 @@ class TestDropboxUploader(TestCase):
 
         dropbox_constructor_mock.assert_called_with('mytoken')
         dropbox_mock.files_upload.assert_has_calls([
-            mock.call('mybinarydata', '/photos-picker/photo1.png'),
-            mock.call('mybinarydata2', '/photos-picker/photo2.jpg')
+            mock.call('mybinarydata', '/my-customer-dir/photo1.png'),
+            mock.call('mybinarydata2', '/my-customer-dir/photo2.jpg')
         ])
 
     @mock.patch('photospicker.uploader.dropbox_uploader.Dropbox')
@@ -98,4 +102,17 @@ class TestDropboxUploader(TestCase):
         dropbox_mock.files_upload.assert_called_with(
             'mybinarydata',
             '/photos-picker/photo0.png'
+        )
+
+    def test_constructor_with_wrong_folder_name_should_raise_exception(self):
+        """
+        Test that the constructor raises an exception if an invalid folder
+        name is given
+        """
+        with self.assertRaises(UploaderException) as cm:
+            DropboxUploader(None, 'my_wrong_folder_name!')
+
+        self.assertEqual(
+            UploaderException.INVALID_DIR_NAME,
+            cm.exception.code
         )

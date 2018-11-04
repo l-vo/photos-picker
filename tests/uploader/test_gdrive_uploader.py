@@ -29,7 +29,7 @@ class TestGDriveUploader(TestCase):
         )
 
         with self.assertRaises(UploaderException) as cm:
-            sut = GDriveUploader(self._gauth)
+            sut = GDriveUploader(self._gauth, 'my-customer-dir')
             sut.initialize()
 
         self._initialize_common_assertions(gdrive_constructor_mock)
@@ -56,12 +56,12 @@ class TestGDriveUploader(TestCase):
         created_folder_mock = Mock()
         gdrive_mock.CreateFile.return_value = created_folder_mock
 
-        sut = GDriveUploader(self._gauth)
+        sut = GDriveUploader(self._gauth, 'my-customer-dir')
         sut.initialize()
 
         gdrive_mock.CreateFile.assert_called_once_with({
             'mimeType': 'application/vnd.google-apps.folder',
-            'title': 'photos-picker'
+            'title': 'my-customer-dir'
         })
         created_folder_mock.Upload.assert_called_once()
 
@@ -88,7 +88,7 @@ class TestGDriveUploader(TestCase):
             [[folder_mock], [file1, file2]]
         )
 
-        sut = GDriveUploader(self._gauth)
+        sut = GDriveUploader(self._gauth, 'my-customer-dir')
         sut.initialize()
 
         folder_mock.__getitem__.assert_called_once_with('id')
@@ -144,7 +144,7 @@ class TestGDriveUploader(TestCase):
         calls = [
             mock.call({
                 'q': "mimeType = 'application/vnd.google-apps.folder' "
-                     "and title = 'photos-picker' and trashed=false"
+                     "and title = 'my-customer-dir' and trashed=false"
             })
         ]
 
@@ -183,3 +183,16 @@ class TestGDriveUploader(TestCase):
 
         self.assertEqual('mybinarydata', created_file_mock.content.getvalue())
         created_file_mock.Upload.assert_called_once()
+
+    def test_constructor_with_wrong_folder_name_should_raise_exception(self):
+        """
+        Test that the constructor raises an exception if an invalid folder
+        name is given
+        """
+        with self.assertRaises(UploaderException) as cm:
+            GDriveUploader(None, 'my_wrong_folder_name!')
+
+        self.assertEqual(
+            UploaderException.INVALID_DIR_NAME,
+            cm.exception.code
+        )
