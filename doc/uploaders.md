@@ -14,13 +14,16 @@ def __init__(self, folder_path)
 ## DropboxUploader
 
 ### Utility
-Upload the photos to Dropbox. ***Be careful, the script empty the `/photos` directory, you must limit your token access to application for avoiding unwanted deletions***.
+Upload the photos to Dropbox. ***Be careful, the script empty the `/photos-picker` directory, you must limit your token access to application for avoiding unwanted deletions***.
 
 ### Constructor arguments
 ```python
 def __init__(self, api_token)
 ```
 * `api_token` (string): authorization token from Dropbox for accessing API
+
+### Get a Dropbox api token
+You can find home to generate your api token [here](https://www.dropbox.com/developers/reference/oauth-guide) in the Dropbox documentation.
 
 ## GDriveUploader
 
