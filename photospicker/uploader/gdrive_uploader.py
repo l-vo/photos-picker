@@ -2,18 +2,27 @@ from io import BytesIO
 from photospicker.exception.uploader_exception import UploaderException
 from photospicker.uploader.abstract_uploader import AbstractUploader
 from pydrive.drive import GoogleDrive
+import re
 
 
 class GDriveUploader(AbstractUploader):
     """Upload picked photo to Google Drive"""
 
-    def __init__(self, gauth):
+    def __init__(self, gauth, folder_name='photos-picker'):
         """
         Constructor
 
         :param pydrive.auth.GoogleAuth gauth: GoogleAth authentified instance
+        :param str folder_name: Google Drive folder name
         """
-        super(GDriveUploader, self).__init__('photos-picker')
+        super(GDriveUploader, self).__init__(folder_name)
+
+        if not re.match('^[A-Za-z0-9._-]+$', self._path):
+            raise UploaderException(
+                UploaderException.INVALID_DIR_NAME,
+                "Invalid dir name {dirname}".format(dirname=self._path)
+            )
+
         self._gdrive = GoogleDrive(gauth)
         self._folder = None
 

@@ -9,18 +9,19 @@ Copy the photos to a given directory. This directory must exist and be empty.
 ```python
 def __init__(self, folder_path)
 ```
-* `folder_path` (string): path where the photos will be copie
+* `folder_path` (string): path where the photos will be copied
 
 ## DropboxUploader
 
 ### Utility
-Upload the photos to Dropbox. ***Be careful, the script empty the `/photos-picker` directory, you must limit your token access to application for avoiding unwanted deletions***.
+Upload the photos to Dropbox. ***Be careful, the script empty the `/photos-picker` directory (or the alternative directory you configured). You should limit your token access to application for avoiding unwanted deletions***.
 
 ### Constructor arguments
 ```python
-def __init__(self, api_token)
+def __init__(self, api_token, folder_name='photos-picker')
 ```
 * `api_token` (string): authorization token from Dropbox for accessing API
+* `folder_name` (string, optional): name of the folder in Dropbox
 
 ### Get a Dropbox api token
 You can find home to generate your api token [here](https://www.dropbox.com/developers/reference/oauth-guide) in the Dropbox documentation.
@@ -32,9 +33,10 @@ Upload the photos to Google Drive. ***The script empty a directory named photos-
 
 ### Constructor arguments
 ```python
-def __init__(self, gauth):
+def __init__(self, gauth, folder_name='photos-picker')
 ```
-* `gauth` (pydrive.auth.GoogleAuth): authentified instance of GoogleAuth.
+* `gauth` (pydrive.auth.GoogleAuth): authentified instance of GoogleAuth
+* `folder_name` (string, optional): name of the folder in Google Drive
 
 ### GoogleAuth authentication
 This library uses pyDrive for dealing with Google Drive API. For allowing your application to use Google Drive API, you must create a `client_secrets.json` credential file at the root of your application. How to get this file is well documented here: [pyDrive quickstart](https://pythonhosted.org/PyDrive/quickstart.html).
