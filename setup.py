@@ -8,13 +8,13 @@ def read(fname):
 
 setup(
     name='photos-picker',
-    version='0.2.1',
+    version='0.3.0',
     description='Pick photos following a given strategy and upload them to various destinations',
     author='Laurent VOULLEMIER',
     author_email='laurent.voullemier@gmail.com',
     url='https://github.com/l-vo/photos-picker',
     packages=find_packages(),
-    install_requires=['Pillow', 'zope.event', 'dropbox'],
+    install_requires=['Pillow', 'zope.event', 'dropbox', 'pydrive'],
     include_package_data=True,
     zip_safe=False,
     long_description=read('README.md'),

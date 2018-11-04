@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/l-vo/photos-picker.svg?branch=master)](https://travis-ci.org/l-vo/photos-picker)
 [![codecov](https://codecov.io/gh/l-vo/photos-picker/branch/master/graph/badge.svg)](https://codecov.io/gh/l-vo/photos-picker)
 
-This libary allows to pick photos in a folder according to a given strategy (last photos, random photos...) and copy them to a destination (another folder, Dropbox folder...)
+This libary allows to pick photos in a folder according to a given strategy (last photos, random photos...) and copy them to a destination (another system folder, Dropbox or Google drive folder...)
 
 ## Compatibility
 This library works and is tested with Python 2.7. Other Python versions are not tested yet.
@@ -55,6 +55,7 @@ Note that uploaders don't append new photos. Either the directory must be empty 
 
 * `FilesystemUploader`: copy the photos to a given directory. This directory must exist and be empty.
 * `DropBoxUploader`: upload the photos to Dropbox. Note that you should limit your token access to application. Creating a full access token is not needed and may induce security issues.
+* `GDriveUploader` upload  the photos to Google Drive.
 
 More details [here](doc/uploaders.md)
 
