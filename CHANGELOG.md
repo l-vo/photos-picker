@@ -1,6 +1,7 @@
 # master
 * Update usage examples: only catch photospicker AbstractException for displaying exception message
 * Add CHANGELOG.md
+* Add SmartPicker
 
 # 0.3.1
 * Allow to use a custom target directory in Dropbox

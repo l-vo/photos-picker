@@ -39,6 +39,7 @@ You can see a more complex example which displays work progress [here](examples/
 ### Pickers:
 * `LastPhotosPicker`: pick the *n* lastest photos.
 * `RandomPicker`: pick randomly *n* photos. 
+* `SmartPicker`: pick randomy *n* photos. Recent photos have more chance to be picked than old ones. It results by a picking of a majority of recent photos and a few old ones.
 
 More details [here](doc/pickers.md)
 
