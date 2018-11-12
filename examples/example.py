@@ -1,6 +1,7 @@
 from __future__ import division
 from __future__ import print_function
 
+from photospicker.exception.abstract_exception import AbstractException
 from photospicker.picker.last_photos_picker import LastPhotosPicker
 from photospicker.uploader.filesystem_uploader import FilesystemUploader
 from photospicker.filter.resize_filter import ResizeFilter
@@ -84,8 +85,5 @@ if __name__ == '__main__':
 
         photos_picker = PhotosPicker(picker, filters, uploader)
         photos_picker.run()
-    except Exception as err:
-        if err.message:
-            print(err.message)
-        else:
-            raise err
+    except AbstractException as err:
+        print(err.message)
