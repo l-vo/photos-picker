@@ -17,7 +17,7 @@ def __init__(self, directory_patterns, photos_count, patterns=None, excluded_pat
 ## RandomPicker
 
 ### Utility
-pick randomly *n* photos.
+Pick randomly *n* photos.
 
 ### Constructor arguments
 ```python
