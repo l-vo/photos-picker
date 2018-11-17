@@ -10,7 +10,7 @@ class TestFilesystemUploader(TestCase):
 
     @mock.patch('os.listdir')
     @mock.patch('os.path.isdir')
-    def test_initialize_directory_not_found(self, is_dir_mock, listdir_mock):
+    def test_constructor_directory_not_found(self, is_dir_mock, listdir_mock):
         """
         Test that an exception is launched if the directory is not found
 
@@ -20,8 +20,7 @@ class TestFilesystemUploader(TestCase):
         is_dir_mock.return_value = False
 
         with self.assertRaises(UploaderException) as cm:
-            sut = FilesystemUploader('/root/myfolder')
-            sut.initialize()
+            FilesystemUploader('/root/myfolder')
 
         is_dir_mock.assert_called_with('/root/myfolder')
 
@@ -29,7 +28,7 @@ class TestFilesystemUploader(TestCase):
 
     @mock.patch('os.listdir')
     @mock.patch('os.path.isdir')
-    def test_initialize_directory_not_empty(self, is_dir_mock, listdir_mock):
+    def test_constructor_directory_not_empty(self, is_dir_mock, listdir_mock):
         """
         Test that an exception is launched if the directory is not empty
 
@@ -40,8 +39,7 @@ class TestFilesystemUploader(TestCase):
         listdir_mock.return_value = ['myfile']
 
         with self.assertRaises(UploaderException) as cm:
-            sut = FilesystemUploader('/root/myfolder')
-            sut.initialize()
+            FilesystemUploader('/root/myfolder')
 
         is_dir_mock.assert_called_with('/root/myfolder')
         listdir_mock.assert_called_with('/root/myfolder')
