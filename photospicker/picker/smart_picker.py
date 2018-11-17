@@ -21,18 +21,16 @@ class SmartPicker(AbstractExifDatePicker):
             if ret is not None:
                 break  # use the lowest ratio found
 
-        (packet_size, extractions) = ret
+        (packet_sizes, extractions) = ret
         current_packet = []
-        total = len(sorted_filenames)
-        for key, filename in enumerate(sorted_filenames):
+        packet_size = packet_sizes.pop(0)
+        for filename in sorted_filenames:
             current_packet.append(filename)
-            k = key + 1
-            if k % packet_size == 0 and total - k >= packet_size:
+            if len(current_packet) == packet_size:
                 self._process_packet(current_packet, extractions)
                 current_packet = []
-
-        if current_packet:
-            self._process_packet(current_packet, extractions)
+                if packet_sizes:
+                    packet_size = packet_sizes.pop(0)
 
     def _process_packet(self, current_packet, extractions):
         """
@@ -74,10 +72,19 @@ class SmartPicker(AbstractExifDatePicker):
             extractions.append(to_extract)
 
         # Packets count is equal to extractions count
-        packet_size = math.ceil(
-            len(sorted_filenames) / float(len(extractions))
-        )
-        if packet_size < max_val:
+        total = len(sorted_filenames)
+        packets_count = len(extractions)
+        packet_size_floored = total / packets_count
+        rest = total - packet_size_floored * packets_count
+        packet_sizes = []
+        for i in range(1, packets_count + 1):
+            packet_sizes.append(
+                packet_size_floored + 1
+                if packets_count - i < rest
+                else packet_size_floored
+            )
+
+        if packet_sizes[0] < max_val:
             return None
 
-        return (packet_size, extractions)
+        return (packet_sizes, extractions)
