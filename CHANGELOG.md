@@ -4,6 +4,7 @@
 * Add SmartPicker
 * Take care that photos to retrieve count is not greater than total photos count (at AbstractPicker level)
 * On FilesystemUploader, check that target directory exists and is empty before scanning
+* Add code coverage when running `make test`
 
 # 0.3.1
 * Allow to use a custom target directory in Dropbox

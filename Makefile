@@ -25,7 +25,9 @@ upload-test:
 
 ## Run tests
 test:
-	python -m unittest discover
+	coverage run --source photospicker -m unittest discover
+	coverage html
+	coverage report
 
 ## Build and upload on PYPI test
 test-distribute: build upload-test
