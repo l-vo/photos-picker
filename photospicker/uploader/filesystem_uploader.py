@@ -6,7 +6,14 @@ import os
 class FilesystemUploader(AbstractUploader):
     """Copy picked photo to a filesystem empty directory"""
 
-    def initialize(self):  # pragma: no cover
+    def __init__(self, folder_path):
+        """
+        Constructor
+
+        :param str folder_path: target folder path
+        """
+        super(FilesystemUploader, self).__init__(folder_path)
+
         """Check target directory"""
         if not os.path.isdir(self._path):
             raise UploaderException(
@@ -19,6 +26,9 @@ class FilesystemUploader(AbstractUploader):
                 UploaderException.NOT_EMPTY,
                 "Directory {path} not empty".format(path=self._path)
             )
+
+    def initialize(self):
+        pass
 
     def upload(self, binary, original_filename):
         """
