@@ -10,8 +10,7 @@ class TestLastPhotosPicker(TestCase):
         """Test scan method"""
 
         sut = LastPhotosPicker('', 2)
-        sut._build_sorted_filenames = Mock()
-        sut._build_sorted_filenames.return_value = [
+        sut._picked_file_paths = [
             'myphoto4.jpg',
             'myphoto1.jpg',
             'myphoto3.jpg'

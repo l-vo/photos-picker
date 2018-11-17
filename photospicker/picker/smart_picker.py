@@ -12,9 +12,10 @@ class SmartPicker(AbstractExifDatePicker):
     photos will be also retrieved.
     """
 
-    def scan(self):
-        """Scan the given path for building picked file paths list"""
-        sorted_filenames = self._build_sorted_filenames()
+    def _select(self):
+        """Finally select photos"""
+        sorted_filenames = self._picked_file_paths
+        self._picked_file_paths = []
         for i in range(1, 21):
             ratio = i * .05
             ret = self._compute_packet_extractions(ratio, sorted_filenames)

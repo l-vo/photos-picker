@@ -2,7 +2,7 @@ from photospicker.picker.abstract_picker import AbstractPicker
 from PIL.JpegImagePlugin import JpegImageFile
 from PIL import Image
 from PIL import ExifTags
-from abc import ABCMeta
+from abc import ABCMeta, abstractmethod
 import operator
 
 
@@ -11,13 +11,8 @@ class AbstractExifDatePicker(AbstractPicker):
 
     __metaclass__ = ABCMeta
 
-    def _build_sorted_filenames(self):
-        """
-        Build a list of photos sorted by Exif date in reverse order
-
-        :return list
-        """
-
+    def scan(self):
+        """Order photos by exif date and launch discriminating method"""
         data_to_sort = {}
 
         scanned = 0
@@ -48,8 +43,16 @@ class AbstractExifDatePicker(AbstractPicker):
             reverse=True
         )
 
-        filenames = []
         for filename, data in sorted_data:
-            filenames.append(filename)
+            self._picked_file_paths.append(filename)
 
-        return filenames
+        self._select()
+
+    @abstractmethod
+    def _select(self):  # pragma: no cover
+        """
+        Finally select photos
+
+        :raise NotImplementedError
+        """
+        raise NotImplementedError()

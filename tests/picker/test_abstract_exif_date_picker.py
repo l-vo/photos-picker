@@ -10,15 +10,14 @@ import mock
 class DummyPicker(AbstractExifDatePicker):
     """Dummy class for testing AbstractExifDatePicker"""
 
-    def scan(self):
+    def _select(self):
         """Dummy abstract method"""
         pass
 
     @property
-    def sorted_filenames(self):
-        """Getter for _build_sorted_filenames return"""
-
-        return self._build_sorted_filenames()
+    def picked_file_paths(self):
+        """Getter for _picked_file_paths return"""
+        return self._picked_file_paths
 
 
 class TestAbstractExifDatePicker(TestCase):
@@ -26,9 +25,9 @@ class TestAbstractExifDatePicker(TestCase):
 
     @mock.patch('PIL.Image.open')
     @mock.patch('os.walk')
-    def test_build_sorted_filenames(self, walk_mock, image_open_mock):
+    def test_scan(self, walk_mock, image_open_mock):
         """
-        Test _build sorted_filenames
+        Test scan
 
         :param MagicMock walk_mock:       mock for walk method
         :param MagicMock image_open_mock: mock for PIL Image mock method
@@ -74,10 +73,16 @@ class TestAbstractExifDatePicker(TestCase):
             image_mock5
         ]
 
+        select_mock = Mock()
+
         sut = DummyPicker('', 0)
+        sut._select = select_mock
         sut.initialize()
+        sut.scan()
+
+        select_mock.assert_called_once()
 
         self.assertEqual(
             ['myphoto4.jpg', 'myphoto1.jpg', 'myphoto3.jpg'],
-            sut.sorted_filenames
+            sut.picked_file_paths
         )

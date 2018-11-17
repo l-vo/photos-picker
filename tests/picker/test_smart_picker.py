@@ -66,11 +66,10 @@ class TestSmartPicker(TestCase):
         shuffle_mock.side_effect = self._shuffle_mock_side_effect
 
         sut = SmartPicker('', photos_to_retrieve)
-        sut._build_sorted_filenames = Mock()
         filenames_returned = []
         for i in range(1, photos_count + 1):
             filenames_returned.append('myphoto{i}.jpg'.format(i=i))
-        sut._build_sorted_filenames.return_value = filenames_returned
+        sut._picked_file_paths = filenames_returned
         sut.scan()
 
         i = 0
