@@ -22,6 +22,14 @@ class DummyPicker(AbstractPicker):
         """
         return self._files_to_scan
 
+    def photos_count(self):
+        """
+        Getter for _photos_count
+
+        :return: int
+        """
+        return self._photos_count
+
 
 class TestAbstractPicker(TestCase):
     """Unit tests for AbstractPicker"""
@@ -150,3 +158,24 @@ class TestAbstractPicker(TestCase):
             sut.initialize()
 
         self.assertEqual(PickerException.EMPTY_SCAN, cm.exception.code)
+
+    @mock.patch('os.walk')
+    def test_photos_count_greater_than_total_photos(self, walk_mock):
+        """
+        Test that _photos_count is updated if greater than total photos count
+
+        :param MagicMock walk_mock: mock for walk function
+        """
+        walk_mock.side_effect = [
+            [
+                ['/mypath', [], [
+                    'myphoto1.jpg', 'myphoto2.jpg', 'myphoto3.jpg',
+                    'myphoto4.jpg', 'myphoto5.jpg', 'myphoto6.jpg',
+                    'myphoto7.jpg', 'myphoto8.jpg', 'myphoto9.jpg'
+                ]]
+            ]
+        ]
+
+        sut = DummyPicker('/mypath', 12)
+        sut.initialize()
+        self.assertEqual(9, sut.photos_count())

@@ -79,6 +79,9 @@ class AbstractPicker:
                 PickerException.EMPTY_SCAN,
                 "No photos to scan found in given directory(ies)"
             )
+        files_to_scan_len = len(self._files_to_scan)
+        if self._photos_count > files_to_scan_len:
+            self._photos_count = files_to_scan_len
 
     def _is_in_excluded_patterns(self, path):
         """

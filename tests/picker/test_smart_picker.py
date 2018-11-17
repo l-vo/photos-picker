@@ -37,13 +37,7 @@ class TestSmartPicker(TestCase):
                 100,
                 [100],
                 range(1, 101)
-            ),
-            (
-                80,
-                100,
-                [80],
-                range(1, 81)
-            ),
+            )
         )
 
     @unittest_dataprovider.data_provider(provider_scan)

@@ -2,6 +2,7 @@
 * Update usage examples: only catch photospicker AbstractException for displaying exception message
 * Add CHANGELOG.md
 * Add SmartPicker
+* Take care that photos to retrieve count is not greater than total photos count (at AbstractPicker level)
 
 # 0.3.1
 * Allow to use a custom target directory in Dropbox
