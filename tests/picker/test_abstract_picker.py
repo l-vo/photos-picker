@@ -5,6 +5,8 @@ from mock import MagicMock  # noqa
 import unittest_dataprovider
 import mock
 
+from tests.picker.picker_photo_stub import PickerPhotoStub
+
 
 class DummyPicker(AbstractPicker):
     """Dummy class for testing AbstractPicker"""
@@ -75,7 +77,10 @@ class TestAbstractPicker(TestCase):
         sut.initialize()
 
         walk_mock.assert_called_with('mypath')
-        self.assertEqual(expected_files_to_scan, sut.files_to_scan)
+        self.assertEqual(
+            [PickerPhotoStub(filepath) for filepath in expected_files_to_scan],
+            sut.files_to_scan
+        )
 
     @staticmethod
     def provider_initialize_multiple_and_excluded_paths():
@@ -141,7 +146,10 @@ class TestAbstractPicker(TestCase):
             mock.call('/mypath2')
         ])
 
-        self.assertEqual(expected_files_to_scan, sut.files_to_scan)
+        self.assertEqual(
+            [PickerPhotoStub(filepath) for filepath in expected_files_to_scan],
+            sut.files_to_scan
+        )
 
     @mock.patch('os.walk')
     def test_initialize_with_no_photo_found(self, walk_mock):

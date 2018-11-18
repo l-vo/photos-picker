@@ -6,6 +6,9 @@ from mock import MagicMock  # noqa
 from mock import Mock
 import mock
 
+from photospicker.picker.picker_photo import PickerPhoto
+from tests.picker.picker_photo_stub import PickerPhotoStub
+
 
 class DummyPicker(AbstractExifDatePicker):
     """Dummy class for testing AbstractExifDatePicker"""
@@ -68,11 +71,20 @@ class TestAbstractExifDatePicker(TestCase):
             image_mock5
         ]
 
-        expected_ordered = ['myphoto4.jpg', 'myphoto1.jpg', 'myphoto3.jpg']
-        expected_selected = ['myphoto4.jpg', 'myphoto1.jpg']
+        expected_ordered = [
+            PickerPhotoStub('myphoto4.jpg'),
+            PickerPhotoStub('myphoto1.jpg'),
+            PickerPhotoStub('myphoto3.jpg')
+        ]
+        expected_selected = [
+            'myphoto4.jpg',
+            'myphoto1.jpg'
+        ]
 
         select_mock = Mock()
-        select_mock.return_value = expected_selected
+        select_mock.return_value = [
+            PickerPhoto(filepath) for filepath in expected_selected
+        ]
 
         sut = DummyPicker('', 0)
         sut._select = select_mock

@@ -1,8 +1,12 @@
 from unittest import TestCase
 from mock import Mock
+from mock import MagicMock  # noqa
+from photospicker.picker.picker_photo import PickerPhoto
 from photospicker.picker.pickers.smart_picker import SmartPicker
 import mock
 import unittest_dataprovider
+
+from tests.picker.picker_photo_stub import PickerPhotoStub
 
 
 class TestSmartPicker(TestCase):
@@ -60,7 +64,7 @@ class TestSmartPicker(TestCase):
         :param int photos_to_retrieve: photos to retrieve count
         :param list calls_data: data for building expected shuffle call list
         :param list expected_indexes: indexes of the exoected picked photos
-        :param mock.MagicMock shuffle_mock: mock for random.shuffle
+        :param MagicMock shuffle_mock: mock for random.shuffle
         """
 
         shuffle_mock.side_effect = self._shuffle_mock_side_effect
@@ -68,7 +72,9 @@ class TestSmartPicker(TestCase):
         sut = SmartPicker('', photos_to_retrieve)
         filenames_returned = []
         for i in range(1, photos_count + 1):
-            filenames_returned.append('myphoto{i}.jpg'.format(i=i))
+            filenames_returned.append(
+                PickerPhoto('myphoto{i}.jpg'.format(i=i))
+            )
 
         build_method_mock = Mock()
         build_method_mock.return_value = filenames_returned
@@ -80,7 +86,7 @@ class TestSmartPicker(TestCase):
         calls = []
         while len(calls_data):
             i += 1
-            call.append('myphoto{i}.jpg'.format(i=i))
+            call.append(PickerPhotoStub('myphoto{i}.jpg'.format(i=i)))
             if i == calls_data[0]:
                 calls.append(mock.call(call))
                 call = []

@@ -6,6 +6,8 @@ import os
 import fnmatch
 import string
 
+from photospicker.picker.picker_photo import PickerPhoto
+
 
 class AbstractPicker:
     """
@@ -70,9 +72,8 @@ class AbstractPicker:
                 for filename in filenames:
                     for pattern in self._patterns:
                         if fnmatch.fnmatch(filename.lower(), pattern):
-                            self._files_to_scan.append(os.path.join(
-                                root,
-                                filename
+                            self._files_to_scan.append(PickerPhoto(
+                                os.path.join(root, filename)
                             ))
         if not self._files_to_scan:
             raise PickerException(
@@ -109,7 +110,9 @@ class AbstractPicker:
 
     def scan(self):
         """Scan the given path for building picked file paths list"""
-        self._picked_file_paths = self._scan()
+        self._picked_file_paths = [
+            picker_photo.filepath for picker_photo in self._scan()
+        ]
 
     def _notify_progress(self, scanned):
         """
