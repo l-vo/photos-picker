@@ -69,7 +69,10 @@ class TestSmartPicker(TestCase):
         filenames_returned = []
         for i in range(1, photos_count + 1):
             filenames_returned.append('myphoto{i}.jpg'.format(i=i))
-        sut._picked_file_paths = filenames_returned
+
+        build_method_mock = Mock()
+        build_method_mock.return_value = filenames_returned
+        sut._build_photos_to_select_list = build_method_mock
         sut.scan()
 
         i = 0

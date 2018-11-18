@@ -9,7 +9,7 @@ import mock
 class DummyPicker(AbstractPicker):
     """Dummy class for testing AbstractPicker"""
 
-    def scan(self):
+    def _scan(self):
         """Dummy abstract method"""
         pass
 

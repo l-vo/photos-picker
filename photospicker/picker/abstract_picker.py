@@ -97,13 +97,19 @@ class AbstractPicker:
         return False
 
     @abstractmethod
-    def scan(self):  # pragma: no cover
+    def _scan(self):  # pragma: no cover
         """
-        Scan the given path for building picked file paths list
+        Scan the given path and return picked file paths list
+
+        :return list
 
         :raise NotImplementedError
         """
         raise NotImplementedError()
+
+    def scan(self):
+        """Scan the given path for building picked file paths list"""
+        self._picked_file_paths = self._scan()
 
     def _notify_progress(self, scanned):
         """

@@ -11,8 +11,20 @@ class AbstractExifDatePicker(AbstractPicker):
 
     __metaclass__ = ABCMeta
 
-    def scan(self):
-        """Order photos by exif date and launch discriminating method"""
+    def _scan(self):  # pragma: no cover
+        """
+        Order photos by exif date and launch discriminating method
+
+        :return list
+        """
+        return self._select(self._build_photos_to_select_list())
+
+    def _build_photos_to_select_list(self):
+        """
+        Create an ordered photos list to select photos inside
+
+        :return list
+        """
         data_to_sort = {}
 
         scanned = 0
@@ -43,16 +55,19 @@ class AbstractExifDatePicker(AbstractPicker):
             reverse=True
         )
 
+        ret = []
         for filename, data in sorted_data:
-            self._picked_file_paths.append(filename)
+            ret.append(filename)
 
-        self._select()
+        return ret
 
     @abstractmethod
-    def _select(self):  # pragma: no cover
+    def _select(self, to_select):  # pragma: no cover
         """
         Finally select photos
 
-        :raise NotImplementedError
+        :param list to_select: list where process selection
+
+        :return list
         """
         raise NotImplementedError()

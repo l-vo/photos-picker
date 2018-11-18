@@ -10,11 +10,13 @@ class TestLastPhotosPicker(TestCase):
         """Test scan method"""
 
         sut = LastPhotosPicker('', 2)
-        sut._picked_file_paths = [
+        build_method_mock = Mock()
+        build_method_mock.return_value = [
             'myphoto4.jpg',
             'myphoto1.jpg',
             'myphoto3.jpg'
         ]
+        sut._build_photos_to_select_list = build_method_mock
         sut.scan()
 
         self.assertEqual(
