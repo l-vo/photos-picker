@@ -1,6 +1,6 @@
 from unittest import TestCase
 from mock import Mock
-from photospicker.picker.smart_picker import SmartPicker
+from photospicker.picker.pickers.smart_picker import SmartPicker
 import mock
 import unittest_dataprovider
 

@@ -1,5 +1,6 @@
 from unittest import TestCase
-from photospicker.uploader.filesystem_uploader import FilesystemUploader
+from photospicker.uploader.uploaders.filesystem_uploader \
+    import FilesystemUploader
 from mock import MagicMock
 from photospicker.exception.uploader_exception import UploaderException
 import mock

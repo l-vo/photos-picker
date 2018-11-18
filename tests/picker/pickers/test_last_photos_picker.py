@@ -1,4 +1,4 @@
-from photospicker.picker.last_photos_picker import LastPhotosPicker
+from photospicker.picker.pickers.last_photos_picker import LastPhotosPicker
 from unittest import TestCase
 from mock import Mock
 

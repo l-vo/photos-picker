@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 from photospicker.exception.uploader_exception import UploaderException
-from photospicker.uploader.dropbox_uploader import DropboxUploader
+from photospicker.uploader.uploaders.dropbox_uploader import DropboxUploader
 from mock import Mock
 from mock import MagicMock  # noqa
 from dropbox.exceptions import ApiError
@@ -13,7 +13,7 @@ import mock
 class TestDropboxUploader(TestCase):
     """Test class for DropboxUploader"""
 
-    @mock.patch('photospicker.uploader.dropbox_uploader.Dropbox')
+    @mock.patch('photospicker.uploader.uploaders.dropbox_uploader.Dropbox')
     def test_initialize(self, dropbox_constructor_mock):
         """
         Test initialize
@@ -31,7 +31,7 @@ class TestDropboxUploader(TestCase):
             '/my-customer-dir'
         )
 
-    @mock.patch('photospicker.uploader.dropbox_uploader.Dropbox')
+    @mock.patch('photospicker.uploader.uploaders.dropbox_uploader.Dropbox')
     def test_upload(self, dropbox_constructor_mock):
         """
         Test upload
@@ -55,7 +55,7 @@ class TestDropboxUploader(TestCase):
             mock.call('mybinarydata2', '/my-customer-dir/photo2.jpg')
         ])
 
-    @mock.patch('photospicker.uploader.dropbox_uploader.Dropbox')
+    @mock.patch('photospicker.uploader.uploaders.dropbox_uploader.Dropbox')
     def test_not_caught_error_on_files_delete(self, dropbox_constructor_mock):
         """
         Test that an ApiError raised by Dropbox client is not caught
@@ -79,7 +79,7 @@ class TestDropboxUploader(TestCase):
 
         self.assertEqual("myerrormessage", cm.exception.user_message_text)
 
-    @mock.patch('photospicker.uploader.dropbox_uploader.Dropbox')
+    @mock.patch('photospicker.uploader.uploaders.dropbox_uploader.Dropbox')
     def test_caught_error_on_files_delete(self, dropbox_constructor_mock):
         """
         Test that path lookup ApiErrors raised by Dropbox are caught

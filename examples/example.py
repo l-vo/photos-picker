@@ -2,9 +2,10 @@ from __future__ import division
 from __future__ import print_function
 
 from photospicker.exception.abstract_exception import AbstractException
-from photospicker.picker.last_photos_picker import LastPhotosPicker
-from photospicker.uploader.filesystem_uploader import FilesystemUploader
-from photospicker.filter.resize_filter import ResizeFilter
+from photospicker.picker.pickers.last_photos_picker import LastPhotosPicker
+from photospicker.uploader.uploaders.filesystem_uploader \
+    import FilesystemUploader
+from photospicker.filter.filters.resize_filter import ResizeFilter
 from photospicker.event.scan_progress_event import ScanProgressEvent
 from photospicker.event.start_upload_event import StartUploadEvent
 from photospicker.event.end_upload_event import EndUploadEvent
@@ -53,6 +54,7 @@ def end_upload_listener(event):
     """
     msg = "\rUpload {uploaded}/{total}: upload finished for {filepath}"
     print(msg.format(uploaded=event.uploaded_files, total=event.files_to_upload, filepath=event.filepath))
+
 
 @handler(StartFilterEvent)
 def start_filter_listener(event):

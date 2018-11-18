@@ -1,5 +1,5 @@
 from unittest import TestCase
-from photospicker.picker.random_picker import RandomPicker
+from photospicker.picker.pickers.random_picker import RandomPicker
 from mock import MagicMock  # noqa
 import mock
 
