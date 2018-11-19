@@ -86,8 +86,12 @@ class TestAbstractExifDatePicker(TestCase):
             PickerPhoto(filepath) for filepath in expected_selected
         ]
 
+        order_picked_mock = Mock()
+        order_picked_mock.side_effect = self._order_picked_side_effect
+
         sut = DummyPicker('', 0)
         sut._select = select_mock
+        sut._order_picked = order_picked_mock
         sut.initialize()
         sut.scan()
 
@@ -96,3 +100,14 @@ class TestAbstractExifDatePicker(TestCase):
         )
 
         self.assertEqual(expected_selected, sut.picked_file_paths)
+
+    @staticmethod
+    def _order_picked_side_effect(to_order):
+        """
+        Identity side effect for __order_picked
+
+        :param list to_order: list to order
+
+        :return: list
+        """
+        return to_order

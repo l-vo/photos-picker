@@ -4,7 +4,7 @@ from photospicker.picker.picker_photo import PickerPhoto
 from photospicker.picker.pickers.random_picker import RandomPicker
 from mock import MagicMock  # noqa
 import mock
-
+from mock import Mock
 from tests.picker.picker_photo_stub import PickerPhotoStub
 
 
@@ -28,8 +28,11 @@ class TestRandomPicker(TestCase):
         ]]]
 
         shuffle_mock.side_effect = self._shuffle_mock_side_effect
+        order_picked_mock = Mock()
+        order_picked_mock.side_effect = self._order_picked_side_effect
 
         sut = RandomPicker('', 2)
+        sut._order_picked = order_picked_mock
         sut.initialize()
         sut.scan()
 
@@ -64,3 +67,14 @@ class TestRandomPicker(TestCase):
         files.append(PickerPhoto('myphoto2.jpg'))
         files.append(PickerPhoto('myphoto4.jpg'))
         files.append(PickerPhoto('myphoto1.jpg'))
+
+    @staticmethod
+    def _order_picked_side_effect(to_order):
+        """
+        Identity side effect for __order_picked
+
+        :param list to_order: list to order
+
+        :return: list
+        """
+        return to_order
