@@ -15,6 +15,6 @@ class AbstractFilter:
         :param Image img     : image object to modify
         :param dict exif_data: image exif data
 
-        :return Image
+        :return: Image
         """
         raise NotImplementedError()

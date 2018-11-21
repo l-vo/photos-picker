@@ -18,7 +18,7 @@ class EndUploadEvent(object):
         """
         Getter for the file uploaded
 
-        :return str
+        :return: str
         """
         return self._filepath
 
@@ -27,7 +27,7 @@ class EndUploadEvent(object):
         """
         Getter for the total files uploaded count
 
-        :return int
+        :return: int
         """
         return self._uploaded_files
 
@@ -36,6 +36,6 @@ class EndUploadEvent(object):
         """
         Getter for the total files to upload count
 
-        :return int
+        :return: int
         """
         return self._files_to_upload

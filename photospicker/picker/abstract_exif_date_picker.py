@@ -12,7 +12,7 @@ class AbstractExifDatePicker(AbstractPicker):
         """
         Order photos by exif date and launch discriminating method
 
-        :return list
+        :return: list
         """
         return self._select(self._build_photos_to_select_list())
 
@@ -20,7 +20,7 @@ class AbstractExifDatePicker(AbstractPicker):
         """
         Create an ordered photos list to select photos inside
 
-        :return list
+        :return: list
         """
         data_to_sort = []
         scanned = 0
@@ -48,6 +48,6 @@ class AbstractExifDatePicker(AbstractPicker):
 
         :param list to_select: list where process selection
 
-        :return list
+        :return: list
         """
         raise NotImplementedError()

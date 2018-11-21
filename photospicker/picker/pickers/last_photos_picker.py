@@ -11,7 +11,7 @@ class LastPhotosPicker(AbstractExifDatePicker):
 
         :param list to_select: list where process selection
 
-        :return list
+        :return: list
         """
         return [
             filename for key, filename in enumerate(to_select)

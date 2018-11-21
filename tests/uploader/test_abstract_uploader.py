@@ -14,7 +14,7 @@ class DummyUploader(AbstractUploader):
 
         :param str original_filename: name of the original file
 
-        :return str
+        :return: str
         """
         return self._build_filename(original_filename)
 

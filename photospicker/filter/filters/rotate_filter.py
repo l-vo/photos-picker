@@ -20,7 +20,7 @@ class RotateFilter(AbstractFilter):
         :param Image original_img: image object to rotate
         :param dict exif_data    : image exif data
 
-        :return Image
+        :return: Image
         """
         orientation_key = None
         for key in ExifTags.TAGS.keys():

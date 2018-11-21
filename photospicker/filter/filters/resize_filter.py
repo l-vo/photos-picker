@@ -22,7 +22,7 @@ class ResizeFilter(AbstractFilter):
         :param Image original_img: image object to resize
         :param dict exif_data    : image exif data
 
-        :return Image
+        :return: Image
         """
         (original_width, original_height) = original_img.size
 

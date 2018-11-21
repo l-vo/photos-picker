@@ -9,7 +9,7 @@ class RandomPicker(AbstractPicker):
         """
         Scan the given path and return picked file paths list
 
-        :return list
+        :return: list
         """
         self._notify_progress(0)
         random.shuffle(self._files_to_scan)
