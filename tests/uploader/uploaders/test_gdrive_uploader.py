@@ -1,7 +1,7 @@
 from unittest import TestCase
 from mock import Mock, MagicMock
 from photospicker.exception.uploader_exception import UploaderException
-from photospicker.uploader.gdrive_uploader import GDriveUploader
+from photospicker.uploader.uploaders.gdrive_uploader import GDriveUploader
 import mock
 
 
@@ -11,7 +11,7 @@ class TestGDriveUploader(TestCase):
     def setUp(self):
         self._gauth = Mock()
 
-    @mock.patch('photospicker.uploader.gdrive_uploader.GoogleDrive')
+    @mock.patch('photospicker.uploader.uploaders.gdrive_uploader.GoogleDrive')
     def test_initialize_should_throw_exception_if_many_folders(
             self,
             gdrive_constructor_mock
@@ -36,7 +36,7 @@ class TestGDriveUploader(TestCase):
 
         self.assertEqual(UploaderException.MANY_DIRS, cm.exception.code)
 
-    @mock.patch('photospicker.uploader.gdrive_uploader.GoogleDrive')
+    @mock.patch('photospicker.uploader.uploaders.gdrive_uploader.GoogleDrive')
     def test_initialize_with_no_existing_folder_should_create_folder(
             self,
             gdrive_constructor_mock
@@ -67,7 +67,7 @@ class TestGDriveUploader(TestCase):
 
         self._initialize_common_assertions(gdrive_constructor_mock)
 
-    @mock.patch('photospicker.uploader.gdrive_uploader.GoogleDrive')
+    @mock.patch('photospicker.uploader.uploaders.gdrive_uploader.GoogleDrive')
     def test_initialize_with_existing_folder_should_empty_it(
             self,
             gdrive_constructor_mock
@@ -152,7 +152,7 @@ class TestGDriveUploader(TestCase):
 
         gdrive_constructor_mock.return_value.ListFile.assert_has_calls(calls)
 
-    @mock.patch('photospicker.uploader.gdrive_uploader.GoogleDrive')
+    @mock.patch('photospicker.uploader.uploaders.gdrive_uploader.GoogleDrive')
     def test_upload(self, gdrive_constructor_mock):
         """
         Test upload method

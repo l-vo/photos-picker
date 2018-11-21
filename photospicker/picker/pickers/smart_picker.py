@@ -1,7 +1,6 @@
 from photospicker.picker.abstract_exif_date_picker import \
     AbstractExifDatePicker
 import random
-import math
 
 
 class SmartPicker(AbstractExifDatePicker):
@@ -12,36 +11,47 @@ class SmartPicker(AbstractExifDatePicker):
     photos will be also retrieved.
     """
 
-    def scan(self):
-        """Scan the given path for building picked file paths list"""
-        sorted_filenames = self._build_sorted_filenames()
+    def _select(self, to_select):
+        """
+        Finally select photos
+
+        :param list to_select: list where process selection
+
+        :return list
+        """
         for i in range(1, 21):
             ratio = i * .05
-            ret = self._compute_packet_extractions(ratio, sorted_filenames)
+            ret = self._compute_packet_extractions(ratio, to_select)
             if ret is not None:
                 break  # use the lowest ratio found
 
         (packet_sizes, extractions) = ret
         current_packet = []
         packet_size = packet_sizes.pop(0)
-        for filename in sorted_filenames:
+        selected = []
+        for filename in to_select:
             current_packet.append(filename)
             if len(current_packet) == packet_size:
-                self._process_packet(current_packet, extractions)
+                selected += self._process_packet(current_packet, extractions)
                 current_packet = []
                 if packet_sizes:
                     packet_size = packet_sizes.pop(0)
 
-    def _process_packet(self, current_packet, extractions):
+        return selected
+
+    @staticmethod
+    def _process_packet(current_packet, extractions):
         """
         Randomly select photos inside a packet
 
         :param list current_packet: packet
         :param list extractions: list of photos count to extract of each packet
+
+        :return list
         """
         random.shuffle(current_packet)
         to_extract = extractions.pop(0)
-        self._picked_file_paths += [
+        return [
             x for key, x in enumerate(current_packet)
             if key < to_extract
         ]

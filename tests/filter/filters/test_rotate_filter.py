@@ -1,7 +1,7 @@
 from unittest import TestCase
 from mock import Mock
 from mock import MagicMock  # noqa
-from photospicker.filter.rotate_filter import RotateFilter
+from photospicker.filter.filters.rotate_filter import RotateFilter
 import mock
 import unittest_dataprovider
 
@@ -9,7 +9,7 @@ import unittest_dataprovider
 class TestRotateFilter(TestCase):
     """Unit tests for ResizeFilter"""
 
-    @mock.patch('photospicker.filter.rotate_filter.ExifTags')
+    @mock.patch('photospicker.filter.filters.rotate_filter.ExifTags')
     def test_execute_orientationtagnotexists_shouldreturnoriginalimg(
             self,
             exif_tags_mock
@@ -42,7 +42,7 @@ class TestRotateFilter(TestCase):
     @unittest_dataprovider.data_provider(
         provider_execute_noexiforientationissupplied_shouldreturnoriginalimg
     )
-    @mock.patch('photospicker.filter.rotate_filter.ExifTags')
+    @mock.patch('photospicker.filter.filters.rotate_filter.ExifTags')
     def test_execute_noexiforientationissupplied_shouldreturnoriginalimg(
             self,
             exif_data,
@@ -77,7 +77,7 @@ class TestRotateFilter(TestCase):
         )
 
     @unittest_dataprovider.data_provider(provider_execute)
-    @mock.patch('photospicker.filter.rotate_filter.ExifTags')
+    @mock.patch('photospicker.filter.filters.rotate_filter.ExifTags')
     def test_execute(
             self,
             expand,

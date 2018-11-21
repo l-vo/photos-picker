@@ -1,8 +1,5 @@
 from photospicker.picker.abstract_picker import AbstractPicker
-from PIL.JpegImagePlugin import JpegImageFile
-from PIL import Image
-from PIL import ExifTags
-from abc import ABCMeta
+from abc import ABCMeta, abstractmethod
 import operator
 
 
@@ -11,45 +8,46 @@ class AbstractExifDatePicker(AbstractPicker):
 
     __metaclass__ = ABCMeta
 
-    def _build_sorted_filenames(self):
+    def _scan(self):  # pragma: no cover
         """
-        Build a list of photos sorted by Exif date in reverse order
+        Order photos by exif date and launch discriminating method
 
         :return list
         """
+        return self._select(self._build_photos_to_select_list())
 
-        data_to_sort = {}
+    def _build_photos_to_select_list(self):
+        """
+        Create an ordered photos list to select photos inside
 
+        :return list
+        """
+        data_to_sort = []
         scanned = 0
         self._notify_progress(scanned)
-        for filepath in self._files_to_scan:
-            img = Image.open(filepath)
-
-            if isinstance(img, JpegImageFile):
-                exif_data = img._getexif()
-
-                if exif_data is None:
-                    exif_data = {}
-
-                for key in exif_data.keys():
-                    if ExifTags.TAGS.get(key) != 'DateTimeOriginal':
-                        continue
-
-                    data_to_sort[filepath] = exif_data[key]
+        for picker_photo in self._files_to_scan:
+            date = picker_photo.date
+            if date:
+                data_to_sort.append(picker_photo)
 
             scanned += 1
             self._notify_progress(scanned)
 
         self._notify_end()
 
-        sorted_data = sorted(
-            data_to_sort.items(),
-            key=operator.itemgetter(1),
+        return sorted(
+            data_to_sort,
+            key=operator.attrgetter('date'),
             reverse=True
         )
 
-        filenames = []
-        for filename, data in sorted_data:
-            filenames.append(filename)
+    @abstractmethod
+    def _select(self, to_select):  # pragma: no cover
+        """
+        Finally select photos
 
-        return filenames
+        :param list to_select: list where process selection
+
+        :return list
+        """
+        raise NotImplementedError()

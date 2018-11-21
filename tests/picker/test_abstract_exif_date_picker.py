@@ -6,19 +6,16 @@ from mock import MagicMock  # noqa
 from mock import Mock
 import mock
 
+from photospicker.picker.picker_photo import PickerPhoto
+from tests.picker.picker_photo_stub import PickerPhotoStub
+
 
 class DummyPicker(AbstractExifDatePicker):
     """Dummy class for testing AbstractExifDatePicker"""
 
-    def scan(self):
+    def _select(self):
         """Dummy abstract method"""
         pass
-
-    @property
-    def sorted_filenames(self):
-        """Getter for _build_sorted_filenames return"""
-
-        return self._build_sorted_filenames()
 
 
 class TestAbstractExifDatePicker(TestCase):
@@ -26,9 +23,9 @@ class TestAbstractExifDatePicker(TestCase):
 
     @mock.patch('PIL.Image.open')
     @mock.patch('os.walk')
-    def test_build_sorted_filenames(self, walk_mock, image_open_mock):
+    def test_select(self, walk_mock, image_open_mock):
         """
-        Test _build sorted_filenames
+        Test select
 
         :param MagicMock walk_mock:       mock for walk method
         :param MagicMock image_open_mock: mock for PIL Image mock method
@@ -74,10 +71,43 @@ class TestAbstractExifDatePicker(TestCase):
             image_mock5
         ]
 
-        sut = DummyPicker('', 0)
-        sut.initialize()
+        expected_ordered = [
+            PickerPhotoStub('myphoto4.jpg'),
+            PickerPhotoStub('myphoto1.jpg'),
+            PickerPhotoStub('myphoto3.jpg')
+        ]
+        expected_selected = [
+            'myphoto4.jpg',
+            'myphoto1.jpg'
+        ]
 
-        self.assertEqual(
-            ['myphoto4.jpg', 'myphoto1.jpg', 'myphoto3.jpg'],
-            sut.sorted_filenames
+        select_mock = Mock()
+        select_mock.return_value = [
+            PickerPhoto(filepath) for filepath in expected_selected
+        ]
+
+        order_picked_mock = Mock()
+        order_picked_mock.side_effect = self._order_picked_side_effect
+
+        sut = DummyPicker('', 0)
+        sut._select = select_mock
+        sut._order_picked = order_picked_mock
+        sut.initialize()
+        sut.scan()
+
+        select_mock.assert_called_once_with(
+            expected_ordered
         )
+
+        self.assertEqual(expected_selected, sut.picked_file_paths)
+
+    @staticmethod
+    def _order_picked_side_effect(to_order):
+        """
+        Identity side effect for __order_picked
+
+        :param list to_order: list to order
+
+        :return: list
+        """
+        return to_order

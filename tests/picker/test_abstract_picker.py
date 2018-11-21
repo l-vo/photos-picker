@@ -2,14 +2,16 @@ from photospicker.exception.picker_exception import PickerException
 from photospicker.picker.abstract_picker import AbstractPicker
 from unittest import TestCase
 from mock import MagicMock  # noqa
+from mock import Mock
 import unittest_dataprovider
 import mock
+from tests.picker.picker_photo_stub import PickerPhotoStub
 
 
 class DummyPicker(AbstractPicker):
     """Dummy class for testing AbstractPicker"""
 
-    def scan(self):
+    def _scan(self):
         """Dummy abstract method"""
         pass
 
@@ -75,7 +77,10 @@ class TestAbstractPicker(TestCase):
         sut.initialize()
 
         walk_mock.assert_called_with('mypath')
-        self.assertEqual(expected_files_to_scan, sut.files_to_scan)
+        self.assertEqual(
+            [PickerPhotoStub(filepath) for filepath in expected_files_to_scan],
+            sut.files_to_scan
+        )
 
     @staticmethod
     def provider_initialize_multiple_and_excluded_paths():
@@ -133,7 +138,13 @@ class TestAbstractPicker(TestCase):
             ]
         ]
 
-        sut = DummyPicker(['/mypath1', '/mypath2'], 20, None, excluded_paths)
+        sut = DummyPicker(
+            ['/mypath1', '/mypath2'],
+            20,
+            0,
+            None,
+            excluded_paths
+        )
         sut.initialize()
 
         walk_mock.assert_has_calls([
@@ -141,7 +152,10 @@ class TestAbstractPicker(TestCase):
             mock.call('/mypath2')
         ])
 
-        self.assertEqual(expected_files_to_scan, sut.files_to_scan)
+        self.assertEqual(
+            [PickerPhotoStub(filepath) for filepath in expected_files_to_scan],
+            sut.files_to_scan
+        )
 
     @mock.patch('os.walk')
     def test_initialize_with_no_photo_found(self, walk_mock):
@@ -179,3 +193,68 @@ class TestAbstractPicker(TestCase):
         sut = DummyPicker('/mypath', 12)
         sut.initialize()
         self.assertEqual(9, sut.photos_count())
+
+    @staticmethod
+    def provider_scan():
+        """
+        Data provider for test_scan
+
+        :return: tuple
+        """
+        return (
+            (0, ['myfile3.jpg', 'myfile1.jpg', 'myfile4.jpg', 'myfile2.jpg']),
+            (-1, ['myfile2.jpg', 'myfile3.jpg', 'myfile4.jpg', 'myfile1.jpg']),
+            (1, ['myfile1.jpg', 'myfile4.jpg', 'myfile3.jpg', 'myfile2.jpg'])
+        )
+
+    @unittest_dataprovider.data_provider(provider_scan)
+    @mock.patch('random.shuffle')
+    def test_scan(self, order_parameter, expected_picked, shuffle_mock):
+        """
+        Test scan method
+
+        :param MagicMock shuffle_mock: mock for shuffle method
+        :param int order_parameter: parameter given to constructor for ordering
+        :param list expected_picked: expected sorted list
+        """
+        internal_scan_mock = Mock()
+        internal_scan_mock.return_value = [
+            PickerPhotoStub('myfile1.jpg', '2018-04-07 23:32:21'),
+            PickerPhotoStub('myfile2.jpg', '2018-05-05 18:32:21'),
+            PickerPhotoStub('myfile3.jpg', '2018-05-05 12:32:21'),
+            PickerPhotoStub('myfile4.jpg', '2018-05-03 15:32:21'),
+        ]
+
+        shuffle_mock.side_effect = self._random_shuffle_side_effect
+
+        sut = DummyPicker('', 0, order_parameter)
+        sut._scan = internal_scan_mock
+        sut.scan()
+
+        self.assertEqual(
+            expected_picked,
+            sut.picked_file_paths
+        )
+
+    def _random_shuffle_side_effect(self, photos):
+        """
+        Side effect for random shuffle
+
+        :param list photos: list of PickerPhotoStub objects
+        """
+        self.assertEqual([
+            PickerPhotoStub('myfile1.jpg', '2018-04-07 23:32:21'),
+            PickerPhotoStub('myfile2.jpg', '2018-05-05 18:32:21'),
+            PickerPhotoStub('myfile3.jpg', '2018-05-05 12:32:21'),
+            PickerPhotoStub('myfile4.jpg', '2018-05-03 15:32:21'),
+        ], photos)
+
+        photo1 = photos[0]
+        photo2 = photos[1]
+        photo3 = photos[2]
+        photo4 = photos[3]
+        del photos[:]
+        photos.append(photo3)
+        photos.append(photo1)
+        photos.append(photo4)
+        photos.append(photo2)

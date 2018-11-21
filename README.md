@@ -18,8 +18,8 @@ The main class `PhotosPicker` accepts a "picker", a tuple of "filters" and an "u
 
 ```python
 from photospicker.exception.abstract_exception import AbstractException
-from photospicker.picker.last_photos_picker import LastPhotosPicker
-from photospicker.uploader.filesystem_uploader import FilesystemUploader
+from photospicker.picker.pickers.last_photos_picker import LastPhotosPicker
+from photospicker.uploader.uploaders.filesystem_uploader import FilesystemUploader
 from photospicker.photos_picker import PhotosPicker
 
 if __name__ == '__main__':

@@ -5,6 +5,9 @@ from photospicker.exception.picker_exception import PickerException
 import os
 import fnmatch
 import string
+import random
+import operator
+from photospicker.picker.picker_photo import PickerPhoto
 
 
 class AbstractPicker:
@@ -21,6 +24,7 @@ class AbstractPicker:
             self,
             directory_paths,
             photos_count,
+            order=0,
             patterns=None,
             excluded_patterns=None
     ):
@@ -29,6 +33,9 @@ class AbstractPicker:
 
         :param mixed directory_paths:   directory paths to scan
         :param int   photos_count:      photos count to pick
+        :param int   order:             0 for random order
+                                        -1 for order from newer to older
+                                        1 for order from older to newer
         :param list  patterns:          patterns (in lowercase) that files must
                                         match for being scanned
         :param list  excluded_patterns: directory patterns excluded
@@ -40,6 +47,7 @@ class AbstractPicker:
         else:
             self._paths = [directory_paths]
 
+        self._order = order
         self._files_to_scan = []
         self._picked_file_paths = []
         self._photos_count = photos_count
@@ -70,9 +78,8 @@ class AbstractPicker:
                 for filename in filenames:
                     for pattern in self._patterns:
                         if fnmatch.fnmatch(filename.lower(), pattern):
-                            self._files_to_scan.append(os.path.join(
-                                root,
-                                filename
+                            self._files_to_scan.append(PickerPhoto(
+                                os.path.join(root, filename)
                             ))
         if not self._files_to_scan:
             raise PickerException(
@@ -97,13 +104,41 @@ class AbstractPicker:
         return False
 
     @abstractmethod
-    def scan(self):  # pragma: no cover
+    def _scan(self):  # pragma: no cover
         """
-        Scan the given path for building picked file paths list
+        Scan the given path and return picked file paths list
+
+        :return list
 
         :raise NotImplementedError
         """
         raise NotImplementedError()
+
+    def scan(self):
+        """Scan the given path for building picked file paths list"""
+        picker_photos = self._order_picked(self._scan())
+        self._picked_file_paths = [
+            picker_photo.filepath for picker_photo in picker_photos
+        ]
+
+    def _order_picked(self, picked):
+        """
+        Order picked files
+
+        :param list picked: list of PickerPhoto previously picked
+
+        :return: list
+        """
+        if self._order == 0:
+            random.shuffle(picked)
+        else:
+            picked = sorted(
+                picked,
+                key=operator.attrgetter('date'),
+                reverse=self._order < 0
+            )
+
+        return picked
 
     def _notify_progress(self, scanned):
         """

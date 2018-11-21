@@ -1,5 +1,5 @@
 from unittest import TestCase
-from photospicker.filter.resize_filter import ResizeFilter
+from photospicker.filter.filters.resize_filter import ResizeFilter
 from PIL import Image
 from mock import Mock
 import unittest_dataprovider
