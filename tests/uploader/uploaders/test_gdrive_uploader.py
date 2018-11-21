@@ -111,7 +111,7 @@ class TestGDriveUploader(TestCase):
         :param list return_values: values successively
                                                     returned by GetList method
 
-        :return Mock
+        :return: Mock
         """
         gdrive_mock = Mock()
         gdrive_constructor_mock.return_value = gdrive_mock

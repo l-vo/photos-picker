@@ -17,7 +17,7 @@ class SmartPicker(AbstractExifDatePicker):
 
         :param list to_select: list where process selection
 
-        :return list
+        :return: list
         """
         for i in range(1, 21):
             ratio = i * .05
@@ -47,7 +47,7 @@ class SmartPicker(AbstractExifDatePicker):
         :param list current_packet: packet
         :param list extractions: list of photos count to extract of each packet
 
-        :return list
+        :return: list
         """
         random.shuffle(current_packet)
         to_extract = extractions.pop(0)

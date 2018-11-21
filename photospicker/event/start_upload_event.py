@@ -18,7 +18,7 @@ class StartUploadEvent(object):
         """
         Getter for the file which starts to be uploaded
 
-        :return str
+        :return: str
         """
         return self._filepath
 
@@ -27,7 +27,7 @@ class StartUploadEvent(object):
         """
         Getter for the rank of the file in upload queue
 
-        :return int
+        :return: int
         """
         return self._upload_file_rank
 
@@ -36,6 +36,6 @@ class StartUploadEvent(object):
         """
         Getter for the total files to upload count
 
-        :return int
+        :return: int
         """
         return self._files_to_upload

@@ -6,6 +6,7 @@
 * On FilesystemUploader, check that target directory exists and is empty before scanning
 * Add code coverage when running `make test`
 * Allow to specify an order for retrieved photos
+* Replace :return by :return: on docstrings
 
 # 0.3.1
 * Allow to use a custom target directory in Dropbox

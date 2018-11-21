@@ -16,7 +16,7 @@ class AbstractException(Exception):
         """
         Getter code
 
-        :return int
+        :return: int
         """
         return self._code
 
@@ -25,6 +25,6 @@ class AbstractException(Exception):
         """
         Getter message
 
-        :return str
+        :return: str
         """
         return self._message

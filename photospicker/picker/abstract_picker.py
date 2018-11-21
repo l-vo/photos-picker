@@ -108,7 +108,7 @@ class AbstractPicker:
         """
         Scan the given path and return picked file paths list
 
-        :return list
+        :return: list
 
         :raise NotImplementedError
         """

@@ -42,7 +42,7 @@ class AbstractUploader:
 
         :param str original_filename: name of the original file
 
-        :return str
+        :return: str
         """
         filename, ext = os.path.splitext(original_filename)
         return 'photo{counter}{ext}'.format(

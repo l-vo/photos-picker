@@ -18,7 +18,7 @@ class EndFilterEvent(object):
         """
         Getter for the filter name
 
-        :return str
+        :return: str
         """
         return self._filter_name
 
