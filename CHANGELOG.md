@@ -1,4 +1,5 @@
 # master
+* Fix errors 404 on README links on pypi.org
 
 # 0.4.1
 * Set README content-type in `setup.py` for being correctly displayed on pypi.org

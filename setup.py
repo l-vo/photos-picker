@@ -1,18 +1,23 @@
 import os
 from setuptools import setup, find_packages
 
+github_url = 'https://github.com/l-vo/photos-picker'
+version = '0.4.1'
+
 
 def read(fname):
-    return open(os.path.join(os.path.dirname(__file__), fname)).read()
+    content = open(os.path.join(os.path.dirname(__file__), fname)).read()
+    return content.replace('doc/', github_url + '/blob/' + version + '/doc/')
 
 
 setup(
     name='photos-picker',
-    version='0.4.1',
-    description='Pick photos following a given strategy and upload them to various destinations',
+    version=version,
+    description='Pick photos following a given strategy '
+                'and upload them to various destinations',
     author='Laurent VOULLEMIER',
     author_email='laurent.voullemier@gmail.com',
-    url='https://github.com/l-vo/photos-picker',
+    url=github_url,
     packages=find_packages(),
     install_requires=['Pillow', 'zope.event', 'dropbox', 'pydrive'],
     include_package_data=True,
