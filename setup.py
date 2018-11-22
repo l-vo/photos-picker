@@ -8,7 +8,7 @@ def read(fname):
 
 setup(
     name='photos-picker',
-    version='0.4.0',
+    version='0.4.1',
     description='Pick photos following a given strategy and upload them to various destinations',
     author='Laurent VOULLEMIER',
     author_email='laurent.voullemier@gmail.com',
@@ -18,6 +18,7 @@ setup(
     include_package_data=True,
     zip_safe=False,
     long_description=read('README.md'),
+    long_description_content_type='text/markdown',
     license='MIT',
     keywords='photos upload photoframe',
     classifiers=[
