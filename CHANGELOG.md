@@ -1,4 +1,5 @@
 # master
+* Set README content-type in `setup.py` for being correctly displayed on pypi.org
 
 # 0.4.0
 * Update usage examples: only catch photospicker AbstractException for displaying exception message
