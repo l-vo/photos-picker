@@ -8,7 +8,7 @@ def read(fname):
 
 setup(
     name='photos-picker',
-    version='0.3.1',
+    version='0.4.0',
     description='Pick photos following a given strategy and upload them to various destinations',
     author='Laurent VOULLEMIER',
     author_email='laurent.voullemier@gmail.com',

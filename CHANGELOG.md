@@ -1,4 +1,6 @@
 # master
+
+# 0.4.0
 * Update usage examples: only catch photospicker AbstractException for displaying exception message
 * Add CHANGELOG.md
 * Add SmartPicker
