@@ -72,7 +72,7 @@ class AbstractPicker:
     def initialize(self):
         """Fill in the list of files to scan"""
         for path in self._paths:
-            for root, dirnames, filenames in os.walk(path):
+            for root, dirnames, filenames in os.walk(os.path.expanduser(path)):
                 if self._is_in_excluded_patterns(root):
                     continue
                 for filename in filenames:
@@ -99,7 +99,8 @@ class AbstractPicker:
         :return: bool
         """
         for excluded_pattern in self._excluded_patterns:
-            if string.find(path + '/', excluded_pattern) != -1:
+            expandeduser_pattern = os.path.expanduser(excluded_pattern)
+            if string.find(path + '/', expandeduser_pattern) != -1:
                 return True
         return False
 

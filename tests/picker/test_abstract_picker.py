@@ -89,36 +89,42 @@ class TestAbstractPicker(TestCase):
             ([], [
                 '/mypath1/folder1/myphoto1.jpg',
                 '/mypath1/folder1/myphoto2.JPEG',
-                '/mypath2/myphoto3.png',
-                '/mypath2/folder1/myphoto4.png'
+                '/home/user/mypath2/myphoto3.png',
+                '/home/user/mypath2/folder1/myphoto4.png'
             ]),
             (['/folder1/'], [
-                '/mypath2/myphoto3.png'
+                '/home/user/mypath2/myphoto3.png'
             ]),
             (['/mypath1'], [
-                '/mypath2/myphoto3.png',
-                '/mypath2/folder1/myphoto4.png'
+                '/home/user/mypath2/myphoto3.png',
+                '/home/user/mypath2/folder1/myphoto4.png'
             ]),
-            (['/mypath2'], [
+            (['~/mypath2'], [
                 '/mypath1/folder1/myphoto1.jpg',
                 '/mypath1/folder1/myphoto2.JPEG',
             ]),
-            (['/mypath2/folder1'], [
+            (['~user/mypath2'], [
+                '/mypath1/folder1/myphoto1.jpg',
+                '/mypath1/folder1/myphoto2.JPEG'
+            ]),
+            (['/home/user/mypath2/folder1'], [
                 '/mypath1/folder1/myphoto1.jpg',
                 '/mypath1/folder1/myphoto2.JPEG',
-                '/mypath2/myphoto3.png'
+                '/home/user/mypath2/myphoto3.png'
             ])
         )
 
     @unittest_dataprovider.data_provider(
         provider_initialize_multiple_and_excluded_paths
     )
+    @mock.patch('os.path.expanduser')
     @mock.patch('os.walk')
     def test_initialize_multiple_and_excluded_paths(
             self,
             excluded_paths,
             expected_files_to_scan,
-            walk_mock
+            walk_mock,
+            expanduser_mock
     ):
         """
         Test initialize method with multiple and excluded paths
@@ -126,20 +132,23 @@ class TestAbstractPicker(TestCase):
         :param list excluded_paths        : excluded paths
         :param list expected_files_to_scan: expected files to scan
         :param MagicMock walk_mock        : mock for walk function
+        :param MagicMock expanduser_mock  : mock for expanduser function
         """
+        expanduser_mock.side_effect = self.expanduser_side_effect
+
         walk_mock.side_effect = [
             [
                 ['/mypath1', [], []],
                 ['/mypath1/folder1', [], ['myphoto1.jpg', 'myphoto2.JPEG']]
             ],
             [
-                ['/mypath2', [], ['myphoto3.png']],
-                ['/mypath2/folder1', [], ['myphoto4.png']]
+                ['/home/user/mypath2', [], ['myphoto3.png']],
+                ['/home/user/mypath2/folder1', [], ['myphoto4.png']]
             ]
         ]
 
         sut = DummyPicker(
-            ['/mypath1', '/mypath2'],
+            ['/mypath1', '~/mypath2'],
             20,
             0,
             None,
@@ -149,13 +158,24 @@ class TestAbstractPicker(TestCase):
 
         walk_mock.assert_has_calls([
             mock.call('/mypath1'),
-            mock.call('/mypath2')
+            mock.call('/home/user/mypath2')
         ])
 
         self.assertEqual(
             [PickerPhotoStub(filepath) for filepath in expected_files_to_scan],
             sut.files_to_scan
         )
+
+    @staticmethod
+    def expanduser_side_effect(path):
+        """
+        Side effect method for expanduser mock
+
+        :param str path: path to expand
+
+        :return: str
+        """
+        return path.replace('~user', '/home/user').replace('~', '/home/user')
 
     @mock.patch('os.walk')
     def test_initialize_with_no_photo_found(self, walk_mock):
