@@ -7,7 +7,7 @@ Pick the *n* lastest photos.
 
 ### Constructor arguments
 ```python
-def __init__(self, directory_patterns, photos_count, order=0, patterns=None, excluded_paths=None):
+def __init__(self, directory_patterns, photos_count, order=0, patterns=None, excluded_patterns=None):
 ```
 * `directory_path` (list or string): directory path or list of directory paths to scan
 * `photos_count` (int): photos count to retrieve
@@ -16,7 +16,7 @@ def __init__(self, directory_patterns, photos_count, order=0, patterns=None, exc
     * sort=1: retrieved photos are sorted from the oldest to the most recent
     * sort=-1: retrieved photos are sorted from the most recent to the oldest
 * `patterns` (list of strings): patterns to consider, *.tif, *.tiff, *.jpg', *.jpeg and *.png by default
-* `excluded_patterns` (list of strings): directory patterns which will be ignored during the scan
+* `excluded_patterns` (list of strings): directory patterns which will be ignored during the scan, a directory is ignored if its path contains one of the strings listed in excluded_patterns
 
 ## RandomPicker
 
@@ -25,7 +25,7 @@ Pick randomly *n* photos.
 
 ### Constructor arguments
 ```python
-def __init__(self, directory_paths, photos_count, order=0, patterns=None, excluded_paths=None):
+def __init__(self, directory_paths, photos_count, order=0, patterns=None, excluded_patterns=None):
 ```
 * `directory_path` (list or string): directory path or list of directory paths to scan
 * `photos_count` (int): photos count to retrieve
@@ -34,7 +34,7 @@ def __init__(self, directory_paths, photos_count, order=0, patterns=None, exclud
     * sort=1: retrieved photos are sorted from the oldest to the most recent
     * sort=-1: retrieved photos are sorted from the most recent to the oldest
 * `patterns` (list of strings): patterns to consider, *.tif, *.tiff, *.jpg', *.jpeg and *.png by default
-* `excluded_paths` (list of string): directory paths which will be ignored during the scan
+* `excluded_patterns` (list of string): directory patterns which will be ignored during the scan, a directory is ignored if its path contains one of the strings listed in excluded_patterns
 
 ## SmartPicker
 
@@ -43,7 +43,7 @@ Pick randomy *n* photos. Recent photos have more chance to be picked than old on
 
 ### Constructor arguments
 ```python
-def __init__(self, directory_paths, photos_count, order=0, patterns=None, excluded_paths=None):
+def __init__(self, directory_paths, photos_count, order=0, patterns=None, excluded_patterns=None):
 ```
 * `directory_path` (list or string): directory path or list of directory paths to scan
 * `photos_count` (int): photos count to retrieve
@@ -52,4 +52,4 @@ def __init__(self, directory_paths, photos_count, order=0, patterns=None, exclud
     * sort=1: retrieved photos are sorted from the oldest to the most recent
     * sort=-1: retrieved photos are sorted from the most recent to the oldest
 * `patterns` (list of strings): patterns to consider, *.tif, *.tiff, *.jpg', *.jpeg and *.png by default
-* `excluded_paths` (list of string): directory paths which will be ignored during the scan
+* `excluded_patterns` (list of string): directory patterns which will be ignored during the scan, a directory is ignored if its path contains one of the strings listed in excluded_patterns
