@@ -1,4 +1,6 @@
 # master
+
+# 0.5.0
 * Fix errors 404 on README links on pypi.org
 * Disable Codecov comments in pull requests
 * Allow to use "~" in search paths/excluded patterns
