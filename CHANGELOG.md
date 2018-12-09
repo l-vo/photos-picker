@@ -2,6 +2,7 @@
 * Fix errors 404 on README links on pypi.org
 * Disable Codecov comments in pull requests
 * Allow to use "~" in search paths/excluded patterns
+* Replace `excluded_paths` by `excluded_patterns` in documentation
 
 # 0.4.1
 * Set README content-type in `setup.py` for being correctly displayed on pypi.org
