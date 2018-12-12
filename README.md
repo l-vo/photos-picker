@@ -43,11 +43,15 @@ You can see a more complex example which displays work progress [here](examples/
 
 More details [here](doc/pickers.md)
 
+Note you can also create your own picker extending the base class `AbstractPicker`.
+
 ### Filters:
 * `ResizeFilter`: resize the photos with the given width and height. The final photos size are computed for avoiding distortion.
 * `RotateFilter`: Rotate the photos according to EXIF data.
 
 More details [here](doc/filters.md)
+
+Note you can also create your own filter extending the base class `AbstractFilter`.
 
 ### Uploaders:
 Note that uploaders don't append new photos. Either the directory must be empty or the uploader clear it before copying files.
@@ -57,6 +61,8 @@ Note that uploaders don't append new photos. Either the directory must be empty 
 * `GDriveUploader` upload  the photos to Google Drive.
 
 More details [here](doc/uploaders.md)
+
+Note you can also create your own uploader extending the base class `AbstractUploader`.
 
 ## Contributing
 Other pickers, filters and uploaders will come along the time. If you need a specific picker, filter or uploader, post an issue. Or better, submit a pull request :)
