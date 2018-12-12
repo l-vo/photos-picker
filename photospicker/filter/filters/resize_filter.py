@@ -27,7 +27,7 @@ class ResizeFilter(AbstractFilter):
         (original_width, original_height) = original_img.size
 
         diff_wh = self._width - self._height
-        sign_diff_wh = diff_wh / abs(diff_wh)
+        sign_diff_wh = 1 if diff_wh == 0 else diff_wh / abs(diff_wh)
         diff_original_wh = original_width - original_height
         sign_diff_original_wh = diff_original_wh / abs(diff_original_wh)
 
