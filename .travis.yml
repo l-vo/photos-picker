@@ -1,12 +1,18 @@
 language: python
 python:
-- "2.7"
+- '2.7'
+before_install:
+-  openssl aes-256-cbc -K $encrypted_9f1a5021e214_key -iv $encrypted_9f1a5021e214_iv -in mycreds.json.enc -out mycreds.json -d
 install:
 - pip install  -r requirements.txt
 script:
 - flake8 unittest_data_provider
 - flake8 test
-- coverage run --source photospicker -m unittest discover
-
+- coverage run --source photospicker -m unittest discover tests/unit/
+- python -m unittest discover tests/functional/
 after_success:
 - codecov
+
+env:
+  global:
+    secure: S68Q4V08H6QhtSf/iZTAc66UV+Sg37bGzHGwNqwfd24E3UADSH5lXqugTxCKwf/3e6hDr8cD6Jnk5a5KJDvueI1HMutcsr+O5uKkR2efVq/cCRqg+JZiy6PfN47w/jWxaaEzwihZ8mdpHwL+m6gcB2OZLoC9/A4F3dP1+aLvceZ/UHDE+ZpOfb8LWYaa7AeoylCQXX/QpvwkYuP0jur/QqiK6BhMi6/4r1MzMKDcZNuZlQXlsk3vpexu64mXTloVeRrZpFvOe/oAuPj3j9YuWlagsg4RhFFzpvFdqfYhKc4pe2Zl+AqG479blUHUpMP3loZ60ZdjjjTvfEFQNH/S1leJPhFZipD+zmJvbZwErDaPXCiNw9JJf+i0fOA/gPcC8wxxMhcBIYMZGYDFkv2Epm6774lk3iP9x7z9Go1bXC9qkOY8SbcPUYqKo1gyV5gDlin7sNWcxuYaNyMGtPeUNTNR0WAMcjV1Vmh4clDR60mtr03c/i0LqtLfWJWth8wt0wNHpQ3h4eM+zV8Tcb87WagUt8i5jDRIu1jIRyXsfv6uJbUdiApB3xp7ilRMbUKaFOIoyn5B1hb40PKkD8zL7RZ6VWn3z8daZBfI1XTPCHdkZNZ07ZdDk+mzq8z0iIYSMcIQvFk9A00inXiNNf/U38ATW4l4DgjGn121PdNIxyc=

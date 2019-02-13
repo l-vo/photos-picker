@@ -65,9 +65,20 @@ More details [here](doc/uploaders.md)
 Note you can also create your own uploader extending the base class `AbstractUploader`.
 
 ## Contributing
-Other pickers, filters and uploaders will come along the time. If you need a specific picker, filter or uploader, post an issue. Or better, submit a pull request :)
+The project is currenlty currently shipped with many pickers, filters or uploaders. But others can be developed, you may post an issue for that. Or better, pull request are welcome :)
 
-If you submit a pull request, be sure that the PEP8 standards are respected and the tests are not broken launching the following command:
+If you submit a pull request, a CI will process some checks:
+- That the code is conform with PEP8 standard
+- That the unit tests are not broken
+- That the functional tests are not broken
+
+For running them locally, functional tests need you to have a Dropbox token and a Google Drive credential file (`mycreds.json`) at the root of the project. The following command process locally at the same checks as the CI:
 ```bash
-$ make validate
+$ DROPBOX_TOKEN=mydropboxtoken make validate
+```
+ 
+If you don't have Dropbox/Google Drive token/credential file, you can however check the code standards and launch the unit tests:
+```bash
+$ make lint
+$ make test-unit
 ```

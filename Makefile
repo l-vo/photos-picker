@@ -37,9 +37,7 @@ test-unit:
 
 ## Run functional tests
 test-functional:
-	coverage run --source photospicker -m unittest discover tests/functional/
-	coverage html
-	coverage report
+	python -m unittest discover tests/functional/
 
 ## Build and upload on PYPI test
 test-distribute: build upload-test
