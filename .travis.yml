@@ -7,4 +7,6 @@ script:
 - flake8 unittest_data_provider
 - flake8 test
 - coverage run --source photospicker -m unittest discover
+
+after_success:
 - codecov
