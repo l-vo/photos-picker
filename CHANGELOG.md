@@ -1,4 +1,8 @@
 # master
+* Mention the possibility to create custom pickers, filters or uploaders in README
+
+# 0.5.1
+* Fix crash when resize filter width has the same value as resize filter height
 
 # 0.5.0
 * Fix errors 404 on README links on pypi.org
