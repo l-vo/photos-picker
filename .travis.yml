@@ -6,6 +6,5 @@ install:
 script:
 - flake8 unittest_data_provider
 - flake8 test
-- python -m unittest discover
 - coverage run --source photospicker -m unittest discover
 - codecov
