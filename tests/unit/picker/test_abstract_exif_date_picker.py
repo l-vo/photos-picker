@@ -7,7 +7,7 @@ from mock import Mock
 import mock
 
 from photospicker.picker.picker_photo import PickerPhoto
-from tests.picker.picker_photo_stub import PickerPhotoStub
+from tests.unit.picker.picker_photo_stub import PickerPhotoStub
 
 
 class DummyPicker(AbstractExifDatePicker):

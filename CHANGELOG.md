@@ -1,4 +1,5 @@
 # master
+* Add functional tests
 * Mention the possibility to create custom pickers, filters or uploaders in README
 
 # 0.5.1

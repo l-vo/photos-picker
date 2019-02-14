@@ -6,7 +6,7 @@ from photospicker.picker.pickers.smart_picker import SmartPicker
 import mock
 import unittest_dataprovider
 
-from tests.picker.picker_photo_stub import PickerPhotoStub
+from tests.unit.picker.picker_photo_stub import PickerPhotoStub
 
 
 class TestSmartPicker(TestCase):

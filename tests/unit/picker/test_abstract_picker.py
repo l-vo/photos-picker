@@ -5,7 +5,7 @@ from mock import MagicMock  # noqa
 from mock import Mock
 import unittest_dataprovider
 import mock
-from tests.picker.picker_photo_stub import PickerPhotoStub
+from tests.unit.picker.picker_photo_stub import PickerPhotoStub
 
 
 class DummyPicker(AbstractPicker):

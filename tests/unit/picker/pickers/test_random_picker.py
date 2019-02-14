@@ -5,7 +5,8 @@ from photospicker.picker.pickers.random_picker import RandomPicker
 from mock import MagicMock  # noqa
 import mock
 from mock import Mock
-from tests.picker.picker_photo_stub import PickerPhotoStub
+
+from tests.unit.picker.picker_photo_stub import PickerPhotoStub
 
 
 class TestRandomPicker(TestCase):
