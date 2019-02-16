@@ -10,6 +10,10 @@ build:
 	-rm dist/*
 	python setup.py sdist bdist_wheel
 
+## Install dev requirements
+dev:
+	pip install -r requirements.txt
+
 ## Lint code
 lint:
 	flake8 photopicker
