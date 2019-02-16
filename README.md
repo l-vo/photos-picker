@@ -67,18 +67,28 @@ Note you can also create your own uploader extending the base class `AbstractUpl
 ## Contributing
 The project is currenlty currently shipped with many pickers, filters or uploaders. But others can be developed, you may post an issue for that. Or better, pull request are welcome :)
 
-If you submit a pull request, a CI will process some checks:
-- That the code is conform with PEP8 standard
+If you submit a pull request, a CI will process some to checks:
+- That the code is conform with the PEP8 standard
 - That the unit tests are not broken
 - That the functional tests are not broken
 
-For running them locally, functional tests need you to have a Dropbox token and a Google Drive credential file (`mycreds.json`) at the root of the project. The following command process locally at the same checks as the CI:
+For running these checks locally, you should have installed:
+- [pip](https://pip.pypa.io/en/stable/installing/)
+- [GNU Make](https://www.gnu.org/software/make/)
+
+Especially for functional tests are required:
+- [Git](https://git-scm.com/)
+- a [Dropbox token](https://blogs.dropbox.com/developers/2014/05/generate-an-access-token-for-your-own-account/)
+- a [Google Drive credential file](https://pythonhosted.org/PyDrive/quickstart.html#authentication) (`mycreds.json` at the root of the project)
+
+If all these requirements are ok, the following command process locally at the same checks as the CI:
 ```bash
 $ DROPBOX_TOKEN=mydropboxtoken make validate
 ```
  
-If you don't have Dropbox/Google Drive token/credential file, you can however check the code standards and launch the unit tests:
+If you don't have a Dropbox token or a Google Drive credential file, you can however locally check the code standards and launch the unit tests:
 ```bash
+$ make dev
 $ make lint
 $ make test-unit
 ```
