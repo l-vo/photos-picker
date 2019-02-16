@@ -77,7 +77,8 @@ For running these checks locally, you should have installed:
 - [GNU Make](https://www.gnu.org/software/make/)
 
 Especially for functional tests are required:
-- [Git](https://git-scm.com/)
+- [Curl](https://curl.haxx.se/)
+- [Unzip](https://linux.die.net/man/1/unzip)
 - a [Dropbox token](https://blogs.dropbox.com/developers/2014/05/generate-an-access-token-for-your-own-account/)
 - a [Google Drive credential file](https://pythonhosted.org/PyDrive/quickstart.html#authentication) (`mycreds.json` at the root of the project)
 

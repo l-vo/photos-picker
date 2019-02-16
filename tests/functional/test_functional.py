@@ -48,12 +48,29 @@ class TestFunctional(TestCase):
         func_tests_dir = os.path.dirname(os.path.realpath(__file__))
         cls.gdrive_creds_filepath = func_tests_dir + '/../../mycreds.json'
 
+        samples_zip = cls.tmpdir + '/samples.zip'
         subprocess.call([
-            'git',
-            'clone',
-            'https://github.com/ianare/exif-samples.git',
+            "curl",
+            "https://codeload.github.com/ianare/exif-samples/zip/"
+            + "1c14d21c5278c77fc8183f260876b9799ea14a3b",
+            "-o",
+            samples_zip
+        ])
+
+        subprocess.call([
+            "unzip",
+            samples_zip,
+            "-d",
+            cls.tmpdir
+        ])
+
+        subprocess.call([
+            "mv",
+            cls.tmpdir
+            + '/exif-samples-1c14d21c5278c77fc8183f260876b9799ea14a3b',
             cls.sample_dir
         ])
+
         # Causes problem with LastDatePicker (same date as another photo)
         # When date is the same, order may be different depending on systems
         os.remove(cls.sample_dir + '/jpg/hdr/iphone_hdr_NO.jpg')
