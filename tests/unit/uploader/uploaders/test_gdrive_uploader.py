@@ -172,7 +172,7 @@ class TestGDriveUploader(TestCase):
 
         sut = GDriveUploader(self._gauth)
         sut.initialize()
-        sut.upload('mybinarydata', 'IMG5423.JPG')
+        sut.upload(b'mybinarydata', 'IMG5423.JPG')
 
         folder_mock.__getitem__.assert_called_with('id')
 
@@ -181,7 +181,7 @@ class TestGDriveUploader(TestCase):
             'title': 'photo0.jpg'
         })
 
-        self.assertEqual('mybinarydata', created_file_mock.content.getvalue())
+        self.assertEqual(b'mybinarydata', created_file_mock.content.getvalue())
         created_file_mock.Upload.assert_called_once()
 
     def test_constructor_with_wrong_folder_name_should_raise_exception(self):

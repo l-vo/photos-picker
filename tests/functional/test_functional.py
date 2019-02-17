@@ -261,7 +261,7 @@ class TestFunctional(TestCase):
 
         :return: string
         """
-        with open(filepath, 'r') as content_file:
+        with open(filepath, 'r+b') as content_file:
             content = content_file.read()
         md5 = hashlib.md5(content)
         return md5.hexdigest()

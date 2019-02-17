@@ -38,5 +38,5 @@ class FilesystemUploader(AbstractUploader):
         :param str original_filename: original file name
         """
         filename = self._build_filename(original_filename)
-        with open(os.path.join(self._path, filename), 'w') as f:
+        with open(os.path.join(self._path, filename), 'w+b') as f:
             f.write(binary)

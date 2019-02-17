@@ -1,6 +1,7 @@
 from photospicker.picker.abstract_exif_date_picker import \
     AbstractExifDatePicker
 import random
+import math
 
 
 class SmartPicker(AbstractExifDatePicker):
@@ -84,7 +85,7 @@ class SmartPicker(AbstractExifDatePicker):
         # Packets count is equal to extractions count
         total = len(sorted_filenames)
         packets_count = len(extractions)
-        packet_size_floored = total / packets_count
+        packet_size_floored = math.floor(total / packets_count)
         rest = total - packet_size_floored * packets_count
         packet_sizes = []
         for i in range(1, packets_count + 1):

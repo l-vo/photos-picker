@@ -43,7 +43,7 @@ class TestAbstractPicker(TestCase):
 
         self.assertEqual(
             "patterns argument must be a list",
-            cm.exception.message
+            str(cm.exception)
         )
 
     @staticmethod

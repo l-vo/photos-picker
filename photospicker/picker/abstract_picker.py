@@ -100,7 +100,7 @@ class AbstractPicker:
         """
         for excluded_pattern in self._excluded_patterns:
             expandeduser_pattern = os.path.expanduser(excluded_pattern)
-            if string.find(path + '/', expandeduser_pattern) != -1:
+            if (path + '/').find(expandeduser_pattern) != -1:
                 return True
         return False
 
