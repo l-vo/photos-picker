@@ -75,6 +75,7 @@ If you submit a pull request, a CI will process some to checks:
 For running these checks locally, you should have installed:
 - [pip](https://pip.pypa.io/en/stable/installing/)
 - [GNU Make](https://www.gnu.org/software/make/)
+- [Tox](https://tox.readthedocs.io/)
 
 Especially for functional tests are required:
 - [Curl](https://curl.haxx.se/)
