@@ -28,10 +28,7 @@ upload-test:
 	python -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
 
 ## Run all tests
-test:
-	coverage run --source photospicker -m unittest discover
-	coverage html
-	coverage report
+test: test-unit test-functional
 
 ## Run unit tests
 test-unit:
