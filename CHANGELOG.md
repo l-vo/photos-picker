@@ -1,4 +1,5 @@
 # master
+* Fix resize filter
 * Add make dev command
 * Add functional tests
 * Mention the possibility to create custom pickers, filters or uploaders in README

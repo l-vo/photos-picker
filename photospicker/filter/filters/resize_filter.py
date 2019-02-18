@@ -12,8 +12,8 @@ class ResizeFilter(AbstractFilter):
         :param int max_width : max width after filter execution
         :param int max_height: max height after filter execution
         """
-        self._width = max_width
-        self._height = max_height
+        self._width = float(max_width)
+        self._height = float(max_height)
 
     def execute(self, original_img, exif_data):
         """
@@ -24,24 +24,14 @@ class ResizeFilter(AbstractFilter):
 
         :return: Image
         """
-        (original_width, original_height) = original_img.size
+        (original_width_int, original_height_int) = original_img.size
+        original_width = float(original_width_int)
+        original_height = float(original_height_int)
 
-        diff_wh = self._width - self._height
-        sign_diff_wh = 1 if diff_wh == 0 else diff_wh / abs(diff_wh)
-        diff_original_wh = original_width - original_height
-        sign_diff_original_wh = diff_original_wh / abs(diff_original_wh)
-
-        if sign_diff_wh == sign_diff_original_wh:
-            w = self._width
-            h = self._height
+        if original_width / original_height > self._width / self._height:
+            ratio = self._width / original_width
         else:
-            w = self._height
-            h = self._width
-
-        if original_width / original_height > w / h:
-            ratio = float(w) / original_width
-        else:
-            ratio = float(h) / original_height
+            ratio = self._height / original_height
 
         resized_img = original_img.resize(
             (int(ratio * original_width), int(ratio * original_height)),
