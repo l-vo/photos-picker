@@ -48,14 +48,15 @@ class TestFunctional(TestCase):
         func_tests_dir = os.path.dirname(os.path.realpath(__file__))
         cls.gdrive_creds_filepath = func_tests_dir + '/../../mycreds.json'
 
-        samples_zip = cls.tmpdir + '/samples.zip'
-        subprocess.call([
-            "curl",
-            "https://codeload.github.com/ianare/exif-samples/zip/"
-            + "1c14d21c5278c77fc8183f260876b9799ea14a3b",
-            "-o",
-            samples_zip
-        ])
+        samples_zip = cls.tmpdir + 'photos-picker-test-samples.zip'
+        if not os.path.isfile(samples_zip):
+            subprocess.call([
+                "curl",
+                "https://codeload.github.com/ianare/exif-samples/zip/"
+                + "1c14d21c5278c77fc8183f260876b9799ea14a3b",
+                "-o",
+                samples_zip
+            ])
 
         subprocess.call([
             "unzip",

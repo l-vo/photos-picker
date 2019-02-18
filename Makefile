@@ -43,9 +43,8 @@ test-functional:
 ## Build and upload on PYPI test
 test-distribute: build upload-test
 
-## Launch tox for PEP8 and tests validation
-validate:
-	tox --recreate -c tox.ini
+## Launch PEP8 and tests validation
+validate: dev lint test-unit test-functional
 
 ## ------
 
