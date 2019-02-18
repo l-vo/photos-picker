@@ -16,24 +16,39 @@ class TestResizeFilter(TestCase):
         :return: tuple
         """
         return (
-            ((200, 100), (200, 50)),
-            ((100, 200), (200, 50)),
-            ((200, 25), (100, 25)),
-            ((100, 100), (100, 25)),
-            ((750, 150), (600, 150)),
-            ((500, 250), (500, 125)),
+            ((300, 150), (20, 20), (20, 10)),
+            ((300, 150), (20, 30), (20, 10)),
+            ((300, 150), (20, 60), (20, 10)),
+            ((300, 150), (30, 20), (30, 15)),
+            ((300, 150), (60, 20), (40, 20)),
+            ((300, 150), (60, 60), (60, 30)),
+
+            ((300, 300), (20, 20), (20, 20)),
+            ((300, 300), (20, 30), (20, 20)),
+            ((300, 300), (20, 60), (20, 20)),
+            ((300, 300), (30, 20), (20, 20)),
+            ((300, 300), (60, 20), (20, 20)),
+            ((300, 300), (60, 60), (60, 60)),
+
+            ((150, 300), (20, 20), (10, 20)),
+            ((150, 300), (20, 30), (15, 30)),
+            ((150, 300), (20, 60), (20, 40)),
+            ((150, 300), (30, 20), (10, 20)),
+            ((150, 300), (60, 20), (10, 20)),
+            ((150, 300), (60, 60), (30, 60)),
         )
 
     @unittest_dataprovider.data_provider(provider_execute)
-    def test_execute(self, filter_size, expected_img_size):
+    def test_execute(self, img_size, filter_size, expected_img_size):
         """
         Test execute method
 
+        :param tuple img_size         : original imgage size
         :param tuple filter_size      : parameterized size of the filter
         :param tuple expected_img_size: expected size of the returned image
         """
         original_img = Mock()
-        original_img.size = (400, 100)
+        original_img.size = img_size
         original_img.format = 'JPEG'
 
         resized_mock = Mock()

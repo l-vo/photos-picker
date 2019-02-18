@@ -88,19 +88,19 @@ class TestFunctional(TestCase):
         return (
             ([ResizeFilter(100, 100), RotateFilter()], {
                 'photo1.jpg': '9f8bb12a840adc598c9257f0309fd04b',
-                'photo2.jpg': '615a8cd4f1ead919dbe268a4d0526263',
-                'photo3.jpg': '4955a9411b47113c07a3d9767ba67955',
-                'photo4.jpg': '7517ea032f3bab1ecab4006a5e6dbe9b',
-                'photo5.jpg': '25ca68bc469e3e63eddf38be7fbaaeed'
+                'photo2.jpg': 'df0452191369cd17da8a686af4b2f90e',
+                'photo3.jpg': 'c17294d3485ee34e5f7a6b7ac02034f4',
+                'photo4.jpg': 'eb8a92d6675a04ae2480209a34de983e',
+                'photo5.jpg': '48df8f1599b1dacac715d2a9bbbb1832'
             }),
             ([ResizeFilter(100, 100)], {
                 'photo1.jpg': '9f8bb12a840adc598c9257f0309fd04b',
-                'photo2.jpg': '615a8cd4f1ead919dbe268a4d0526263',
-                'photo3.jpg': '4955a9411b47113c07a3d9767ba67955',
-                'photo4.jpg': '1bda1787b7aeef690f1d21a43d3b5e21',
-                'photo5.jpg': '1bffaba99a0efcf8e4d033b2f451e0b2'
+                'photo2.jpg': 'df0452191369cd17da8a686af4b2f90e',
+                'photo3.jpg': 'c17294d3485ee34e5f7a6b7ac02034f4',
+                'photo4.jpg': 'f400ff3da846a09eba959049ec2a6e67',
+                'photo5.jpg': '49eb68b900ed87671b2f02af188d906d'
             }),
-            ([RotateFilter()], {
+           ([RotateFilter()], {
                 'photo1.jpg': '9f8bb12a840adc598c9257f0309fd04b',
                 'photo2.jpg': '95268c0535b0588f5d01181162d382a7',
                 'photo3.jpg': 'f7064521c932b0a534d8b958bc79901f',
@@ -155,10 +155,10 @@ class TestFunctional(TestCase):
         return (
             ([ResizeFilter(100, 100), RotateFilter()], {
                 'photo1.jpg': '9f8bb12a840adc598c9257f0309fd04b',
-                'photo2.jpg': '615a8cd4f1ead919dbe268a4d0526263',
-                'photo3.jpg': '4955a9411b47113c07a3d9767ba67955',
-                'photo4.jpg': '7517ea032f3bab1ecab4006a5e6dbe9b',
-                'photo5.jpg': '25ca68bc469e3e63eddf38be7fbaaeed'
+                'photo2.jpg': 'df0452191369cd17da8a686af4b2f90e',
+                'photo3.jpg': 'c17294d3485ee34e5f7a6b7ac02034f4',
+                'photo4.jpg': 'eb8a92d6675a04ae2480209a34de983e',
+                'photo5.jpg': '48df8f1599b1dacac715d2a9bbbb1832'
             }),
         )
 
