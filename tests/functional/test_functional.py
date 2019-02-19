@@ -2,6 +2,7 @@ from unittest import TestCase
 import subprocess
 import os
 import hashlib
+import sys
 import unittest_dataprovider
 from unittest import SkipTest
 
@@ -39,15 +40,16 @@ class TestFunctional(TestCase):
 
         skip_reason = "Can't execute functional tests if {dir} already exists"
 
-        cls.sample_dir = cls.tmpdir + '/photos-picker-exif-samples'
+        versid = str(sys.hexversion)
+        cls.sample_dir = cls.tmpdir + '/photos-picker-exif-samples_' + versid
         if os.path.isdir(cls.sample_dir):
             raise SkipTest(skip_reason.format(dir=cls.sample_dir))
 
-        cls.target_dir = cls.tmpdir + '/tests-photos-picker'
+        cls.target_dir = cls.tmpdir + '/tests-photos-picker_' + versid
         if os.path.isdir(cls.target_dir):
             raise SkipTest(skip_reason.format(dir=cls.target_dir))
 
-        cls.remote_test_dir = 'photos-picker-test'
+        cls.remote_test_dir = 'photos-picker-test_' + versid
 
         func_tests_dir = os.path.dirname(os.path.realpath(__file__))
         cls.gdrive_creds_filepath = func_tests_dir + '/../../mycreds.json'
