@@ -8,12 +8,10 @@ python:
 before_install:
 -  openssl aes-256-cbc -K $encrypted_9f1a5021e214_key -iv $encrypted_9f1a5021e214_iv -in mycreds.json.enc -out mycreds.json -d
 install:
-- pip install  -r requirements.txt
+- make dev
 script:
-- flake8 unittest_data_provider
-- flake8 test
-- coverage run --source photospicker -m unittest discover tests/unit/
-- python -m unittest discover tests/functional/
+- make lint
+- make test
 after_success:
 - codecov
 
