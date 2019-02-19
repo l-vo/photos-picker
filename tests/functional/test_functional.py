@@ -4,9 +4,12 @@ import os
 import hashlib
 import sys
 import unittest_dataprovider
+import shutil
+import requests
 from unittest import SkipTest
 
 from dropbox import Dropbox
+from zipfile import ZipFile
 from dropbox.exceptions import ApiError
 from dropbox.files import DeleteError
 from pydrive.drive import GoogleDrive
@@ -58,32 +61,27 @@ class TestFunctional(TestCase):
         expected_hash = 'b01a2c4b116bfa35de6385f1a5266eae'
         if not os.path.isfile(samples_zip)\
                 or cls._compute_file_md5(samples_zip) != expected_hash:
-            subprocess.call([
-                "curl",
+            print("Downloading sample images archive "
+                  "(about 31M, this will be done only once) ...")
+            req = requests.get(
                 "https://codeload.github.com/ianare/exif-samples/zip/"
-                + "1c14d21c5278c77fc8183f260876b9799ea14a3b",
-                "-o",
-                samples_zip
-            ])
+                + "1c14d21c5278c77fc8183f260876b9799ea14a3b"
+            )
+            with open(samples_zip, 'w+b') as f:
+                f.write(req.content)
 
         unziptmpdir = cls.tmpdir + '/unzip_' + versid
         os.mkdir(unziptmpdir)
 
-        FNULL = open(os.devnull, 'w')
-        subprocess.call([
-            "unzip",
-            samples_zip,
-            "-d",
-            unziptmpdir
-        ], stdout=FNULL, stderr=subprocess.STDOUT)
+        zipfile = ZipFile(samples_zip, 'r')
+        zipfile.extractall(unziptmpdir)
+        zipfile.close()
 
-        subprocess.call([
-            "mv",
+        os.rename(
             unziptmpdir
             + '/exif-samples-1c14d21c5278c77fc8183f260876b9799ea14a3b',
             cls.sample_dir
-        ])
-        FNULL.close()
+        )
 
         os.rmdir(unziptmpdir)
 
@@ -92,7 +90,7 @@ class TestFunctional(TestCase):
         os.remove(cls.sample_dir + '/jpg/hdr/iphone_hdr_NO.jpg')
 
     def setUp(self):
-        subprocess.call(['mkdir', self.target_dir])
+        os.mkdir(self.target_dir)
 
     @staticmethod
     def provider_filesystem_uploader():
@@ -305,12 +303,12 @@ class TestFunctional(TestCase):
     @classmethod
     def tearDown(cls):
         # Clear local test files
-        subprocess.call(['rm', '-rf', cls.target_dir])
+        shutil.rmtree(cls.target_dir)
 
     @classmethod
     def tearDownClass(cls):
         # Clear sample files for tests
-        subprocess.call(['rm', '-rf', cls.sample_dir])
+        shutil.rmtree(cls.sample_dir)
 
         # Clear Dropbox test files
         if 'DROPBOX_TOKEN' in os.environ.keys():
