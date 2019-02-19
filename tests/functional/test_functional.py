@@ -83,6 +83,7 @@ class TestFunctional(TestCase):
             + '/exif-samples-1c14d21c5278c77fc8183f260876b9799ea14a3b',
             cls.sample_dir
         ])
+        FNULL.close()
 
         os.rmdir(unziptmpdir)
 
