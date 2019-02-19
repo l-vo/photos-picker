@@ -29,9 +29,13 @@ class TestFunctional(TestCase):
     @classmethod
     def setUpClass(cls):
         if 'TMPDIR' in os.environ.keys():
-            cls.tmpdir = os.environ['TMPDIR']
+            tmpdir = os.environ['TMPDIR']
         else:
-            cls.tmpdir = '/tmp'
+            tmpdir = '/tmp'
+
+        cls.tmpdir = tmpdir + '/photos-picker-test'
+        if not os.path.isdir(cls.tmpdir):
+            os.mkdir(cls.tmpdir)
 
         skip_reason = "Can't execute functional tests if {dir} already exists"
 
