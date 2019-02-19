@@ -1,4 +1,6 @@
 # master
+* Normalize doctrings
+* Allow Python3 compatibility
 * Fix resize filter
 * Add make dev command
 * Add functional tests
