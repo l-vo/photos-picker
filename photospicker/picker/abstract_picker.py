@@ -4,7 +4,6 @@ from zope import event
 from photospicker.exception.picker_exception import PickerException
 import os
 import fnmatch
-import string
 import random
 import operator
 from photospicker.picker.picker_photo import PickerPhoto
