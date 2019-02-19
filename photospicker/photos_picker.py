@@ -22,8 +22,8 @@ class PhotosPicker:
         """
         Constructor
 
-        :param AbstractPicker picker    : photo selection strategy
-        :param tuple filters            : filters
+        :param AbstractPicker picker: photo selection strategy
+        :param tuple filters: filters
         :param AbstractUploader uploader: upload strategy
         """
         self._picker = picker

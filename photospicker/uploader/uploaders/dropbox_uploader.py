@@ -40,7 +40,7 @@ class DropboxUploader(AbstractUploader):
         """
         Upload or copy files to destination
 
-        :param str binary           : binary data to upload
+        :param str binary : binary data to upload
         :param str original_filename: original file name
         """
         # Upload file

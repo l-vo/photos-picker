@@ -63,7 +63,7 @@ class GDriveUploader(AbstractUploader):
         """
         Upload or copy files to destination
 
-        :param str binary           : binary data to upload
+        :param str binary: binary data to upload
         :param str original_filename: original file name
         """
         filename = self._build_filename(original_filename)

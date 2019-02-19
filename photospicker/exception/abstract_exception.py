@@ -5,7 +5,7 @@ class AbstractException(Exception):
         """
         Constructor
 
-        :param int code   : error code
+        :param int code: error code
         :param str message: error message
         """
         self._code = code
@@ -16,7 +16,7 @@ class AbstractException(Exception):
         """
         Getter code
 
-        :return: int
+        :rtype: int
         """
         return self._code
 
@@ -25,6 +25,6 @@ class AbstractException(Exception):
         """
         Getter message
 
-        :return: str
+        :rtype: str
         """
         return self._message

@@ -134,8 +134,7 @@ class TestGDriveUploader(TestCase):
         """
         Make common assertions for initialize tests
 
-        :param MagicMock gdrive_constructor_mock:
-                                                    mock for gdrive constructor
+        :param MagicMock gdrive_constructor_mock: mock for gdrive constructor
         :param list list_files_additonal_calls:
                                 additional expected calls for ListFile method
         """
@@ -157,8 +156,7 @@ class TestGDriveUploader(TestCase):
         """
         Test upload method
 
-        :param MagicMock gdrive_constructor_mock:
-                                                    mock for gdrive constructor
+        :param MagicMock gdrive_constructor_mock: mock for gdrive constructor
         """
         folder_mock = MagicMock()
         folder_mock.__getitem__.return_value = 12

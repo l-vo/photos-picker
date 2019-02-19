@@ -9,7 +9,7 @@ class EndFilterEvent(object):
         Constructor
 
         :param AbstractFilter photo_filter: filter
-        :param str filepath               : file processed by the filter
+        :param str filepath: file processed by the filter
         """
         self._filter_name = photo_filter.__class__.__name__
         self._filepath = filepath
@@ -18,7 +18,7 @@ class EndFilterEvent(object):
         """
         Getter for the filter name
 
-        :return: str
+        :rtype: str
         """
         return self._filter_name
 
@@ -26,6 +26,6 @@ class EndFilterEvent(object):
         """
         Getter for the file path of the processes file
 
-        :return: str
+        :rtype: str
         """
         return self._filepath

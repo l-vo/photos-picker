@@ -52,7 +52,7 @@ class TestRotateFilter(TestCase):
         Test that execute return original image
         if no exif orientation is not supplied
 
-        :param mixed exif_data         : exif data of the original image
+        :param mixed exif_data: exif data of the original image
         :param MagicMock exif_tags_mock: mock for ExifTags
         """
         exif_tags_mock.TAGS = {123: 'mytagvalue', 456: 'Orientation'}
@@ -89,13 +89,11 @@ class TestRotateFilter(TestCase):
         """
         Test that right params are used when applying rotation
 
-        :param mixed expand            : expand value passed to
-            filter constructor
-        :param dict exif_data          : exif data of the original image
-        :param int expected_angle      : expected angle to be applyed
-            to original image
-        :param bool expected_expand    : expected expand value to be applyed
-            to original image
+        :param mixed expand: expand value passed to filter constructor
+        :param dict exif_data: exif data of the original image
+        :param int expected_angle: expected angle applyed to original image
+        :param bool expected_expand: expected expand value
+                                     applyed to original image
         :param MagicMock exif_tags_mock: mock for ExifTags
         """
         exif_tags_mock.TAGS = {456: 'Orientation'}

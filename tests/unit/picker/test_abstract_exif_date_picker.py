@@ -27,7 +27,7 @@ class TestAbstractExifDatePicker(TestCase):
         """
         Test select
 
-        :param MagicMock walk_mock:       mock for walk method
+        :param MagicMock walk_mock: mock for walk method
         :param MagicMock image_open_mock: mock for PIL Image mock method
         """
 

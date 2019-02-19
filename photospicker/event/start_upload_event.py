@@ -5,9 +5,9 @@ class StartUploadEvent(object):
         """
         Constructor
 
-        :param str filepath        : file which starts to be uploaded
+        :param str filepath: file which starts to be uploaded
         :param int upload_file_rank: rank of the file in upload queue
-        :param int files_to_upload : total files to upload count
+        :param int files_to_upload: total files to upload count
         """
         self._filepath = filepath
         self._upload_file_rank = upload_file_rank
@@ -18,7 +18,7 @@ class StartUploadEvent(object):
         """
         Getter for the file which starts to be uploaded
 
-        :return: str
+        :type: str
         """
         return self._filepath
 
@@ -27,7 +27,7 @@ class StartUploadEvent(object):
         """
         Getter for the rank of the file in upload queue
 
-        :return: int
+        :type: int
         """
         return self._upload_file_rank
 
@@ -36,6 +36,6 @@ class StartUploadEvent(object):
         """
         Getter for the total files to upload count
 
-        :return: int
+        :rtype: int
         """
         return self._files_to_upload

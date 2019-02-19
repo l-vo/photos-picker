@@ -12,9 +12,9 @@ class AbstractFilter:
         """
         Execute filter
 
-        :param Image img     : image object to modify
+        :param Image img: image object to modify
         :param dict exif_data: image exif data
 
-        :return: Image
+        :rtype: Image
         """
         raise NotImplementedError()

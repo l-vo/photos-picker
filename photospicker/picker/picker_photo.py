@@ -24,7 +24,7 @@ class PickerPhoto(object):
         """
         Return exif DateTimeOriginal
 
-        :return: str
+        :rtype: str
         """
         img = Image.open(self._filepath)
         if isinstance(img, JpegImageFile):
@@ -43,7 +43,7 @@ class PickerPhoto(object):
         """
         Getter for _filepath
 
-        :return: str
+        :rtype: str
         """
         return self._filepath
 
@@ -52,7 +52,7 @@ class PickerPhoto(object):
         """
         Getter for _date (exif date)
 
-        :return: str
+        :rtype: str
         """
         if self._date is None:
             self.retrieve_date()
