@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := help
 SHELL := /bin/bash
 
-.PHONY: build help lint upload upload-test test test-distribute valid
+.PHONY: build clear-tmp help lint upload upload-test test test-distribute valid
 
 ## ------
 
@@ -9,6 +9,27 @@ SHELL := /bin/bash
 build:
 	-rm dist/*
 	python setup.py sdist bdist_wheel
+
+## Clear remaining temporary files used for functional tests
+clear-tmp:
+	@if [ -z ${TMPDIR} ]; \
+	then \
+		if [ -d /tmp/photos-picker-test ]; \
+		then \
+			rm -rf /tmp/photos-picker-test; \
+			echo "/tmp/photos-picker-test removed"; \
+		else \
+			echo "/tmp/photos-picker-test already removed"; \
+		fi \
+	else \
+		if [ -d ${TMPDIR}/photos-picker-test ]; \
+		then \
+			rm -rf ${TMPDIR}/photos-picker-test; \
+			echo "${TMPDIR}/photos-picker-test removed"; \
+		else \
+			echo "${TMPDIR}/photos-picker-test already removed"; \
+		fi \
+	fi
 
 ## Install dev requirements
 dev:
