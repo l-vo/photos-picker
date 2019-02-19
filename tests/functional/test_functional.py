@@ -48,7 +48,7 @@ class TestFunctional(TestCase):
         func_tests_dir = os.path.dirname(os.path.realpath(__file__))
         cls.gdrive_creds_filepath = func_tests_dir + '/../../mycreds.json'
 
-        samples_zip = cls.tmpdir + 'photos-picker-test-samples.zip'
+        samples_zip = cls.tmpdir + '/photos-picker-test-samples.zip'
         if not os.path.isfile(samples_zip):
             subprocess.call([
                 "curl",
