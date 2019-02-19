@@ -6,7 +6,7 @@
 This libary allows to pick photos in a folder according to a given strategy (last photos, random photos...) and copy them to a destination (another system folder, Dropbox or Google drive folder...)
 
 ## Compatibility
-This library works and is tested with Python 2.7. Other Python versions are not tested yet.
+This library currently works with Python 2.7, Python 3.4, Python 3.5, Python 3.6 and Python 3.7.
 
 ## Install
 ```bash
