@@ -17,6 +17,7 @@ $ pip install photos-picker
 The main class `PhotosPicker` accepts a "picker", a tuple of "filters" and an "uploader" as arguments. The picker allows to select photos while the filters modify them. At the end of the process, the uploader copy transformed (or not) photos to a given destination. Below the simplest example which copy the 50 lastest photos to another directory:
 
 ```python
+# Python 2.7 example
 from photospicker.exception.abstract_exception import AbstractException
 from photospicker.picker.pickers.last_photos_picker import LastPhotosPicker
 from photospicker.uploader.uploaders.filesystem_uploader import FilesystemUploader
