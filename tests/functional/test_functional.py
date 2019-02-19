@@ -62,12 +62,13 @@ class TestFunctional(TestCase):
                 samples_zip
             ])
 
+        FNULL = open(os.devnull, 'w')
         subprocess.call([
             "unzip",
             samples_zip,
             "-d",
             cls.tmpdir
-        ])
+        ], stdout=FNULL, stderr=subprocess.STDOUT)
 
         subprocess.call([
             "mv",
