@@ -1,9 +1,9 @@
 from PIL.JpegImagePlugin import JpegImageFile
 
-from event.start_upload_event import StartUploadEvent
-from event.end_upload_event import EndUploadEvent
-from event.start_filter_event import StartFilterEvent
-from event.end_filter_event import EndFilterEvent
+from .event.start_upload_event import StartUploadEvent
+from .event.end_upload_event import EndUploadEvent
+from .event.start_filter_event import StartFilterEvent
+from .event.end_filter_event import EndFilterEvent
 from zope.event import notify
 from PIL import Image
 from io import BytesIO

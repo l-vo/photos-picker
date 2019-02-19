@@ -2,10 +2,14 @@ from unittest import TestCase
 import subprocess
 import os
 import hashlib
+import sys
 import unittest_dataprovider
+import shutil
+import requests
 from unittest import SkipTest
 
 from dropbox import Dropbox
+from zipfile import ZipFile
 from dropbox.exceptions import ApiError
 from dropbox.files import DeleteError
 from pydrive.drive import GoogleDrive
@@ -29,54 +33,64 @@ class TestFunctional(TestCase):
     @classmethod
     def setUpClass(cls):
         if 'TMPDIR' in os.environ.keys():
-            cls.tmpdir = os.environ['TMPDIR']
+            tmpdir = os.environ['TMPDIR']
         else:
-            cls.tmpdir = '/tmp'
+            tmpdir = '/tmp'
+
+        cls.tmpdir = tmpdir + '/photos-picker-test'
+        if not os.path.isdir(cls.tmpdir):
+            os.mkdir(cls.tmpdir)
 
         skip_reason = "Can't execute functional tests if {dir} already exists"
 
-        cls.sample_dir = cls.tmpdir + '/photos-picker-exif-samples'
+        versid = str(sys.hexversion)
+        cls.sample_dir = cls.tmpdir + '/exif-samples_' + versid
         if os.path.isdir(cls.sample_dir):
             raise SkipTest(skip_reason.format(dir=cls.sample_dir))
 
-        cls.target_dir = cls.tmpdir + '/tests-photos-picker'
+        cls.target_dir = cls.tmpdir + '/tests_' + versid
         if os.path.isdir(cls.target_dir):
             raise SkipTest(skip_reason.format(dir=cls.target_dir))
 
-        cls.remote_test_dir = 'photos-picker-test'
+        cls.remote_test_dir = 'photos-picker-test_' + versid
 
         func_tests_dir = os.path.dirname(os.path.realpath(__file__))
         cls.gdrive_creds_filepath = func_tests_dir + '/../../mycreds.json'
 
-        samples_zip = cls.tmpdir + '/samples.zip'
-        subprocess.call([
-            "curl",
-            "https://codeload.github.com/ianare/exif-samples/zip/"
-            + "1c14d21c5278c77fc8183f260876b9799ea14a3b",
-            "-o",
-            samples_zip
-        ])
+        samples_zip = cls.tmpdir + '/test-samples.zip'
+        expected_hash = 'b01a2c4b116bfa35de6385f1a5266eae'
+        if not os.path.isfile(samples_zip)\
+                or cls._compute_file_md5(samples_zip) != expected_hash:
+            print("Downloading sample images archive "
+                  "(about 31M, this will be done only once) ...")
+            req = requests.get(
+                "https://codeload.github.com/ianare/exif-samples/zip/"
+                + "1c14d21c5278c77fc8183f260876b9799ea14a3b"
+            )
+            with open(samples_zip, 'w+b') as f:
+                f.write(req.content)
 
-        subprocess.call([
-            "unzip",
-            samples_zip,
-            "-d",
-            cls.tmpdir
-        ])
+        unziptmpdir = cls.tmpdir + '/unzip_' + versid
+        os.mkdir(unziptmpdir)
 
-        subprocess.call([
-            "mv",
-            cls.tmpdir
+        zipfile = ZipFile(samples_zip, 'r')
+        zipfile.extractall(unziptmpdir)
+        zipfile.close()
+
+        os.rename(
+            unziptmpdir
             + '/exif-samples-1c14d21c5278c77fc8183f260876b9799ea14a3b',
             cls.sample_dir
-        ])
+        )
+
+        os.rmdir(unziptmpdir)
 
         # Causes problem with LastDatePicker (same date as another photo)
         # When date is the same, order may be different depending on systems
         os.remove(cls.sample_dir + '/jpg/hdr/iphone_hdr_NO.jpg')
 
     def setUp(self):
-        subprocess.call(['mkdir', self.target_dir])
+        os.mkdir(self.target_dir)
 
     @staticmethod
     def provider_filesystem_uploader():
@@ -253,7 +267,8 @@ class TestFunctional(TestCase):
 
         self.assertEqual(expected_files, actual_files)
 
-    def _compute_file_md5(self, filepath):
+    @staticmethod
+    def _compute_file_md5(filepath):
         """
         Compute md5 hash of a file content
 
@@ -261,7 +276,7 @@ class TestFunctional(TestCase):
 
         :return: string
         """
-        with open(filepath, 'r') as content_file:
+        with open(filepath, 'r+b') as content_file:
             content = content_file.read()
         md5 = hashlib.md5(content)
         return md5.hexdigest()
@@ -288,12 +303,12 @@ class TestFunctional(TestCase):
     @classmethod
     def tearDown(cls):
         # Clear local test files
-        subprocess.call(['rm', '-rf', cls.target_dir])
+        shutil.rmtree(cls.target_dir)
 
     @classmethod
     def tearDownClass(cls):
         # Clear sample files for tests
-        subprocess.call(['rm', '-rf', cls.sample_dir])
+        shutil.rmtree(cls.sample_dir)
 
         # Clear Dropbox test files
         if 'DROPBOX_TOKEN' in os.environ.keys():

@@ -7,6 +7,7 @@ from photospicker.photos_picker import PhotosPicker
 from callee.types import InstanceOf
 from io import BytesIO
 import mock
+import sys
 
 
 class TestPhotosPicker(TestCase):
@@ -23,8 +24,7 @@ class TestPhotosPicker(TestCase):
         """
         return file_content
 
-    @mock.patch('__builtin__.open')
-    def test_run_without_filters(self, mock_open):
+    def test_run_without_filters(self):
         """
         Test run method without filters
 
@@ -37,8 +37,6 @@ class TestPhotosPicker(TestCase):
         open_mock2 = MagicMock()
         open_mock2.__enter__().read.return_value = 'mydata2'
 
-        mock_open.side_effect = [open_mock1, open_mock2]
-
         picker = Mock()
         picker.picked_file_paths = [
             '/myfolder/myphoto1.jpg',
@@ -47,16 +45,19 @@ class TestPhotosPicker(TestCase):
 
         uploader = Mock()
 
-        photos_picker = PhotosPicker(picker, (), uploader)
-        photos_picker.run()
+        builtin = '__builtin__' if sys.version_info < (3, 0) else 'builtins'
+        with mock.patch(builtin + '.open') as mock_open:
+            mock_open.side_effect = [open_mock1, open_mock2]
+            photos_picker = PhotosPicker(picker, (), uploader)
+            photos_picker.run()
+
+            mock_open.assert_has_calls([
+                mock.call('/myfolder/myphoto1.jpg', mode='rb'),
+                mock.call('/myfolder/myphoto2.png', mode='rb')
+            ])
 
         picker.initialize.assert_called_once()
         picker.scan.assert_called_once()
-
-        mock_open.assert_has_calls([
-            mock.call('/myfolder/myphoto1.jpg', mode='rb'),
-            mock.call('/myfolder/myphoto2.png', mode='rb')
-        ])
 
         open_mock1.__enter__().read.assert_called_once()
         open_mock2.__enter__().read.assert_called_once()
@@ -143,8 +144,8 @@ class TestPhotosPicker(TestCase):
             mock.call()
         ])
         uploader.upload.assert_has_calls([
-            mock.call('binarydata_JPEG', 'myphoto1.jpg'),
-            mock.call('binarydata_PNG', 'myphoto2.png')
+            mock.call(b'binarydata_JPEG', 'myphoto1.jpg'),
+            mock.call(b'binarydata_PNG', 'myphoto2.png')
         ])
 
     @staticmethod
@@ -155,4 +156,4 @@ class TestPhotosPicker(TestCase):
         :param BytesIO bytesio: BytesIO instance for writing image
         :param str img_format : image format (JPEG, PNG...)
         """
-        bytesio.write('binarydata_' + img_format)
+        bytesio.write(('binarydata_' + img_format).encode())
