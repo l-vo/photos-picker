@@ -41,11 +41,11 @@ class TestFunctional(TestCase):
         skip_reason = "Can't execute functional tests if {dir} already exists"
 
         versid = str(sys.hexversion)
-        cls.sample_dir = cls.tmpdir + '/photos-picker-exif-samples_' + versid
+        cls.sample_dir = cls.tmpdir + '/exif-samples_' + versid
         if os.path.isdir(cls.sample_dir):
             raise SkipTest(skip_reason.format(dir=cls.sample_dir))
 
-        cls.target_dir = cls.tmpdir + '/tests-photos-picker_' + versid
+        cls.target_dir = cls.tmpdir + '/tests_' + versid
         if os.path.isdir(cls.target_dir):
             raise SkipTest(skip_reason.format(dir=cls.target_dir))
 
@@ -54,7 +54,7 @@ class TestFunctional(TestCase):
         func_tests_dir = os.path.dirname(os.path.realpath(__file__))
         cls.gdrive_creds_filepath = func_tests_dir + '/../../mycreds.json'
 
-        samples_zip = cls.tmpdir + '/photos-picker-test-samples.zip'
+        samples_zip = cls.tmpdir + '/test-samples.zip'
         expected_hash = 'b01a2c4b116bfa35de6385f1a5266eae'
         if not os.path.isfile(samples_zip)\
                 or cls._compute_file_md5(samples_zip) != expected_hash:
