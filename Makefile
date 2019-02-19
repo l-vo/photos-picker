@@ -37,8 +37,8 @@ dev:
 
 ## Lint code
 lint:
-	flake8 photopicker
-	flake8 test
+	flake8 photospicker
+	flake8 tests
 
 ## Upload to PYPI
 upload:

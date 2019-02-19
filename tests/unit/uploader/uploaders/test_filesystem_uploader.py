@@ -71,5 +71,6 @@ class TestFilesystemUploader(TestCase):
             sut.initialize()
             sut.upload('mydata', 'myphoto.jpg')
 
-            mock_open.assert_called_once_with('/root/myfolder/photo0.jpg', 'w+b')
+            path = '/root/myfolder/photo0.jpg'
+            mock_open.assert_called_once_with(path, 'w+b')
         handle.__enter__().write.assert_called_once_with('mydata')

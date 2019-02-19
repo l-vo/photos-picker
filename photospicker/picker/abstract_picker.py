@@ -4,7 +4,6 @@ from zope import event
 from photospicker.exception.picker_exception import PickerException
 import os
 import fnmatch
-import string
 import random
 import operator
 from photospicker.picker.picker_photo import PickerPhoto
@@ -31,15 +30,16 @@ class AbstractPicker:
         """
         Constructor
 
-        :param mixed directory_paths:   directory paths to scan
-        :param int   photos_count:      photos count to pick
-        :param int   order:             0 for random order
-                                        -1 for order from newer to older
-                                        1 for order from older to newer
-        :param list  patterns:          patterns (in lowercase) that files must
-                                        match for being scanned
-        :param list  excluded_patterns: directory patterns excluded
-                                        form the scan
+        :param mixed directory_paths: directory paths to scan
+        :param int photos_count: photos count to pick
+        :param int order: 0 for random order
+                          -1 for order from newer to older
+                          1 for order from older to newer
+        :param list patterns: patterns (in lowercase) that files must match
+                              for being scanned
+        :param list excluded_patterns: directory patterns excluded
+                                       form the scan
+
         :raise TypeError
         """
         if isinstance(directory_paths, list):
@@ -96,7 +96,7 @@ class AbstractPicker:
 
         :param string path: path to check
 
-        :return: bool
+        :rtype: bool
         """
         for excluded_pattern in self._excluded_patterns:
             expandeduser_pattern = os.path.expanduser(excluded_pattern)
@@ -109,7 +109,7 @@ class AbstractPicker:
         """
         Scan the given path and return picked file paths list
 
-        :return: list
+        :rtype: list
 
         :raise NotImplementedError
         """
@@ -128,7 +128,7 @@ class AbstractPicker:
 
         :param list picked: list of PickerPhoto previously picked
 
-        :return: list
+        :rtype: list
         """
         if self._order == 0:
             random.shuffle(picked)

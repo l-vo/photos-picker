@@ -7,7 +7,7 @@ class ScanProgressEvent(object):
 
         :param int files_scanned: files scanned count
         :param int files_to_scan: total files count to scan
-        :param bool end         : whether the scan is ended
+        :param bool end: whether the scan is ended
         """
         self._files_scanned = files_scanned
         self._files_to_scan = files_to_scan
@@ -18,7 +18,7 @@ class ScanProgressEvent(object):
         """
         Getter for the scanned files count
 
-        :return: int
+        :rtype: int
         """
         return self._files_scanned
 
@@ -27,7 +27,7 @@ class ScanProgressEvent(object):
         """
         Getter for the total files count to scan
 
-        :return: int
+        :rtype: int
         """
         return self._files_to_scan
 
@@ -36,6 +36,6 @@ class ScanProgressEvent(object):
         """
         Getter for whether the scan is ended
 
-        :return: bool
+        :rtype: bool
         """
         return self._end

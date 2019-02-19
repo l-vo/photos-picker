@@ -5,8 +5,8 @@ class EndUploadEvent(object):
         """
         Constructor
 
-        :param str filepath       : file uploaded
-        :param int uploaded_files : total files uploaded count
+        :param str filepath: file uploaded
+        :param int uploaded_files: total files uploaded count
         :param int files_to_upload: total files to upload count
         """
         self._filepath = filepath
@@ -18,7 +18,7 @@ class EndUploadEvent(object):
         """
         Getter for the file uploaded
 
-        :return: str
+        :rtype: str
         """
         return self._filepath
 
@@ -27,7 +27,7 @@ class EndUploadEvent(object):
         """
         Getter for the total files uploaded count
 
-        :return: int
+        :rtype: int
         """
         return self._uploaded_files
 
@@ -36,6 +36,6 @@ class EndUploadEvent(object):
         """
         Getter for the total files to upload count
 
-        :return: int
+        :rtype: int
         """
         return self._files_to_upload

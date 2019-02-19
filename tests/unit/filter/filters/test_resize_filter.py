@@ -43,8 +43,8 @@ class TestResizeFilter(TestCase):
         """
         Test execute method
 
-        :param tuple img_size         : original imgage size
-        :param tuple filter_size      : parameterized size of the filter
+        :param tuple img_size: original imgage size
+        :param tuple filter_size: parameterized size of the filter
         :param tuple expected_img_size: expected size of the returned image
         """
         original_img = Mock()

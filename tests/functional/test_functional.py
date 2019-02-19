@@ -1,5 +1,4 @@
 from unittest import TestCase
-import subprocess
 import os
 import hashlib
 import sys
@@ -21,7 +20,8 @@ from photospicker.uploader.uploaders.dropbox_uploader import DropboxUploader
 
 from photospicker.filter.filters.rotate_filter import RotateFilter
 from photospicker.photos_picker import PhotosPicker
-from photospicker.uploader.uploaders.filesystem_uploader import FilesystemUploader
+from photospicker.uploader.uploaders.filesystem_uploader\
+    import FilesystemUploader
 
 from photospicker.filter.filters.resize_filter import ResizeFilter
 from photospicker.picker.pickers.last_photos_picker import LastPhotosPicker
@@ -114,7 +114,7 @@ class TestFunctional(TestCase):
                 'photo4.jpg': 'f400ff3da846a09eba959049ec2a6e67',
                 'photo5.jpg': '49eb68b900ed87671b2f02af188d906d'
             }),
-           ([RotateFilter()], {
+            ([RotateFilter()], {
                 'photo1.jpg': '9f8bb12a840adc598c9257f0309fd04b',
                 'photo2.jpg': '95268c0535b0588f5d01181162d382a7',
                 'photo3.jpg': 'f7064521c932b0a534d8b958bc79901f',
@@ -291,7 +291,7 @@ class TestFunctional(TestCase):
         gauth = GoogleAuth()
         gauth.LoadCredentialsFile(cls.gdrive_creds_filepath)
         if gauth.credentials is None:
-            # See https://stackoverflow.com/questions/24419188/automating-pydrive-verification-process
+            # See https://stackoverflow.com/questions/24419188/automating-pydrive-verification-process  # noqa
             # For generating correct credentials
             raise SkipTest("Wrong credentials in mycreds.json")
         elif gauth.access_token_expired:

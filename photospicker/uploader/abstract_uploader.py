@@ -25,7 +25,7 @@ class AbstractUploader:
         """
         Upload or copy files to destination
 
-        :param str binary           : binary data to upload
+        :param str binary: binary data to upload
         :param str original_filename: original file name
 
         :raise NotImplementedError
@@ -42,7 +42,7 @@ class AbstractUploader:
 
         :param str original_filename: name of the original file
 
-        :return: str
+        :rtype: str
         """
         filename, ext = os.path.splitext(original_filename)
         return 'photo{counter}{ext}'.format(

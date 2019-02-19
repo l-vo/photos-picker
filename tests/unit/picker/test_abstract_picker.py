@@ -60,11 +60,10 @@ class TestAbstractPicker(TestCase):
         """
         Test initialize method
 
-        :param list|None patterns              : patterns passed
-                                                 to the constructor
-        :param list      expected_files_to_scan: list that should be in
-                                                 the _files_to_scan property
-        :param MagicMock walk_mock             : mock for walk function
+        :param list|None patterns: patterns passed to the constructor
+        :param list expected_files_to_scan: list that should be in
+                                            the _files_to_scan property
+        :param MagicMock walk_mock: mock for walk function
         """
 
         walk_mock.return_value = [['', [], [
@@ -129,10 +128,10 @@ class TestAbstractPicker(TestCase):
         """
         Test initialize method with multiple and excluded paths
 
-        :param list excluded_paths        : excluded paths
+        :param list excluded_paths: excluded paths
         :param list expected_files_to_scan: expected files to scan
-        :param MagicMock walk_mock        : mock for walk function
-        :param MagicMock expanduser_mock  : mock for expanduser function
+        :param MagicMock walk_mock: mock for walk function
+        :param MagicMock expanduser_mock: mock for expanduser function
         """
         expanduser_mock.side_effect = self.expanduser_side_effect
 
