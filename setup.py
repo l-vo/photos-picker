@@ -2,7 +2,7 @@ import os
 from setuptools import setup, find_packages
 
 github_url = 'https://github.com/l-vo/photos-picker'
-version = '0.5.1'
+version = '0.6.0'
 
 
 def read(fname):
