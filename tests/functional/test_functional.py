@@ -66,20 +66,25 @@ class TestFunctional(TestCase):
                 samples_zip
             ])
 
+        unziptmpdir = cls.tmpdir + '/unzip_' + versid
+        os.mkdir(unziptmpdir)
+
         FNULL = open(os.devnull, 'w')
         subprocess.call([
             "unzip",
             samples_zip,
             "-d",
-            cls.tmpdir
+            unziptmpdir
         ], stdout=FNULL, stderr=subprocess.STDOUT)
 
         subprocess.call([
             "mv",
-            cls.tmpdir
+            unziptmpdir
             + '/exif-samples-1c14d21c5278c77fc8183f260876b9799ea14a3b',
             cls.sample_dir
         ])
+
+        os.rmdir(unziptmpdir)
 
         # Causes problem with LastDatePicker (same date as another photo)
         # When date is the same, order may be different depending on systems
