@@ -65,7 +65,7 @@ test-functional:
 test-distribute: build upload-test
 
 ## Launch PEP8 and tests validation
-validate: dev lint test-unit test-functional
+validate: lint test
 
 ## ------
 
