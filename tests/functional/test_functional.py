@@ -53,7 +53,9 @@ class TestFunctional(TestCase):
         cls.gdrive_creds_filepath = func_tests_dir + '/../../mycreds.json'
 
         samples_zip = cls.tmpdir + '/photos-picker-test-samples.zip'
-        if not os.path.isfile(samples_zip):
+        expected_hash = 'b01a2c4b116bfa35de6385f1a5266eae'
+        if not os.path.isfile(samples_zip)\
+                or cls._compute_file_md5(samples_zip) != expected_hash:
             subprocess.call([
                 "curl",
                 "https://codeload.github.com/ianare/exif-samples/zip/"
@@ -259,7 +261,8 @@ class TestFunctional(TestCase):
 
         self.assertEqual(expected_files, actual_files)
 
-    def _compute_file_md5(self, filepath):
+    @staticmethod
+    def _compute_file_md5(filepath):
         """
         Compute md5 hash of a file content
 
