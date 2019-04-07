@@ -1,5 +1,8 @@
 # master
 
+# 1.0.0
+* Tag as stable version
+
 # 0.6.0
 * Normalize doctrings
 * Allow Python3 compatibility
