@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/l-vo/photos-picker.svg?branch=master)](https://travis-ci.org/l-vo/photos-picker)
 [![codecov](https://codecov.io/gh/l-vo/photos-picker/branch/master/graph/badge.svg)](https://codecov.io/gh/l-vo/photos-picker)
+[![license](https://img.shields.io/github/license/l-vo/photos-picker.svg)](https://github.com/l-vo/photos-picker/blob/master/LICENSE)
 
 This libary allows to pick photos in a folder according to a given strategy (last photos, random photos...) and copy them to a destination (another system folder, Dropbox or Google drive folder...)
 

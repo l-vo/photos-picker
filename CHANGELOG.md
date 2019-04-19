@@ -1,4 +1,5 @@
 # master
+* Add license badge
 
 # 1.0.0
 * Tag as stable version
