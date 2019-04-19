@@ -1,5 +1,6 @@
 # master
 * Add license badge
+* Add Pypi version badge
 
 # 1.0.0
 * Tag as stable version
